@@ -3,7 +3,7 @@ import { useState } from "react";
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 
 
-export default function RadioButton({ data, onSelect }) 
+export default function RadioButton({ data }) 
 {
     const [userOption, setUserOption] = useState(null);
 
@@ -16,7 +16,7 @@ export default function RadioButton({ data, onSelect })
                     onPress={() => setUserOption(item.value)}
                     key= {item.key}
                     >     
-                    <Text style={styles.option}> {item.value}</Text>
+                    <Text style={styles.option}>{item.value}</Text>
                  </Pressable>
             );
           })}
@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: 'black',
     textAlign: 'center',
-    height: 25,
+    height: 30,
     width: 50,
     borderWidth: 3,
   },
@@ -38,10 +38,8 @@ const styles = StyleSheet.create({
   },
   unselected: {
     backgroundColor: 'white',
-    textAlign: 'center',
   },
   selected: {
     backgroundColor: '#e90707',
-    textAlign: 'center',
   },
 });

@@ -28,13 +28,13 @@ export default function DrawerMenu (props) {
             }}
             drawerContent={props => <CustomDrawer {...props} />} >
 
-            <Drawer.Screen name="Home" component={Home} 
+            <Drawer.Screen name="Home" component={CreateAccountTest} 
                 options={{
                     drawerIcon: ({color}) => (
                         <Ionicons name="home" color={color} size={24} />
                     )
             }}/>
-            <Drawer.Screen name="Appointment" component={CreateAccountTest}
+            <Drawer.Screen name="Appointment" component={Appointment}
                 options={{
                     drawerIcon: ({color}) => (
                         <Ionicons name="calendar-outline" color={color} size={24} />

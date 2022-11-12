@@ -1,9 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import RadioButton from '../components/RadioButton';
+import TopBarDrawer from '../components/topBarDrawer';
 
-export default function CreateAccountTest() {
+export default function CreateAccountTest({navigation}) {
 
   const typeBlood = [
     { value: 'A', key: 'A'},
@@ -18,36 +18,38 @@ export default function CreateAccountTest() {
   ];
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.paragraph}>Blood Type</Text>
-      <View style={styles.radioButton}>
-        <View>
-          <RadioButton data={typeBlood}/>
-        </View>
-        <View style={styles.space}>
-            <RadioButton data={rH}/>
+    <View>
+      <TopBarDrawer onclick={navigation.toggleDrawer}/>
+      <View style={styles.container}>
+        <Text style={styles.paragraph}>Blood Type</Text>
+        <View style={styles.radioButton}>
+          <View>
+            <RadioButton data={typeBlood}/>
+          </View>
+          <View style={styles.space}>
+              <RadioButton data={rH}/>
+          </View>
         </View>
       </View>
     </View>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    margin: 10,
+    padding: 10,
   },
-  paragraph:
-  {
+  paragraph: {
     fontWeight: 'bold',
     fontSize: 20,
+    textAlign: 'left',
   },
   radioButton: {
     flexDirection: 'row',
   },
   space:{
-    marginLeft: 25,
+    marginLeft: 50,
   },
 });
