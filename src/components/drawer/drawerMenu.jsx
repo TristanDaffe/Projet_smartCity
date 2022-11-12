@@ -7,7 +7,6 @@ import Appointment from '../../screens/appointment';
 import Home from '../../screens/home';
 import Stats from '../../screens/stats';
 import Contact from '../../screens/contact';
-import CreateAccountTest from '../../screens/createAccountTest';
 
 import CustomDrawer from './customDrawer';
 
@@ -28,7 +27,7 @@ export default function DrawerMenu (props) {
             }}
             drawerContent={props => <CustomDrawer {...props} />} >
 
-            <Drawer.Screen name="Home" component={CreateAccountTest} 
+            <Drawer.Screen name="Home" component={Home} 
                 options={{
                     drawerIcon: ({color}) => (
                         <Ionicons name="home" color={color} size={24} />

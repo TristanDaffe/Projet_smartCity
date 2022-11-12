@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
-import RadioButton from '../components/RadioButton';
-import TopBarDrawer from '../components/topBarDrawer';
+import RadioButton from '../../components/RadioButton';
 
 export default function CreateAccountTest({navigation}) {
 
@@ -19,7 +18,6 @@ export default function CreateAccountTest({navigation}) {
 
   return (
     <View>
-      <TopBarDrawer onclick={navigation.toggleDrawer}/>
       <View style={styles.container}>
         <Text style={styles.paragraph}>Blood Type</Text>
         <View style={styles.radioButton}>
