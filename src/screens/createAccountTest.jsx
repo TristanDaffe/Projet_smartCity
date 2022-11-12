@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import RadioButton from '../components/RadioButton';
+import TextField from '../components/textField';
 
 export default function CreateAccountTest() {
 
@@ -19,6 +20,7 @@ export default function CreateAccountTest() {
 
   return (
     <View style={styles.container}>
+        <TextField></TextField>
       <Text style={styles.paragraph}>Blood Type</Text>
       <View style={styles.radioButton}>
         <View>
