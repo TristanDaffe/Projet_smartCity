@@ -1,2 +1,2 @@
 # Projet_mobile
-Nico en galère pour utiliser github
+Reagez dans la partie projet, y a un kanban pour les trucs à faire normalement
