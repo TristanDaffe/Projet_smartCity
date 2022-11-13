@@ -3,7 +3,7 @@ import { Text, View, StyleSheet, Image, Button } from 'react-native';
 import TextField from '../../components/textField';
 import TextPressable from '../../components/textPressable';
 
-export default function CreateAccountTest({navigation}) {
+export default function LoginAccountTest({navigation}) {
 
   return (
     <View>
