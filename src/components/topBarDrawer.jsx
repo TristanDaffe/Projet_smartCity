@@ -1,13 +1,13 @@
 import React from "react";
 import { Text, View, StyleSheet, Image, Pressable } from 'react-native';
 
-export default function hamburgerMenu (props) {   
+export default function TopBarDrawer (props) {   
     return (
         <View style={styles.container}>
             <View styles={styles.menu}>
                 <Pressable onPress={props.onclick}>
                     <Image style={styles.image} source={require('../images/menuHamburger.jpg')}/>
-                </Pressable>
+                </Pressable> 
             </View>
 
             <View style={styles.container}>
