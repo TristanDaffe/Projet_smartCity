@@ -9,8 +9,8 @@ import { setStatusBarStyle } from 'expo-status-bar';
 
 import DrawerMenu from './components/drawer/drawerMenu';
 import Account from './screens/account';
-import Login from './screens/Test/loginAccountTest';
-import Register from './screens/Test/createAccountTest';
+import Login from './screens/loginAccount';
+import Register from './screens/createAccount';
 
 const Stack = createNativeStackNavigator();
 

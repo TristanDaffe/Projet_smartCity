@@ -1,10 +1,16 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image, Button, Pressable } from 'react-native';
-import RadioButton from '../../components/RadioButton';
-import TextField from '../../components/textField';
+import RadioButton from '../components/RadioButton';
+import TextField from '../components/textField';
+import TopBar from '../components/topBar/topBar';
 
 export default function CreateAccountTest({navigation}) {
 
+  function createAccount() {
+    // creation du compte (api)
+  }
+
+  // temoporaire pour tester le bouton (viendra de la DB)
   const typeBlood = [
     { value: 'A', key: 'A'},
     { value: 'B', key: 'B'},
@@ -19,12 +25,9 @@ export default function CreateAccountTest({navigation}) {
 
   return (
     <View>
+      <TopBar />
       <View style={styles.container}>
-        <View style= {styles.lineAccount}>
-          <Text style= {styles.croixRougeText}>Croix Rouge   </Text>
-          <Image source={require('../../images/logo_croix_rouge.png')} style= {styles.imageCroixRouge}/>
-        </View>
-        <Image source={require('../../images/user_account.png')} style= {styles.image}/>
+        <Image source={require('../images/user_account.png')} style= {styles.image}/>
         <Text style={styles.title}>Email</Text>
           <TextField></TextField>
         <Text style={styles.title}>Last Name</Text>
@@ -49,14 +52,16 @@ export default function CreateAccountTest({navigation}) {
         <Text style={styles.title}>Password</Text>
           <TextField></TextField>
 
-          <View style= {styles.lineAccount}>
-            <Text style={styles.text}>Already have an account ?  </Text>
-          <View style= {styles.lineAccount}>
-          </View>
-            <Pressable>
-              <Text style={styles.textPress} onPress={() => navigation.navigate('Login')}>Login</Text>
-            </Pressable>
-          </View>
+        <Button title='Create account' color='red' onPress={createAccount}></Button>
+
+        <View style= {styles.lineAccount}>
+          <Text style={styles.text}>Already have an account ?  </Text>
+        <View style= {styles.lineAccount}>
+        </View>
+          <Pressable onPress={() => navigation.navigate('Login')}>
+            <Text style={styles.textPress}>Login</Text>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -76,6 +81,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     alignItems: 'center',
+    color: 'grey',
   },
   croixRougeText: {
     fontSize: 40,

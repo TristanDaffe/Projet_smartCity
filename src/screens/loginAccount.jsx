@@ -1,31 +1,37 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image, Button } from 'react-native';
-import TextField from '../../components/textField';
+import TextField from '../components/textField';
+
+import TopBar from '../components/topBar/topBar';
 
 export default function LoginAccountTest({navigation}) {
 
+  // fonction pour se connecter (à update quand api sera faite)
+  function login() {
+    navigation.navigate('DrawerMenu');
+  }
+
   return (
     <View>
+      <TopBar />
       <View style={styles.container}>
-        <View style= {styles.lineAccount}>
-          <Text style= {styles.croixRougeText}>Croix Rouge   </Text>
-          <Image source={require('../../images/logo_croix_rouge.png')} style= {styles.imageCroixRouge}/>
-        </View>
-        <Image source={require('../../images/user_account.png')} style= {styles.imageProfile}/>
+        <Image source={require('../images/user_account.png')} style= {styles.imageProfile}/>
         <Text style={styles.textGrey}>Welcome Back !</Text>
         <Text style={styles.title}>Login</Text>
           <TextField></TextField>
         <Text style={styles.title}>Password</Text>
           <TextField></TextField>
-        <Text style={styles.text}>Forgot Password ?</Text>
-        <Button title='Log in' color='red' onPress={() => navigation.navigate('DrawerMenu')}></Button>
+        {/*
+          en commentaire car sais pas comment faire (discuter de si y a)
+          <Text style={styles.text}>Forgot Password ?</Text> 
+        */}
+        <Button title='Log in' color='red' onPress={login}></Button>
         <View style= {styles.lineAccount}>
           <Text style= {styles.textGrey}>Don't have account ?  </Text>
           <Text onPress={() => navigation.navigate('Register')} style={styles.createAccountText}>create a new account</Text>
         </View>
       </View>
     </View>
-
   );
 }
 
