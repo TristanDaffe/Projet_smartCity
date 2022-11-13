@@ -10,6 +10,7 @@ import { setStatusBarStyle } from 'expo-status-bar';
 import DrawerMenu from './components/drawer/drawerMenu';
 import Account from './screens/account';
 import Login from './screens/Test/loginAccountTest';
+import Register from './screens/Test/createAccountTest';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ export default function App() {
         }}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="DrawerMenu" component={DrawerMenu} />
+          <Stack.Screen name="Register" component={Register} />
           <Stack.Screen name="Account" component={Account} />
         </Stack.Navigator>
       </NavigationContainer>
