@@ -1,4 +1,4 @@
-import { Button, TouchableOpacity, View, SafeAreaView, Text, Alert, Switch, StyleSheet, TextInput } from "react-native";
+import { Button, View} from "react-native";
 import { Root, Popup } from 'react-native-popup-confirm-toast'
 
 export default function confirmButton(props) {
