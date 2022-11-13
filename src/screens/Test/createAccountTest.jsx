@@ -20,6 +20,10 @@ export default function CreateAccountTest({navigation}) {
   return (
     <View>
       <View style={styles.container}>
+        <View style= {styles.lineAccount}>
+          <Text style= {styles.croixRougeText}>Croix Rouge   </Text>
+          <Image source={require('../../images/logo_croix_rouge.png')} style= {styles.imageCroixRouge}/>
+        </View>
         <Image source={require('../../images/user_account.png')} style= {styles.image}/>
         <Text style={styles.title}>Email</Text>
           <TextField></TextField>
@@ -50,7 +54,7 @@ export default function CreateAccountTest({navigation}) {
           <View style= {styles.lineAccount}>
           </View>
             <Pressable>
-              <Text style={styles.textPress}>Login</Text>
+              <Text style={styles.textPress} onPress={() => navigation.navigate('Login')}>Login</Text>
             </Pressable>
           </View>
       </View>
@@ -72,6 +76,17 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     alignItems: 'center',
+  },
+  croixRougeText: {
+    fontSize: 40,
+    textAlign: 'center',
+    fontWeight: 'bold',
+    marginBottom: 20,
+  },
+  imageCroixRouge:
+  {
+    height: 60,
+    width: 60,
   },
   radioButton: {
     flexDirection: 'row',
@@ -98,5 +113,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     color: 'red',
+    fontWeight: 'bold',
   }
 });
