@@ -1,2 +1,2 @@
 # Projet_mobile
-Bonjour c'est nouveau git est Suspect
+Reagez dans la partie projet, y a un kanban pour les trucs à faire normalement
