@@ -44,9 +44,10 @@ export default function CreateAccountTest({navigation}) {
         <Text style={styles.title}>Password</Text>
           <TextField></TextField>
           <Button title='Create Account' color='red'></Button>
-          <Text style={styles.text}>Already have an account ?
+          <View style= {styles.lineAccount}>
+            <Text style={styles.text}>Already have an account ?  </Text>
             <TextPressable text={"Login"}></TextPressable>
-          </Text>
+          </View>
       </View>
     </View>
 
@@ -83,5 +84,9 @@ const styles = StyleSheet.create({
     height: 25,
     width: 100,
   },
-
+  lineAccount: {
+    flexDirection: 'row',
+    marginTop: 20,
+    alignSelf: 'center',
+  },
 });
