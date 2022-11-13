@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import {  View, Text, StyleSheet  } from 'react-native';
 
-import TopBarDrawer from '../components/topBarDrawer';
+import TopBarDrawer from '../components/topBar/topBarDrawer';
 
 export default function Appointment ( {navigation} )  {   
     return (

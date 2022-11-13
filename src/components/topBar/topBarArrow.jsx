@@ -1,18 +1,18 @@
 import React from "react";
 import { Text, View, StyleSheet, Image, Pressable } from 'react-native';
 
-export default function TopBarDrawer (props) {   
+export default function TopBar (props) {   
     return (
         <View style={styles.container}>
             <View styles={styles.menu}>
                 <Pressable onPress={props.onclick}>
-                    <Image style={styles.image} source={require('../images/menuHamburger.jpg')}/>
-                </Pressable> 
+                    <Image style={styles.image} source={require('../../images/back_arrow.png')}/>
+                </Pressable>
             </View>
 
             <View style={styles.container}>
                 <Text style={styles.text}>Croix rouge  </Text>
-                <Image style={styles.image} source={require('../images/logo_croix_rouge.png')} />
+                <Image style={styles.image} source={require('../../images/logo_croix_rouge.png')} />
             </View>
             <View></View>
         </View>
