@@ -1,6 +1,8 @@
 import React from 'react';
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Image, Button } from 'react-native';
 import RadioButton from '../../components/RadioButton';
+import TextField from '../../components/textField';
+import TextPressable from '../../components/textPressable';
 
 export default function CreateAccountTest({navigation}) {
 
@@ -19,15 +21,32 @@ export default function CreateAccountTest({navigation}) {
   return (
     <View>
       <View style={styles.container}>
-        <Text style={styles.paragraph}>Blood Type</Text>
+        <Image source={require('../../images/user_account.png')} style= {styles.image}/>
+        <Text style={styles.title}>Email</Text>
+          <TextField></TextField>
+        <Text style={styles.title}>Last Name</Text>
+          <TextField></TextField>
+        <Text style={styles.title}>First Name</Text>
+          <TextField></TextField>
+        <Text style={styles.title}>Birth Date</Text>
+          <TextField placeHolder="DD/MM/YYYY" ></TextField>
+        <Text style={styles.title}>Blood Type</Text>
         <View style={styles.radioButton}>
           <View>
             <RadioButton data={typeBlood}/>
           </View>
-          <View style={styles.space}>
+          <View style={styles.spaceRadioButton}>
               <RadioButton data={rH}/>
           </View>
         </View>
+        <Text style={styles.title}>Login</Text>
+          <TextField></TextField>
+        <Text style={styles.title}>Password</Text>
+          <TextField></TextField>
+          <Button title='Create Account' color='red'></Button>
+          <Text style={styles.text}>Already have an account ?
+            <TextPressable text={"Login"}></TextPressable>
+          </Text>
       </View>
     </View>
 
@@ -39,15 +58,30 @@ const styles = StyleSheet.create({
     margin: 10,
     padding: 10,
   },
-  paragraph: {
+  title: {
     fontWeight: 'bold',
     fontSize: 20,
     textAlign: 'left',
   },
+  text: {
+    fontSize: 15,
+    textAlign: 'center',
+  },
   radioButton: {
     flexDirection: 'row',
   },
-  space:{
+  spaceRadioButton:{
     marginLeft: 50,
   },
+  image:{
+    height: 100,
+    width: 100,
+    alignSelf: 'center',
+  },
+  button:{
+    color: 'red',
+    height: 25,
+    width: 100,
+  },
+
 });

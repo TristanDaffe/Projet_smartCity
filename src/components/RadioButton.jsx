@@ -12,7 +12,7 @@ export default function RadioButton({ data })
           {data.map((item) => {
             return (
                 <Pressable
-                    style={ item.value === userOption ? styles.selected : styles.unselected}
+                    style={ item.value === userOption ? styles.selected : ""}
                     onPress={() => setUserOption(item.value)}
                     key= {item.key}
                     >     
