@@ -8,7 +8,7 @@ export default function LoginAccountTest({navigation}) {
 
   // fonction pour se connecter (à update quand api sera faite)
   function login() {
-    navigation.navigate('DrawerMenu');
+    navigation.navigate('AppStack');
   }
 
   return (

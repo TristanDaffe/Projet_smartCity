@@ -8,14 +8,18 @@ export default function CustomDrawer (props) {
     return (
         <View style={styles.container}>
 
-            <Pressable style={styles.content} onPress={() => props.navigation.navigate('Account')}>
-                <Image source={require('../../images/user_account.png')} style={styles.image} />
+            <Pressable style={styles.content} 
+                onPress={() => props.navigation.navigate('AppStack', { screen: 'Account' })}
+            >
+                <Image source={require('../images/user_account.png')} style={styles.image} />
                 <Text style={styles.text}>Account</Text>
             </Pressable>
 
             <DrawerContentScrollView {...props}>
                 <DrawerItemList {...props} />
             </DrawerContentScrollView>
+
+            
         </View>
 
     );

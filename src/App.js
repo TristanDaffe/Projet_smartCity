@@ -7,10 +7,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { setStatusBarStyle } from 'expo-status-bar';
 
-import DrawerMenu from './components/drawer/drawerMenu';
-import Account from './screens/account';
-import Login from './screens/loginAccount';
-import Register from './screens/createAccount';
+import AppStack from './routes/appStack';
+import LoginRegisterStack from './routes/loginRegisterStack';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,10 +23,8 @@ export default function App() {
           screenOptions={{ 
             headerShown: false,
         }}>
-          <Stack.Screen name="Login" component={Login} />
-          <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="DrawerMenu" component={DrawerMenu} />
-          <Stack.Screen name="Account" component={Account} />
+          <Stack.Screen name="LoginRegisterStack" component={LoginRegisterStack} />
+          <Stack.Screen name="AppStack" component={AppStack} />
         </Stack.Navigator>
       </NavigationContainer>
 
@@ -51,12 +47,4 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
   },
-  header: {
-    flex: 1,
-    height: Constants.statusBarHeight,
-  },
-  menu: {
-      position: 'absolute',
-      alignSelf: 'flex-start',
-  }
 });

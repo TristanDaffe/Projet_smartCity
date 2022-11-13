@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {  View, Text, StyleSheet  } from 'react-native';
 
 import TopBarDrawer from '../components/topBar/topBarDrawer';
-import Test from './Test/'
+import Test from './Test/TestTris'
 
 export default function Home ( {navigation} )  {   
     return (
