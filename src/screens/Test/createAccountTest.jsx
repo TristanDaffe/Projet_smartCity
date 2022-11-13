@@ -1,8 +1,7 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, Button } from 'react-native';
+import { Text, View, StyleSheet, Image, Button, Pressable } from 'react-native';
 import RadioButton from '../../components/RadioButton';
 import TextField from '../../components/textField';
-import TextPressable from '../../components/textPressable';
 
 export default function CreateAccountTest({navigation}) {
 
@@ -31,6 +30,7 @@ export default function CreateAccountTest({navigation}) {
         <Text style={styles.title}>Birth Date</Text>
           <TextField placeHolder="DD/MM/YYYY" ></TextField>
         <Text style={styles.title}>Blood Type</Text>
+
         <View style={styles.radioButton}>
           <View>
             <RadioButton data={typeBlood}/>
@@ -39,17 +39,22 @@ export default function CreateAccountTest({navigation}) {
               <RadioButton data={rH}/>
           </View>
         </View>
+
         <Text style={styles.title}>Login</Text>
           <TextField></TextField>
         <Text style={styles.title}>Password</Text>
           <TextField></TextField>
-          <Button title='Create Account' color='red'></Button>
-          <Text style={styles.text}>Already have an account ?
-            <TextPressable text={"Login"}></TextPressable>
-          </Text>
+
+          <Button title='Create Account' color='red'/>
+
+          <View style= {styles.lineAccount}>
+            <Text style={styles.text}>Already have an account ? </Text>
+            <Pressable>
+              <Text style={styles.textPress}>Login</Text>
+            </Pressable>
+          </View>
       </View>
     </View>
-
   );
 }
 
@@ -66,6 +71,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 15,
     textAlign: 'center',
+    alignItems: 'center',
   },
   radioButton: {
     flexDirection: 'row',
@@ -83,5 +89,15 @@ const styles = StyleSheet.create({
     height: 25,
     width: 100,
   },
+  lineAccount: {
+    flexDirection: 'row',
+    marginTop: 20,
+    alignSelf: 'center',
+  },
+  textPress: {
+    fontSize: 15,
+    textAlign: 'center',
+    color: 'red',
+  }
 
 });

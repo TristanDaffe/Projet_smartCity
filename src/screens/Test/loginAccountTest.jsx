@@ -14,7 +14,7 @@ export default function CreateAccountTest({navigation}) {
         <Text style={styles.title}>Password</Text>
           <TextField></TextField>
         <Text style={styles.text}>Forgot Password ?</Text>
-        <Button title='Log in' color='red'></Button>
+        <Button title='Log in' color='red' />
         <View style= {styles.lineAccount}>
           <Text style= {styles.textAccount}>Don't have account ?  </Text>
           <TextPressable text={"create a new account"}></TextPressable>
