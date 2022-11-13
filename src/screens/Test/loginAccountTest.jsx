@@ -1,7 +1,6 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image, Button } from 'react-native';
 import TextField from '../../components/textField';
-import TextPressable from '../../components/textPressable';
 
 export default function LoginAccountTest({navigation}) {
 
@@ -13,7 +12,7 @@ export default function LoginAccountTest({navigation}) {
           <Image source={require('../../images/logo_croix_rouge.png')} style= {styles.imageCroixRouge}/>
         </View>
         <Image source={require('../../images/user_account.png')} style= {styles.imageProfile}/>
-        <Text style={styles.welcomeText}>Welcome Back !</Text>
+        <Text style={styles.textGrey}>Welcome Back !</Text>
         <Text style={styles.title}>Login</Text>
           <TextField></TextField>
         <Text style={styles.title}>Password</Text>
@@ -21,8 +20,8 @@ export default function LoginAccountTest({navigation}) {
         <Text style={styles.text}>Forgot Password ?</Text>
         <Button title='Log in' color='red' onPress={() => navigation.navigate('DrawerMenu')}></Button>
         <View style= {styles.lineAccount}>
-          <Text style= {styles.textAccount}>Don't have account ?  </Text>
-          <TextPressable text={"create a new account"}></TextPressable>
+          <Text style= {styles.textGrey}>Don't have account ?  </Text>
+          <Text onPress={() => navigation.navigate('Register')} style={styles.createAccountText}>create a new account</Text>
         </View>
       </View>
     </View>
@@ -53,12 +52,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'center',
   },
-  textAccount: {
-    fontSize: 15,
-    textAlign: 'center',
-    color: 'grey',
-  },
-  welcomeText: {
+  textGrey: {
     fontSize: 15,
     textAlign: 'center',
     color: 'grey',
@@ -79,5 +73,9 @@ const styles = StyleSheet.create({
     width: 100,
     alignSelf: 'center',
   },
+  createAccountText:{
+    color:'red',
+    fontWeight: 'bold',
+  }
 
 });
