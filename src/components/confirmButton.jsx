@@ -33,7 +33,6 @@ export default function confirmButton(props) {
                     }
                 />
             </View>
-
         </Root>
     );
 }

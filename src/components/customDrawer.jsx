@@ -1,10 +1,25 @@
 import { DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import React from "react";
-import { View, StyleSheet, Image, Text, Pressable } from 'react-native';
+import { View, StyleSheet, Image, Text, Pressable, Button, Alert } from 'react-native';
 
+import NotificationButton from './notificationButton'
 // mise en page du menu drawer de gauche
 
 export default function CustomDrawer (props) {
+
+    function disconnectButton(){
+        // ajouter la suppression du user actuel
+        Alert.alert('Disconnect ?', '', [
+            {text: 'Yes', onPress: () => disconnect()},
+            {text: 'No'},
+          ]);
+    }
+
+    function disconnect(){
+        // ajouter la suppression du user actuel
+        props.navigation.navigate('Login')
+    }
+
     return (
         <View style={styles.container}>
 
@@ -17,9 +32,19 @@ export default function CustomDrawer (props) {
 
             <DrawerContentScrollView {...props}>
                 <DrawerItemList {...props} />
+                
             </DrawerContentScrollView>
 
+            <View style={styles.middleSection}>
+                <NotificationButton />
+            </View>
+
             
+            <Pressable onPress={disconnectButton}>
+                <View style={styles.disconnectButton}>
+                    <Text style={styles.disconnectText}> Disconnect </Text>
+                </View>
+            </Pressable>
         </View>
 
     );
@@ -46,5 +71,22 @@ const styles = StyleSheet.create({
         color: 'white',
         alignSelf: 'center',
         marginLeft: 10,
+    },
+    middleSection: {
+        alignContent: 'center',
+        paddingBottom: 100,
+    },
+    disconnectText: {
+        fontSize: 15,
+        fontWeight: 'bold',
+        color: 'white',
+        alignSelf: 'center',
+        marginLeft: 10,
+    },
+    disconnectButton: {
+        backgroundColor: 'red',
+        margin: 20,
+        padding: 10,
+        borderRadius: 10,
     }
 });    
