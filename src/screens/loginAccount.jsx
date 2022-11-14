@@ -22,7 +22,7 @@ export default function LoginAccountTest({navigation}) {
           <TextField></TextField>
         <Separator/>
         <Text style={styles.title}>Password</Text>
-          <TextField></TextField>
+          <TextField password={true} secureTextEntry={true}></TextField>
         {/*
           en commentaire car sais pas comment faire (discuter de si y a)
           <Text style={styles.text}>Forgot Password ?</Text> 

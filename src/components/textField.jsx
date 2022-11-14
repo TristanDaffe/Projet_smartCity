@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { TextInput, AppRegistry, Switch,StyleSheet, Text, View } from "react-native";
 
-export default function textField({ placeHolder }) {
+export default function textField({ placeHolder, keyboardType, secureTextEntry }) {
   const [number, onChangeNumber] = React.useState(null);
   return (
     <TextInput
@@ -11,14 +11,15 @@ export default function textField({ placeHolder }) {
       value={number}
       placeholder = {placeHolder}
       // ça c'est pour changer le type de clavier
-      kkeyboardType="default"
+      keyboardType={keyboardType}
+      secureTextEntry={secureTextEntry}
     />
   );
 }
 
 const styles = StyleSheet.create({
   textField: {
-    height: 40,
+    height: 45,
     fontSize: 15,
     width: 350,
     marginBottom : 5,

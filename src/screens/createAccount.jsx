@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, Button, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Image, Button, Pressable, ScrollView, KeyboardAvoidingView} from 'react-native';
 import RadioButton from '../components/RadioButton';
 import TextField from '../components/textField';
 import TopBar from '../components/topBar/topBar';
@@ -24,18 +24,22 @@ export default function CreateAccountTest({navigation}) {
   ];
 
   return (
-    <View>
+    <KeyboardAvoidingView
+    behavior={Platform.OS === "ios" ? "padding" : null}
+    keyboardVerticalOffset={0}>
+
+    <ScrollView>
       <TopBar />
       <View style={styles.container}>
         <Image source={require('../images/user_account.png')} style= {styles.image}/>
         <Text style={styles.title}>Email</Text>
-          <TextField></TextField>
+          <TextField  keyboardType={'email-address'}></TextField>
         <Text style={styles.title}>Last Name</Text>
           <TextField></TextField>
         <Text style={styles.title}>First Name</Text>
           <TextField></TextField>
         <Text style={styles.title}>Birth Date</Text>
-          <TextField placeHolder="DD/MM/YYYY" ></TextField>
+          <TextField placeHolder="DD/MM/YYYY"  keyboardType={'numbers-and-punctuation'}></TextField>
         <Text style={styles.title}>Blood Type</Text>
 
         <View style={styles.radioButton}>
@@ -50,7 +54,7 @@ export default function CreateAccountTest({navigation}) {
         <Text style={styles.title}>Login</Text>
           <TextField></TextField>
         <Text style={styles.title}>Password</Text>
-          <TextField></TextField>
+          <TextField secureTextEntry={true}></TextField>
 
         <Button title='Create account' color='red' onPress={createAccount}></Button>
 
@@ -63,7 +67,9 @@ export default function CreateAccountTest({navigation}) {
           </Pressable>
         </View>
       </View>
-    </View>
+    </ScrollView>
+
+    </KeyboardAvoidingView>
   );
 }
 
