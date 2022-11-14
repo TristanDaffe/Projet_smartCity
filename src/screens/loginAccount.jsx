@@ -3,7 +3,8 @@ import { Text, View, StyleSheet, Image, Button } from 'react-native';
 import TextField from '../components/textField';
 
 import TopBar from '../components/topBar/topBar';
-
+import Separator from '../components/separator';
+789+5
 export default function LoginAccountTest({navigation}) {
 
   // fonction pour se connecter (à update quand api sera faite)
@@ -19,6 +20,7 @@ export default function LoginAccountTest({navigation}) {
         <Text style={styles.textGrey}>Welcome Back !</Text>
         <Text style={styles.title}>Login</Text>
           <TextField></TextField>
+        <Separator/>
         <Text style={styles.title}>Password</Text>
           <TextField></TextField>
         {/*

@@ -18,7 +18,6 @@ export default function textField({ placeHolder }) {
 
 const styles = StyleSheet.create({
   textField: {
-    zIndex: 999,
     height: 40,
     fontSize: 15,
     width: 350,
