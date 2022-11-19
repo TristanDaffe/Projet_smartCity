@@ -4,13 +4,8 @@ import TextField from '../components/textField';
 
 import TopBar from '../components/topBar/topBar';
 import Separator from '../components/separator';
-789+5
-export default function LoginAccountTest({navigation}) {
 
-  // fonction pour se connecter (à update quand api sera faite)
-  function login() {
-    navigation.navigate('AppStack');
-  }
+export default function LoginAccountTest({navigation}) {
 
   return (
     <View>
@@ -27,7 +22,7 @@ export default function LoginAccountTest({navigation}) {
           en commentaire car sais pas comment faire (discuter de si y a)
           <Text style={styles.text}>Forgot Password ?</Text> 
         */}
-        <Button title='Log in' color='red' onPress={login}></Button>
+        <Button title='Log in' color='red' onPress={() => navigation.navigate('AppStack')}></Button>
         <View style= {styles.lineAccount}>
           <Text style= {styles.textGrey}>Don't have account ?  </Text>
           <Text onPress={() => navigation.navigate('Register')} style={styles.createAccountText}>create a new account</Text>

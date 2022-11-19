@@ -1,14 +1,23 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image, Button, Pressable, ScrollView, KeyboardAvoidingView} from 'react-native';
+
+import { TextInput } from 'react-native-gesture-handler';
 import RadioButton from '../components/RadioButton';
-import TextField from '../components/textField';
 import TopBar from '../components/topBar/topBar';
+
+import { AuthContext } from '../context/authContext';
 
 export default function CreateAccountTest({navigation}) {
 
-  function createAccount() {
-    // creation du compte (api)
-  }
+  const [email, setEmail] = React.useState('');
+  const [lastName, setLastName] = React.useState('');
+  const [firstName, setFirstName] = React.useState('');
+  const [birthdate, setBirthdate] = React.useState('');
+  const [bloodType, setBloodType] = React.useState('');
+  const [login, setLogin] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const {register} = React.useContext(AuthContext);
 
   // temoporaire pour tester le bouton (viendra de la DB)
   const typeBlood = [
@@ -32,16 +41,37 @@ export default function CreateAccountTest({navigation}) {
       <TopBar />
       <View style={styles.container}>
         <Image source={require('../images/user_account.png')} style= {styles.image}/>
-        <Text style={styles.title}>Email</Text>
-          <TextField  keyboardType={'email-address'}></TextField>
-        <Text style={styles.title}>Last Name</Text>
-          <TextField></TextField>
-        <Text style={styles.title}>First Name</Text>
-          <TextField></TextField>
-        <Text style={styles.title}>Birth Date</Text>
-          <TextField placeHolder="DD/MM/YYYY"  keyboardType={'numbers-and-punctuation'}></TextField>
-        <Text style={styles.title}>Blood Type</Text>
 
+        <Text style={styles.title}>Email</Text>
+          <TextInput 
+            style={styles.textField}  
+            keyboardType={'email-address'} 
+            onChangeText={text => setEmail(text)}>
+          </TextInput>
+
+        <Text style={styles.title}>Last Name</Text>
+          <TextInput 
+            style={styles.textField}
+            onChangeText={text => setLastName(text)}
+          >
+          </TextInput>
+        <Text style={styles.title}>First Name</Text>
+          <TextInput 
+            style={styles.textField}
+            onChangeText={text => setFirstName(text)}
+          >
+          </TextInput>
+
+        <Text style={styles.title}>Birth Date</Text>
+          <TextInput 
+            style={styles.textField}
+            placeHolder="DD/MM/YYYY"
+            keyboardType={'numbers-and-punctuation'}
+            onChangeText={text => setBirthdate(text)}
+          >
+          </TextInput>
+
+        <Text style={styles.title}>Blood Type</Text>
         <View style={styles.radioButton}>
           <View>
             <RadioButton data={typeBlood}/>
@@ -52,11 +82,22 @@ export default function CreateAccountTest({navigation}) {
         </View>
 
         <Text style={styles.title}>Login</Text>
-          <TextField></TextField>
+          <TextInput 
+            style={styles.textField}
+            onChangeText={text => setLogin(text)}  
+          >
+          </TextInput>
         <Text style={styles.title}>Password</Text>
-          <TextField secureTextEntry={true}></TextField>
+          <TextInput 
+            style={styles.textField}
+            secureTextEntry={true}
+            onChangeText={text => setPassword(text)}
+            >
+          </TextInput>
 
-        <Button title='Create account' color='red' onPress={createAccount}></Button>
+        <Button title='Create account' color='red' 
+          onPress={() => register(email, lastName, firstName, birthdate, bloodType, login, password)}>
+        </Button>
 
         <View style= {styles.lineAccount}>
           <Text style={styles.text}>Already have an account ?  </Text>
@@ -126,5 +167,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: 'red',
     fontWeight: 'bold',
-  }
+  },
+  textField: {
+    height: 45,
+    fontSize: 15,
+    width: 350,
+    marginBottom : 5,
+    marginTop: 5,
+    borderWidth: 1,
+    padding: 10,
+    borderColor: "red",
+    borderWidth: 3,
+  },
 });
