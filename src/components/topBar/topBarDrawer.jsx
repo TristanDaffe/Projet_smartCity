@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, Image, Pressable, Animated, Easing } from 'react-native';
+import Constants from 'expo-constants';
 
 export default function TopBarDrawer (props) {   
     let rotateValueHolder = new Animated.Value(0);
@@ -8,7 +9,7 @@ export default function TopBarDrawer (props) {
         rotateValueHolder.setValue(0)
         Animated.timing(rotateValueHolder, {
             totValue: 1,
-            duration: 10000,
+            duration: 500,
             easing: Easing.linear,
             useNativeDriver: true
         }).start( () => startImageRotationFunction())};
@@ -55,6 +56,7 @@ const styles = StyleSheet.create({
             height: 2,
         },
         shadowOpacity: 0.5,
+
     },
     text: {
         fontWeight: 'bold',
