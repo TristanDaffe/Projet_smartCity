@@ -2,21 +2,11 @@ import React, { useState } from "react";
 import {  View, ScrollView, Text, StyleSheet, Image  } from 'react-native';
 
 import TopBar from '../components/topBar/topBarArrow';
+import { AuthContext } from "../context/authContext";
 
 export default function Account ( {navigation} )  {   
 
-  const user= {
-    name: 'John Doe',
-    email: 'test@truc.com',
-    birthday: '01/01/2000',
-    login: 'johnDoe',
-    password: '123456',
-    bloodType: 'O+',
-
-    timeBeforeBloodDonation: '3 months',
-    timeBeforePlasmaDonation: '2 weeks',
-    timeBeforePlateletDonation: '0',
-  }
+  const {user} = React.useContext(AuthContext);
 
   function timeBeforeDonation(time){
     if(time === '0')
@@ -35,7 +25,7 @@ export default function Account ( {navigation} )  {
           <View>
             <Text style={styles.sectionTitle}>Name </Text>
             <View style={styles.section}>
-              <Text style={styles.sectionText}>{user.name}</Text>
+              <Text style={styles.sectionText}>{user.firstName} {user.lastName}</Text>
             </View>
           </View>
           <View>

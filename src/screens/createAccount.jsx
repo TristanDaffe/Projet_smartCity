@@ -1,7 +1,8 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, Button, Pressable, ScrollView, KeyboardAvoidingView} from 'react-native';
+import { Text, View, StyleSheet, Image, Button, Pressable, ScrollView, KeyboardAvoidingView, ActivityIndicator} from 'react-native';
 
 import { TextInput } from 'react-native-gesture-handler';
+import Spinner from 'react-native-loading-spinner-overlay';
 import RadioButton from '../components/RadioButton';
 import TopBar from '../components/topBar/topBar';
 
@@ -17,7 +18,7 @@ export default function CreateAccountTest({navigation}) {
   const [login, setLogin] = React.useState('');
   const [password, setPassword] = React.useState('');
 
-  const {register} = React.useContext(AuthContext);
+  const {isLoading, register} = React.useContext(AuthContext);
 
   // temoporaire pour tester le bouton (viendra de la DB)
   const typeBlood = [
@@ -40,6 +41,8 @@ export default function CreateAccountTest({navigation}) {
     <ScrollView>
       <TopBar />
       <View style={styles.container}>
+        {/* spinner pour le temps de chargement lors de la requête à l'api */}
+        <Spinner visible={isLoading}/>
         <Image source={require('../images/user_account.png')} style= {styles.image}/>
 
         <Text style={styles.title}>Email</Text>
@@ -96,7 +99,9 @@ export default function CreateAccountTest({navigation}) {
           </TextInput>
 
         <Button title='Create account' color='red' 
-          onPress={() => register(email, lastName, firstName, birthdate, bloodType, login, password)}>
+          onPress={() => 
+            register(email, lastName, firstName, birthdate, bloodType, login, password)
+          }>
         </Button>
 
         <View style= {styles.lineAccount}>

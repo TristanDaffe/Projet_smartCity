@@ -1,11 +1,17 @@
 import React from 'react';
 import { Text, View, StyleSheet, Image, Button } from 'react-native';
-import TextField from '../components/textField';
 
 import TopBar from '../components/topBar/topBar';
 import Separator from '../components/separator';
 
+import { AuthContext } from '../context/authContext';
+import { TextInput } from 'react-native-gesture-handler';
+
 export default function LoginAccountTest({navigation}) {
+  const [loginUser, setloginUser] = React.useState('');
+  const [password, setPassword] = React.useState('');
+
+  const {isLoading, login} = React.useContext(AuthContext);
 
   return (
     <View>
@@ -14,18 +20,36 @@ export default function LoginAccountTest({navigation}) {
         <Image source={require('../images/user_account.png')} style= {styles.imageProfile}/>
         <Text style={styles.textGrey}>Welcome Back !</Text>
         <Text style={styles.title}>Login</Text>
-          <TextField></TextField>
+          <TextInput 
+            style={styles.textField}
+            onChangeText={text => setloginUser(text)}
+          >
+          </TextInput>
         <Separator/>
         <Text style={styles.title}>Password</Text>
-          <TextField password={true} secureTextEntry={true}></TextField>
+          <TextInput 
+            style={styles.textField}
+            password={true} 
+            secureTextEntry={true}
+            onChangeText={text => setPassword(text)}
+          >
+          </TextInput>
         {/*
           en commentaire car sais pas comment faire (discuter de si y a)
           <Text style={styles.text}>Forgot Password ?</Text> 
         */}
-        <Button title='Log in' color='red' onPress={() => navigation.navigate('AppStack')}></Button>
+        <Button 
+          title='Log in' 
+          color='red' 
+          onPress={() => login(loginUser, password)}></Button>
         <View style= {styles.lineAccount}>
           <Text style= {styles.textGrey}>Don't have account ?  </Text>
-          <Text onPress={() => navigation.navigate('Register')} style={styles.createAccountText}>create a new account</Text>
+          <Text 
+            onPress={() => navigation.navigate('Register')} 
+            style={styles.createAccountText}
+            >
+            create a new account
+          </Text>
         </View>
       </View>
     </View>
@@ -79,6 +103,16 @@ const styles = StyleSheet.create({
   createAccountText:{
     color:'red',
     fontWeight: 'bold',
-  }
-
+  },
+  textField: {
+    height: 45,
+    fontSize: 15,
+    width: 350,
+    marginBottom : 5,
+    marginTop: 5,
+    borderWidth: 1,
+    padding: 10,
+    borderColor: "red",
+    borderWidth: 3,
+  },
 });
