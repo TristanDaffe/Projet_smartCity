@@ -3,21 +3,18 @@ import React from "react";
 import { View, StyleSheet, Image, Text, Pressable, Button, Alert } from 'react-native';
 
 import NotificationButton from './notificationButton'
-// mise en page du menu drawer de gauche
+import { AuthContext } from '../context/authContext';
 
+// mise en page du menu drawer de gauche
 export default function CustomDrawer (props) {
+    const { logout } = React.useContext(AuthContext);
 
     function disconnectButton(){
         // ajouter la suppression du user actuel
         Alert.alert('Disconnect ?', '', [
-            {text: 'Yes', onPress: () => disconnect()},
+            {text: 'Yes', onPress: () => logout()},
             {text: 'No'},
           ]);
-    }
-
-    function disconnect(){
-        // ajouter la suppression du user actuel
-        props.navigation.navigate('Login')
     }
 
     return (

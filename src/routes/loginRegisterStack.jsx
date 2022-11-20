@@ -2,8 +2,7 @@ import 'react-native-gesture-handler';
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Login from '../screens/loginAccount';
-import Register from '../screens/createAccount';
+
 
 const Stack = createNativeStackNavigator();
 // screens pour se connecter et créer un compte
