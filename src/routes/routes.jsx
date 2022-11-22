@@ -17,7 +17,7 @@ export default function Routes() {
     <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false,}}>
           {/* le gestion des écrans se fait via si un user est login ou pas */}
-          {user.login ? (
+          {user.id ? (
             <>
             {/* si user login alors on affiche le drawer */}
               <Stack.Screen name="AppStack" component={AppStack} />

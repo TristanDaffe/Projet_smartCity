@@ -183,5 +183,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderColor: "red",
     borderWidth: 3,
+    borderRadius: 5,
   },
 });

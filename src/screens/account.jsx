@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {  View, ScrollView, Text, StyleSheet, Image  } from 'react-native';
 
 import TopBar from '../components/topBar/topBarArrow';
@@ -56,7 +56,7 @@ export default function Account ( {navigation} )  {
 {/* Section du mot de passe*/}
         <Text style={styles.sectionTitle}>Password</Text>
         <View style={styles.section}>
-          <Text style={styles.sectionText} >{user.password}</Text>
+          <Text style={styles.sectionText}>{user.password}</Text>
         </View>
 
 {/* Section du temps avant la prochaine donation*/}

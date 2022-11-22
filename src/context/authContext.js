@@ -64,27 +64,26 @@ console.log(err);
 console.log('user test : ', err);
 
 // version de test sans requête à l'API
-            const userTest = {
-                firstName: 'John',
-                lastName: 'Doe',
-                email: 'test@truc.com',
-                birthday: '01/01/2000',
-                login: 'johnDoe',
-                password: '123456',
-                bloodType: 'O+',
-        
-                timeBeforeBloodDonation: '3 months',
-                timeBeforePlasmaDonation: '2 weeks',
-                timeBeforePlateletDonation: '0',
-            };
-            setUser(userTest);
-            AsyncStorage.setItem('user', JSON.stringify(userTest));
+const userTest = {
+    id: 1,
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'test@truc.com',
+    birthday: '01/01/2000',
+    login: 'johnDoe',
+    password: '123456',
+    bloodType: 'O+',
+
+    timeBeforeBloodDonation: '3 months',
+    timeBeforePlasmaDonation: '2 weeks',
+    timeBeforePlateletDonation: '0',
+};
+setUser(userTest);
+AsyncStorage.setItem('user', JSON.stringify(userTest));
         })
         .finally( () =>{
             setIsLoading(false);
         });
-
-
     }
 
     const logout = () => {

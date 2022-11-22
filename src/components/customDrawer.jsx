@@ -7,7 +7,7 @@ import { AuthContext } from '../context/authContext';
 
 // mise en page du menu drawer de gauche
 export default function CustomDrawer (props) {
-    const { logout } = React.useContext(AuthContext);
+    const { user, logout } = React.useContext(AuthContext);
 
     function disconnectButton(){
         // ajouter la suppression du user actuel
@@ -24,7 +24,7 @@ export default function CustomDrawer (props) {
                 onPress={() => props.navigation.navigate('AppStack', { screen: 'Account' })}
             >
                 <Image source={require('../images/user_account.png')} style={styles.image} />
-                <Text style={styles.text}>Account</Text>
+                <Text style={styles.text}>{user.firstName} {user.lastName}</Text>
             </Pressable>
 
             <DrawerContentScrollView {...props}>
