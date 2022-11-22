@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import { TextInput, AppRegistry, Switch,StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { TextInput, StyleSheet } from "react-native";
 
 export default function textField({ placeHolder, keyboardType, secureTextEntry }) {
   const [number, onChangeNumber] = React.useState(null);

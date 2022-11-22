@@ -1,8 +1,8 @@
 import React from "react";
-import { Text, View, StyleSheet, Pressable, Animated, Easing } from 'react-native';
+import { Text, View, StyleSheet, Image, Pressable, Animated, Easing } from 'react-native';
 import Constants from 'expo-constants';
 
-export default function TopBar (props) {   
+export default function TopBar (props) { 
     let rotateValueHolder = new Animated.Value(0);
     
     const startImageRotationFunction = () => {
@@ -21,6 +21,12 @@ export default function TopBar (props) {
 
     return (
         <View style={styles.container}>
+            <View styles={styles.menu}>
+                <Pressable onPress={props.onclick}>
+                    <Image style={styles.image} source={require('../../images/back_arrow.png')}/>
+                </Pressable>
+            </View>
+
             <View style={styles.container}>
                 <Text style={styles.text}>Croix rouge  </Text>
                 <Pressable onPress={startImageRotationFunction}>
@@ -30,6 +36,7 @@ export default function TopBar (props) {
                 />
                 </Pressable>
             </View>
+            <View></View>
         </View>
     );
 };
@@ -41,8 +48,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'white',
         alignItems: 'flex-start',
         alignItems: 'center',
+        justifyContent: 'space-between',
         textAlign: 'center',
-        justifyContent: 'center',
 
         shadowOffset: {
             width: 0,
@@ -58,4 +65,8 @@ const styles = StyleSheet.create({
         width: 50,
         height: 50,
     },
+    menu: {
+        position: 'absolute',
+        alignSelf: 'flex-start',
+    }
 });
