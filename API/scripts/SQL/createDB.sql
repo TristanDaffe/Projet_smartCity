@@ -1,37 +1,35 @@
-DROP TABLE IF EXISTS opening_day;
+DROP TABLE IF EXISTS opening_day CASCADE;
 CREATE TABLE opening_day(
-    id int AUTO_INCREMENT primary key,
+    id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     day_label varchar(50) not null,
     opening_time time not null,
-    closing_time time not null,
-
-    constraint opening_time < closing_time
+    closing_time time not null CHECK (opening_time < closing_time)
 );
 
-DROP TABLE IF EXISTS locality;
+DROP TABLE IF EXISTS locality CASCADE;
 CREATE TABLE locality(
-    id int AUTO_INCREMENT primary key,
+    id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name varchar(50) not null,
     postal_code int not null
 );
 
-DROP TABLE IF EXISTS blood_type;
+DROP TABLE IF EXISTS blood_type CASCADE;
 CREATE TABLE blood_type(
-    id int AUTO_INCREMENT primary key,
+    id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     type varchar(50) not null,
     rhesus varchar(1) not null,
     check (rhesus in ('+','-'))
 );
 
-DROP TABLE IF EXISTS donation_center;
+DROP TABLE IF EXISTS donation_center CASCADE;
 CREATE TABLE donation_center(
-    id int AUTO_INCREMENT primary key,
+    id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name varchar(50) not null,
     phone_number varchar(50) not null,
     check(phone_number LIKE'04__/%'),
     email_address varchar(50),
     check(email_address LIKE '%@%.%'),
-    fax varchar(14),
+    fax varchar(15),
     check(fax LIKE'+32 % %'),
 
     street_name varchar(50) not null,
@@ -40,7 +38,7 @@ CREATE TABLE donation_center(
         foreign key (locality) references locality(id)
 );
 
-DROP TABLE IF EXISTS open_day;
+DROP TABLE IF EXISTS open_day CASCADE;
 CREATE TABLE open_day(
     center_id int not null,
         foreign key (center_id) references donation_center(id),
@@ -49,7 +47,7 @@ CREATE TABLE open_day(
     primary key (center_id,day_id)
 );
 
-DROP TABLE IF EXISTS donation_available;
+DROP TABLE IF EXISTS donation_available CASCADE;
 CREATE TABLE donation_available(
     center_id int not null,
         foreign key (center_id) references donation_center(id),
@@ -58,26 +56,26 @@ CREATE TABLE donation_available(
     primary key (center_id,blood_type_id)
 );
 
-DROP TABLE IF EXISTS donation_type;
+DROP TABLE IF EXISTS donation_type CASCADE;
 CREATE TABLE donation_type(
-    id int AUTO_INCREMENT primary key,
+    id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name varchar(50) not null unique,
-    time_of_donation time not null,
+    time_of_donation time not null
 );
 
-DROP TABLE IF EXISTS time_between_donation;
+DROP TABLE IF EXISTS time_between_donation CASCADE;
 CREATE TABLE time_between_donation(
     first_donation_type_id int not null,
         foreign key (first_donation_type_id) references donation_type(id),
     next_donation_type_id int not null,
         foreign key (next_donation_type_id) references donation_type(id),
-    interval date not null,
+    interval interval not null,
     primary key (first_donation_type_id,next_donation_type_id)
 );
 
-DROP TABLE IF EXISTS user_account:
+DROP TABLE IF EXISTS user_account CASCADE;
 CREATE TABLE user_account(
-    id int AUTO_INCREMENT primary key,
+    id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     first_name varchar(50) not null,
     last_name varchar(50) not null,
     birthday date not null,
@@ -86,23 +84,19 @@ CREATE TABLE user_account(
     login varchar(50) not null unique,
     password varchar(50) not null,
     blood_type int not null,
-        foreign key (blood_type) references blood_type(id),
-)
+        foreign key (blood_type) references blood_type(id)
+);
 
-DROP TABLE IF EXISTS donation;
+DROP TABLE IF EXISTS donation CASCADE;
 CREATE TABLE donation(
-    id int AUTO_INCREMENT primary key,
+    id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     date date not null,
     user_id int not null,
         foreign key (user_id) references user_account(id),
     donation_type_id int not null,
         foreign key (donation_type_id) references donation_type(id),
     donation_center_id int not null,
-        foreign key (donation_center_id) references donation_center(id),
-    
-    check (date > (select date from donation where user_id = user_id order by date desc limit 1) 
-        + (select interval from time_between_donation 
-        where  next_donation_type_id = donation_type_id and first_donation_type_id = (select donation_type_id from donation where user_id = user_id order by date desc limit 1)))
+        foreign key (donation_center_id) references donation_center(id)    
 );
 
 /* Insert */
@@ -131,15 +125,15 @@ INSERT INTO donation_type(name, time_of_donation) VALUES
 ('Platelets', '01:30:00');
 
 INSERT INTO time_between_donation(first_donation_type_id, next_donation_type_id, interval) VALUES
-(1, 1, '00-03-00'),
-(1, 2, '00-00-14'),
-(1, 3, '00-00-28'),
-(2, 1, '00-00-14'),
-(2, 2, '00-00-14'),
-(2, 3, '00-00-14'),
-(3, 1, '00-00-28'),
-(3, 2, '00-00-14'),
-(3, 3, '00-00-28');
+(1, 1, '3 month'),
+(1, 2, '2 week'),
+(1, 3, '4 week'),
+(2, 1, '2 week'),
+(2, 2, '2 week'),
+(2, 3, '2 week'),
+(3, 1, '3 week'),
+(3, 2, '2 week'),
+(3, 3, '3 week');
 
 INSERT INTO locality(name, postal_code) VALUES
 ('Namur', 5000),
@@ -151,12 +145,12 @@ INSERT INTO locality(name, postal_code) VALUES
 ('Gembloux', 5030);
 
 INSERT INTO user_account(first_name, last_name, birthday, email_address, login, password, blood_type) VALUES
-('John', 'Doe', '1990-01-01', 'john.doe@gmail.com', johnDoeLeBoss, '1234', 1),
-('Jane', 'Doe', '1990-01-01', 'jane.doe@gmail.com', janeDoeLaBoss, '1234', 2),
-('John', 'Smith', '1990-01-01', 'john.smith@gmail.com', johnSmithLeBoss, '1234', 3);
+('John', 'Doe', '1990-01-01', 'john.doe@gmail.com', 'johnDoeLeBoss', '1234', 1),
+('Jane', 'Doe', '1990-01-01', 'jane.doe@gmail.com', 'janeDoeLaBoss', '1234', 2),
+('John', 'Smith', '1990-01-01', 'john.smith@gmail.com', 'johnSmithLeBoss', '1234', 3);
 
 Insert into donation_center(name, phone_number, email_address, fax, street_name, street_number, locality) VALUES
-('Namur', '04/123.45.67', 'caca@caca.lol', '+32 4 123 45 67', 'Rue de la Paix', 1, 1);
+('Namur', '0495/123.45.67', 'caca@caca.lol', '+32 4 123 45 67', 'Rue de la Paix', 1, 1);
 
 Insert into open_day(center_id, day_id) VALUES
 (1, 1),
