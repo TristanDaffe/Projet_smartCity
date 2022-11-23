@@ -6,6 +6,7 @@ import Separator from '../components/separator';
 
 import { AuthContext } from '../context/authContext';
 import { TextInput } from 'react-native-gesture-handler';
+import Spinner from 'react-native-loading-spinner-overlay/lib';
 
 export default function LoginAccountTest({navigation}) {
   const [loginUser, setloginUser] = React.useState('');
@@ -16,6 +17,7 @@ export default function LoginAccountTest({navigation}) {
   return (
     <View>
       <TopBar />
+      <Spinner visible={isLoading}/>
       <View style={styles.container}>
         <Image source={require('../images/user_account.png')} style= {styles.imageProfile}/>
         <Text style={styles.textGrey}>Welcome Back !</Text>
