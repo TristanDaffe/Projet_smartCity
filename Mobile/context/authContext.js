@@ -1,6 +1,7 @@
 import React, {createContext, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {Base_URL} from "../config";
+import { Alert } from "react-native";
 
 export const AuthContext = createContext();
 // https://youtu.be/kXVJYXd3C8k
@@ -27,14 +28,18 @@ export const AuthProvider = ({children}) => {
             })
         })
         .then( res => {
-            let userInfos = res.json();
-            setUser(userInfos);
-            AsyncStorage.setItem('user', JSON.stringify(userInfos));            
-console.log(userInfos);
+            if(res.ok){
+                let userInfos = res.json();
+                setUser(userInfos);
+                AsyncStorage.setItem('user', JSON.stringify(userInfos));  
+            }
+            else{
+                Alert.alert("Error", res);
+            }
         })
         .catch( err => {
             // gestion des erreurs (remplacer le console.log)
-console.log(err);
+            console.log("Error: ", err);
         })
         .finally( () =>{
             setIsLoading(false);

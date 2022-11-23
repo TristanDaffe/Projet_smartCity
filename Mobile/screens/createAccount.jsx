@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, StyleSheet, Image, Button, Pressable, ScrollView, KeyboardAvoidingView, ActivityIndicator} from 'react-native';
+import { Text, View, StyleSheet, Image, Button, Pressable, ScrollView, KeyboardAvoidingView, Alert} from 'react-native';
 
 import { TextInput } from 'react-native-gesture-handler';
 import Spinner from 'react-native-loading-spinner-overlay';
@@ -19,6 +19,10 @@ export default function CreateAccountTest({navigation}) {
   const [password, setPassword] = React.useState('');
 
   const {isLoading, register} = React.useContext(AuthContext);
+
+  function handleRegister () {
+    register(email, lastName, firstName, birthdate, bloodType, login, password);
+  }
 
   // temoporaire pour tester le bouton (viendra de la DB)
   const typeBlood = [
@@ -99,9 +103,7 @@ export default function CreateAccountTest({navigation}) {
           </TextInput>
 
         <Button title='Create account' color='red' 
-          onPress={() => 
-            register(email, lastName, firstName, birthdate, bloodType, login, password)
-          }>
+          onPress={handleRegister}>
         </Button>
 
         <View style= {styles.lineAccount}>

@@ -20,7 +20,7 @@ export default function Routes() {
           {user.id ? (
             <>
             {/* si user login alors on affiche le drawer */}
-              <Stack.Screen name="AppStcak" component={AppStack} />
+              <Stack.Screen name="AppStack" component={AppStack} />
             </>
             ) : (
             <>
