@@ -24,13 +24,13 @@ CREATE TABLE blood_type(
 DROP TABLE IF EXISTS donation_center CASCADE;
 CREATE TABLE donation_center(
     id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    name varchar(50) not null,
-    phone_number varchar(50) not null,
-    check(phone_number LIKE'04__/%'),
+    name varchar(150) not null,
+    phone_number varchar(50),
+    check(phone_number LIKE'0%/%'),
     email_address varchar(50),
     check(email_address LIKE '%@%.%'),
     fax varchar(15),
-    check(fax LIKE'+32 % %'),
+    check(fax LIKE'0800 % %'),
 
     street_name varchar(50) not null,
     street_number int not null,
@@ -152,9 +152,9 @@ INSERT INTO locality(name, postal_code) VALUES
 ('Jemeppe-sur-Sambre', 5190),
 ('Sambreville', 5060),
 ('Yvoir', 5530),
-('Gembloux', 5030);
-('Namur', 5020);
-('Charleroi', 6000);
+('Gembloux', 5030),
+('Namur', 5020),
+('Charleroi', 6000),
 ('Marche-en-Famenne', 6900);
 
 /* TODO */
@@ -172,10 +172,10 @@ INSERT INTO user_account(first_name, last_name, birthday, email_address, login, 
 -- En fait y'a pas toujours de numéro de fax mais j'en ai mis pour remplir
 -- J'ai mis des vrais
 Insert into donation_center(name, phone_number, email_address, fax, street_name, street_number, locality) VALUES
-('Don de sang Croix-Rouge Namur', '081/22.10.10', 'info@croix-rouge.be', '0800 92 245', 'Rue des Dames Blanches', 34, 1);
-('Don de sang - Établissement de transfusion sanguine', '081/42.21.35', null , '0800 92 245', 'Rue Dr Gaston Therasse', 1, 8);
-('La Transfusion du Sang', '071/53.29.99', null , '0800 92 245', 'Bd Joseph II', 11, 9);
-('Don de sang à Marche-en-Famenne', '081/56.41.52', null , '0800 92 245', 'Rue du Vivier', 24, 10);
+('Don de sang Croix-Rouge Namur', '081/22.10.10', 'info@croix-rouge.be', '0800 92 245', 'Rue des Dames Blanches', 34, 1),
+('Don de sang - Établissement de transfusion sanguine', '081/42.21.35', null , '0800 92 245', 'Rue Dr Gaston Therasse', 1, 8),
+('La Transfusion du Sang', '071/53.29.99', null , '0800 92 245', 'Bd Joseph II', 11, 9),
+('Don de sang à Marche-en-Famenne', '081/56.41.52', null , '0800 92 245', 'Rue du Vivier', 24, 10),
 -- Celui-là il a même pas de numéro de tel
 ('prélèvement prise de sang spy', null, null , '0800 92 245', 'Rte de Saussin', 1, 6);
 
@@ -219,14 +219,14 @@ Insert into open_day(center_id, day_id) VALUES
 Insert into donation_available(center_id, blood_type_id) VALUES
 (1, 1),
 (1, 2),
-(1, 3);
-(2, 1);
-(3, 1);
-(3, 2);
-(3, 3);
-(4, 1);
-(4, 2);
-(4, 3);
+(1, 3),
+(2, 1),
+(3, 1),
+(3, 2),
+(3, 3),
+(4, 1),
+(4, 2),
+(4, 3),
 (5, 1);
 
 Insert into donation(date, user_id, donation_type_id, donation_center_id) VALUES
