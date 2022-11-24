@@ -18,7 +18,8 @@ CREATE TABLE blood_type(
     id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     type varchar(50) not null,
     rhesus varchar(1) not null,
-    check (rhesus in ('+','-'))
+    check (rhesus in ('+','-')),
+    UNIQUE (type, rhesus)
 );
 
 DROP TABLE IF EXISTS donation_center CASCADE;
