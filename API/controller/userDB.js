@@ -1,10 +1,11 @@
 const pool = require('../model/database');
 const UserModele = require("../model/userDB");
+const bloodTypeModel = require("../model/bloodTypeDB");
 
 module.exports.getUserFromLogin = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
-    
+
     const { login, password } = body;
     try {
         if(login === null || password === null) {
@@ -18,6 +19,8 @@ module.exports.getUserFromLogin = async (req, res) => {
                 res.sendStatus(404);
             }
             else {
+                const {rows: bloodTypes} = await bloodTypeModel.getBloodType(user.blood_type, client);
+                user.blood_type = bloodTypes[0];
                 res.json(user);
             }
         }
@@ -46,6 +49,8 @@ module.exports.getUser = async (req, res) => {
                 res.sendStatus(404);
             }
             else {
+                const {rows: bloodTypes} = await bloodTypeModel.getBloodType(user.blood_type, client);
+                user.blood_type = bloodTypes[0];
                 res.json(user);
             }
         }

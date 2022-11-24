@@ -3,6 +3,5 @@ module.exports.getUserFromLogin = async (login, password, client) => {
 }
 
 module.exports.getUser = async (id, client) => {
-    console.log('user', id);
     return await client.query("SELECT * FROM user_account WHERE id = $1", [id]);
 }
