@@ -40,6 +40,7 @@ export default function LoginAccountTest({navigation}) {
           en commentaire car sais pas comment faire (discuter de si y a)
           <Text style={styles.text}>Forgot Password ?</Text> 
         */}
+        <Separator/>
         <Button 
           title='Log in' 
           color='red' 

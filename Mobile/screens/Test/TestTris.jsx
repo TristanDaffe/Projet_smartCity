@@ -23,7 +23,6 @@ export default function TestTris ( )  {
         <Text> bloodtype {user.bloodtype} </Text>
         <Text> login = {user.login} </Text>
         <Text> password : {user.password} </Text>
-        <Text> {JSON.stringify(user)} </Text>
         <Button title='bouton alert' onPress={pressHandler} />
     
       </View>

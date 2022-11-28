@@ -63,7 +63,6 @@ module.exports.getBloodTypes = async (req, res) => {
     const client = await pool.connect();
 
     try {
-        console.log("getBloodTypes");
         const {rows: bloodTypes} = await bloodTypeModel.getBloodTypes(client);
         res.json(bloodTypes);
     }

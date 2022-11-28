@@ -25,12 +25,12 @@ export default function Account ( {navigation} )  {
           <View>
             <Text style={styles.sectionTitle}>Name </Text>
             <View style={styles.section}>
-              <Text style={styles.sectionText}>{user.firstName} {user.lastName}</Text>
+              <Text style={styles.sectionText}>{user.first_name} {user.last_name}</Text>
             </View>
           </View>
           <View>
             <Text style={styles.sectionTitle}>Blood type</Text>
-            <Text style={styles.box}>{user.bloodType}</Text>
+            <Text style={styles.box}>{user.blood_type.type}{user.blood_type.rhesus}</Text>
           </View>
           <View />
         </View>
@@ -44,7 +44,7 @@ export default function Account ( {navigation} )  {
 {/* Section de l'addresse mail*/}
         <Text style={styles.sectionTitle}>Email</Text>
         <View style={styles.section}>
-          <Text style={styles.sectionText}>{user.email}</Text>
+          <Text style={styles.sectionText}>{user.email_address}</Text>
         </View>
 
 {/* Section du login*/}

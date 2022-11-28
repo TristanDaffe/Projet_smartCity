@@ -2,6 +2,7 @@ import React, {createContext, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {BASE_URL} from "../config";
 import { Alert } from "react-native";
+import axios from "axios";
 
 export const AuthContext = createContext();
 // https://youtu.be/kXVJYXd3C8k
@@ -12,89 +13,53 @@ export const AuthProvider = ({children}) => {
     const register = (email, lastName, firstName, BirthDate, bloodType, Login, password) => {
         setIsLoading(true);
         // requête à l'API pour créer un utilisateur
-        fetch(`${BASE_URL}/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                email : email,
-                lastName : lastName,
-                firstName : firstName,
-                BirthDate : BirthDate,
-                bloodType : bloodType,
-                Login : Login,
-                password : password
-            })
+        axios
+            .post(`${BASE_URL}/register`, {
+                email,
+                lastName,
+                firstName,
+                BirthDate,
+                bloodType,
+                Login,
+                password
         })
         .then( res => {
-            if(res.ok){
-                let userInfos = res.json();
-                setUser(userInfos);
-                AsyncStorage.setItem('user', JSON.stringify(userInfos));  
-            }
-            else{
-                Alert.alert("Error", res);
-            }
+            let userInfos = res.json();
+            setUser(userInfos);
+            AsyncStorage.setItem('user', JSON.stringify(userInfos));  
         })
         .catch( err => {
             // gestion des erreurs (remplacer le console.log)
-            console.log("Error: ", err);
+            Alert.alert("Erreur lors de l'enregistrement");
         })
         .finally( () =>{
             setIsLoading(false);
     });
     }
 
-    const login = (LoginUser, password) => {
+    const login = (loginUser, password) => {
         setIsLoading(true);
         // requête à l'API pour se connecter
-        fetch(`${BASE_URL}/user`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                login : LoginUser,
-                password : password
+        axios
+            .post(`http://172.20.10.6:3001/user`, {
+                login: loginUser,
+                password: password
             })
-        })
-        .then( res => {
-            if(res.ok){
-                console.log(res);
-                let userInfos = res.json();
-                setUser(userInfos);
-                AsyncStorage.setItem('user', JSON.stringify(userInfos));  
-            }
-            else{
+            .then( res => {
+                let userInfo = res.data;
+                setUser(userInfo);
+                AsyncStorage.setItem('user', JSON.stringify(userInfo));
+            })
+            .catch( err => {
+                console.log(err)
+                // gestion des erreurs (remplacer le console.log)
                 Alert.alert("Error");
-            }          
-        })
-        .catch( err => {
-            // gestion des erreurs (remplacer le console.log)
-console.log('user test : ', err);
 
-// version de test sans requête à l'API
-// const userTest = {
-//     id: 1,
-//     firstName: 'John',
-//     lastName: 'Doe',
-//     email: 'test@truc.com',
-//     birthday: '01/01/2000',
-//     login: 'johnDoe',
-//     password: '123456',
-//     bloodType: 'O+',
-
-//     timeBeforeBloodDonation: '3 months',
-//     timeBeforePlasmaDonation: '2 weeks',
-//     timeBeforePlateletDonation: '0',
-// };
-// setUser(userTest);
-// AsyncStorage.setItem('user', JSON.stringify(userTest));
-        })
-        .finally( () =>{
-            setIsLoading(false);
-        });
+                
+            })
+            .finally( () => {
+                setIsLoading(false);
+            });
     }
 
     const logout = () => {
