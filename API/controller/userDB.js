@@ -7,6 +7,7 @@ module.exports.getUserFromLogin = async (req, res) => {
     const body = req.body;
 
     const { login, password } = body;
+
     try {
         if(login === null || password === null) {
             res.sendStatus(400);

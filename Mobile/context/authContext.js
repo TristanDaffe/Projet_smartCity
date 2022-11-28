@@ -1,6 +1,6 @@
 import React, {createContext, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {Base_URL} from "../config";
+import {BASE_URL} from "../config";
 import { Alert } from "react-native";
 
 export const AuthContext = createContext();
@@ -12,7 +12,7 @@ export const AuthProvider = ({children}) => {
     const register = (email, lastName, firstName, BirthDate, bloodType, Login, password) => {
         setIsLoading(true);
         // requête à l'API pour créer un utilisateur
-        fetch(`${Base_URL}/register`, {
+        fetch(`${BASE_URL}/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -49,42 +49,48 @@ export const AuthProvider = ({children}) => {
     const login = (LoginUser, password) => {
         setIsLoading(true);
         // requête à l'API pour se connecter
-        fetch(`${Base_URL}/login`, {
+        fetch(`${BASE_URL}/user`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                Login : LoginUser,
+                login : LoginUser,
                 password : password
             })
         })
         .then( res => {
-            let userInfos = res.json();
-            setUser(userInfos);
-            AsyncStorage.setItem('user', JSON.stringify(userInfos));            
+            if(res.ok){
+                console.log(res);
+                let userInfos = res.json();
+                setUser(userInfos);
+                AsyncStorage.setItem('user', JSON.stringify(userInfos));  
+            }
+            else{
+                Alert.alert("Error");
+            }          
         })
         .catch( err => {
             // gestion des erreurs (remplacer le console.log)
 console.log('user test : ', err);
 
 // version de test sans requête à l'API
-const userTest = {
-    id: 1,
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'test@truc.com',
-    birthday: '01/01/2000',
-    login: 'johnDoe',
-    password: '123456',
-    bloodType: 'O+',
+// const userTest = {
+//     id: 1,
+//     firstName: 'John',
+//     lastName: 'Doe',
+//     email: 'test@truc.com',
+//     birthday: '01/01/2000',
+//     login: 'johnDoe',
+//     password: '123456',
+//     bloodType: 'O+',
 
-    timeBeforeBloodDonation: '3 months',
-    timeBeforePlasmaDonation: '2 weeks',
-    timeBeforePlateletDonation: '0',
-};
-setUser(userTest);
-AsyncStorage.setItem('user', JSON.stringify(userTest));
+//     timeBeforeBloodDonation: '3 months',
+//     timeBeforePlasmaDonation: '2 weeks',
+//     timeBeforePlateletDonation: '0',
+// };
+// setUser(userTest);
+// AsyncStorage.setItem('user', JSON.stringify(userTest));
         })
         .finally( () =>{
             setIsLoading(false);
