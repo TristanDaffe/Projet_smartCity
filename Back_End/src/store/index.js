@@ -54,7 +54,7 @@ const donationReducer = (state = {listeDonations: liste}, action) => {
     switch (action.type) {
         case "updateDonation":
             const updatedDonation = action.payload.newDonation;
-            const index = newArray.findIndex(em => em.id === updatedDonation.id);
+            const index = newArray.findIndex(don => don.id === updatedDonation.id);
             newArray[index] = updatedDonation;
             return {
                 listeDonations: newArray
@@ -63,6 +63,13 @@ const donationReducer = (state = {listeDonations: liste}, action) => {
             const newDonation = action.payload.newDonation;
             newDonation.id = newArray.length + 1;
             newArray.push(newDonation);
+            return {
+                listeDonations: newArray
+            }
+        case "deleteDonation":
+            const id = action.payload.id;
+            const index2 = newArray.findIndex(don => don.id === id);
+            newArray.splice(index2, 1);
             return {
                 listeDonations: newArray
             }

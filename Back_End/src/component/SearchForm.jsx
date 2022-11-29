@@ -1,9 +1,9 @@
 import React from 'react';
 import SearchBar from './SearchBar';
-import {Link} from 'react-router-dom';
-import {connect} from 'react-redux';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-class SearchForm extends React.Component{
+class SearchForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -20,7 +20,7 @@ class SearchForm extends React.Component{
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props !== prevProps){
+        if (this.props !== prevProps) {
             this.setState({
                 donations: this.props.donations,
                 donationsToDisplay: this.props.donations
@@ -28,32 +28,40 @@ class SearchForm extends React.Component{
         }
     }
 
-    addDonation(event){
+    addDonation(event) {
         event.preventDefault();
         const newDonation = {
-            date : this.state.inputDate,
-            time : this.state.inputTime,
-            donor : this.state.inputDonor,
-            donationType : this.state.inputDonationType,
-            bloodType : this.state.inputBloodType,
-            donationCenter : this.state.inputDonationCenter,
+            date: this.state.inputDate,
+            time: this.state.inputTime,
+            donor: this.state.inputDonor,
+            donationType: this.state.inputDonationType,
+            bloodType: this.state.inputBloodType,
+            donationCenter: this.state.inputDonationCenter,
         }
         this.props.addDonation(newDonation);
     }
 
-    // Permet de filtrer dur le donneur
-    changeValuesToShow(string){
+    deleteDonation(event) {
+        event.preventDefault();
+        this.props.deleteDonation(event.target.value);
+    }
+
+    changeValuesToDisplay(string) {
         const donationsToDisplay = this.state.donations;
         const afterFiltering = donationsToDisplay.filter(don => {
             return don.donor.includes(string);
         });
-        this.setState({donationsToDisplay: afterFiltering});
+        this.setState({ donationsToDisplay: afterFiltering });
     }
 
     render() {
         return (
             <div>
-                <SearchBar callback={(searchValue) => this.changeValuesToShow(searchValue)}/>                <table>
+                <div className="searchBar">
+                <p>Search for a donor:  </p>
+                <SearchBar callback={(searchValue) => this.changeValuesToDisplay(searchValue)} />
+                </div>
+                <table>
                     <thead>
                         <tr>
                             <th>Date</th>
@@ -62,21 +70,24 @@ class SearchForm extends React.Component{
                             <th>Donation Type</th>
                             <th>Blood type</th>
                             <th>Donation center</th>
-                            <th>Voir plus d'info</th>
+                            <th>Update</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.donationsToDisplay.map((donation, index) => {
+                        {this.state.donationsToDisplay.map((don, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{donation.date}</td>
-                                    <td>{donation.time}</td>
-                                    <td>{donation.donor}</td>
-                                    <td>{donation.donationType}</td>
-                                    <td>{donation.bloodType}</td>
-                                    <td>{donation.donationCenter}</td>
+                                    <td>{don.date}</td>
+                                    <td>{don.time}</td>
+                                    <td>{don.donor}</td>
+                                    <td>{don.donationType}</td>
+                                    <td>{don.bloodType}</td>
+                                    <td>{don.donationCenter}</td>
                                     <td>
-                                        <Link to={`/donation/${donation.id}`}>Lien</Link>
+                                        <Link to={`/donationUpdate/${don.id}`}>Update</Link>
+                                    </td>
+                                    <td>
+                                        <button onClick={() => this.props.deleteDonation(don.id)}>Delete</button>
                                     </td>
                                 </tr>
                             );
@@ -86,41 +97,41 @@ class SearchForm extends React.Component{
                 <form>
                     <label >Date:</label>
                     <input type="text"
-                           onChange={(event) => {
-                               this.setState({inputDate: event.target.value});
-                           }}/>
-                    <br/>
+                        onChange={(event) => {
+                            this.setState({ inputDate: event.target.value });
+                        }} />
+                    <br />
                     <label >Time:</label>
                     <input type="Time"
-                           onChange={(event) => {
-                               this.setState({inputTime: event.target.value});
-                           }}/>
-                    <br/>
-                    <label >Donor:</label>  
+                        onChange={(event) => {
+                            this.setState({ inputTime: event.target.value });
+                        }} />
+                    <br />
+                    <label >Donor:</label>
                     <input type="text"
-                            onChange={(event) => {
-                                 this.setState({inputDonor: event.target.value});
-                            }}/>
-                    <br/>
-                    <label >Donation type:</label>  
+                        onChange={(event) => {
+                            this.setState({ inputDonor: event.target.value });
+                        }} />
+                    <br />
+                    <label >Donation type:</label>
                     <input type="text"
-                            onChange={(event) => {
-                                 this.setState({inputDonationType: event.target.value});
-                            }}/>
-                    <br/>
-                    <label >Blood type:</label>  
+                        onChange={(event) => {
+                            this.setState({ inputDonationType: event.target.value });
+                        }} />
+                    <br />
+                    <label >Blood type:</label>
                     <input type="text"
-                            onChange={(event) => {
-                                 this.setState({inputBloodType: event.target.value});
-                            }}/>
-                    <br/>
-                    <label >Donation Center:</label>  
+                        onChange={(event) => {
+                            this.setState({ inputBloodType: event.target.value });
+                        }} />
+                    <br />
+                    <label >Donation Center:</label>
                     <input type="text"
-                            onChange={(event) => {
-                                 this.setState({inputDonationCenter: event.target.value});
-                            }}/>
-                    <br/>
-                    <button onClick={(event) => this.addDonation(event)}>Ajouter</button>
+                        onChange={(event) => {
+                            this.setState({ inputDonationCenter: event.target.value });
+                        }} />
+                    <br />
+                    <button onClick={(event) => this.addDonation(event)}>Add</button>
                 </form>
             </div>
         );
@@ -129,14 +140,17 @@ class SearchForm extends React.Component{
 
 const mapStateToProps = (state) => {
     return {
-        donations : state.donations.listeDonations
+        donations: state.donations.listeDonations
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         addDonation: (donationObjet) => {
-            dispatch({type: "addDonation", payload:{newDonation: donationObjet}});
+            dispatch({ type: "addDonation", payload: { newDonation: donationObjet } });
+        },
+        deleteDonation: (id) => {
+            dispatch({ type: "deleteDonation", payload: { id: id } });
         }
     }
 };

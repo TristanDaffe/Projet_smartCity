@@ -11,7 +11,7 @@ export default function Router(){
     return(
         <BrowserRouter>
             <Routes>
-                <Route path="/donation/:id" element={<Donation/>}/>
+                <Route path="/donationUpdate/:id" element={<Donation/>}/>
                 <Route path="/" element={<SearchForm/>}/>
             </Routes>
         </BrowserRouter>

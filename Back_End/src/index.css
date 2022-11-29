@@ -12,16 +12,38 @@ code {
     monospace;
 }
 
-table {
-  border: medium solid #000000;
 
+.searchBar{
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: left;
+  padding: 10px;
+  margin: 0px;
 }
-td, th {
-  border: thin solid #6495ed;
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border: medium solid #000000;
+}
 
+td,
+th {
+  border: thin solid #6495ed;
+}
+
+
+
+
+
+form {
+  text-align: left;
+  display: inline-block;
+  padding: 10px;
 }
 
 label {
+  text-align: left;
   display: inline-block;
   width: 10em;
 }

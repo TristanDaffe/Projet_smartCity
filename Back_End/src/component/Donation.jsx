@@ -1,100 +1,168 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import {Navigate, useParams} from 'react-router-dom';
+import { connect } from 'react-redux';
+import { Navigate, useParams } from 'react-router-dom';
 
 function withParams(Component) {
-    return (props) => {return <Component {...props} params={useParams()} />};
+    return (props) => { return <Component {...props} params={useParams()} /> };
 }
 
-class Donation extends React.Component{ 
+class Donation extends React.Component {
 
     constructor(props) {
-        console.log(this.props);
         super(props);
+        console.log(this.props);
         const donations = this.props.donations;
         const id = parseInt(this.props.params.id);
         const [donation] = donations.filter(d => d.id === id);
         this.state = {
             id,
-            date : donation.date,
-            time : donation.time,
-            donor : donation.donor,
-            donationType : donation.donationType,
-            bloodType : donation.bloodType,
-            donationCenter : donation.donationCenter,
+            date: donation.date,
+            time: donation.time,
+            donor: donation.donor,
+            donationType: donation.donationType,
+            bloodType: donation.bloodType,
+            donationCenter: donation.donationCenter,
             redirect: false
         }
     }
 
-    sauvegarder(event){
+    save(event) {
         event.preventDefault();
         this.props.updateDonation({
             id: this.state.id,
-            date : this.state.date,
-            time : this.state.time,
-            donor : this.state.donor,
-            donationType : this.state.donationType,
-            bloodType : this.state.bloodType,
-            donationCenter : this.state.donationCenter,
+            date: this.state.date,
+            time: this.state.time,
+            donor: this.state.donor,
+            donationType: this.state.donationType,
+            bloodType: this.state.bloodType,
+            donationCenter: this.state.donationCenter,
         });
-        this.setState({redirect: true});
+        this.setState({ redirect: true });
     }
 
-    render(){
-        return(
-            <form>
-                <label>Id:</label>
-                <input type="text"
-                       value={this.state.id}
-                       onChange={(e) => this.setState({nom: e.target.value})}
-                />
-                <label>Date:</label>
-                <input type="text"
-                       value={this.state.date}
-                       onChange={(e) => this.setState({prenom: e.target.value})}
-                />
-                <label>Donor</label>
-                <input type="text"
-                       value={this.state.donor}
-                       onChange={(e) => this.setState({age: e.target.value})}
-                />
-                <label>Donation type</label>
-                <input type="text"
-                       value={this.state.donationType}
-                       onChange={(e) => this.setState({age: e.target.value})}
-                />
-                <label>Blood type</label>
-                <input type="text"
-                       value={this.state.bloodType}
-                       onChange={(e) => this.setState({age: e.target.value})}
-                />
-                <label>Donation Center</label>
-                <input type="text"
-                       value={this.state.donationCenter}
-                       onChange={(e) => this.setState({age: e.target.value})}
-                />
-                <button
-                    onClick={
-                        (e) => this.sauvegarder(e)
-                    }>
-                    Sauvegarder
-                </button>
-                {this.state.redirect && <Navigate to={"/"}/>}
-            </form>
+    render() {
+        const formStyle = {
+            paddingTop: "40px",
+        }
+        const item = {
+            border: "1px solid black",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "left",
+            justifyContent: "center",
+            width: "100%",
+            padding: "4px",
+        };
+
+        const firstItem = {
+            border: "1px solid black",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "left",
+            justifyContent: "center",
+            width: "100%",
+            padding: "4px",
+            borderTopLeftRadius: "3px",
+            borderTopRightRadius: "3px",
+        };
+
+        const lastItem = {
+            border: "1px solid black",
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "left",
+            justifyContent: "center",
+            width: "100%",
+            padding: "4px",
+            borderBottomLeftRadius: "3px",
+            borderBottomRightRadius: "3px",
+        };
+
+        const container = {
+            border: "6px solid black",
+            borderRadius: "10px",
+            paddingRight: "10px",
+            backgroundColor: "none",
+            zIndex: "1",
+            position: "relative",
+        }
+        return (
+            <div style={formStyle}>
+                <form style={container}>
+                    <div style={firstItem}>
+                        <label>Id</label>
+                        <input type="text"
+                            value={this.state.id}
+                            onChange={(d) => this.setState({ id: d.target.value })}
+                        />
+                    </div>
+                    <div style={item}>
+                        <label>Date</label>
+                        <input type="text"
+                            value={this.state.date}
+                            onChange={(d) => this.setState({ date: d.target.value })}
+                        />
+                    </div>
+                    <div style={item}>
+                        <label>Donor</label>
+                        <input type="text"
+                            value={this.state.donor}
+                            onChange={(d) => this.setState({ donor: d.target.value })}
+                        />
+                    </div>
+                    <div style={item}>
+                        <label>Donation type</label>
+                        <input type="text"
+                            value={this.state.donationType}
+                            onChange={(d) => this.setState({ donationType: d.target.value })}
+                        />
+                    </div>
+                    <div style={item}>
+                        <label>Blood type</label>
+                        <input type="text"
+                            value={this.state.bloodType}
+                            onChange={(d) => this.setState({ bloodType: d.target.value })}
+                        />
+                    </div>
+                    <div style={item}>
+                        <label>Donation Center</label>
+                        <input type="text"
+                            value={this.state.donationCenter}
+                            onChange={(d) => this.setState({ donationCentre: d.target.value })}
+                        />
+                    </div>
+                    <div style={item}>
+                        <label>Time</label>
+                        <input type="time"
+                            value={this.state.date}
+                            onChange={(d) => this.setState({ time: d.target.value })}
+                        />
+                    </div>
+                    <div style={lastItem}>
+                        <button
+                            onClick={
+                                (d) => this.save(d)
+                            }>
+                            Save
+                        </button>
+                        {this.state.redirect && <Navigate to={"/"} />}
+                    </div>
+                </form>
+            </div>
         );
     }
 }
 
 const mapStateToProps = (state) => {
     return {
-        donations : state.donations.listDonations
+        donations: state.donations.listeDonations
     }
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateDonation: (donationObject) => {
-            dispatch({type: "updateDonation", payload:{newDonation: donationObject}});
+        updateDonation: (donationObjet) => {
+            dispatch({ type: "updateDonation", payload: { newDonation: donationObjet } });
         }
     }
 };
