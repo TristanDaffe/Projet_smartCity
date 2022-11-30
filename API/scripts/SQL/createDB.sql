@@ -85,7 +85,8 @@ CREATE TABLE user_account(
     login varchar(50) not null unique,
     password varchar(50) not null,
     blood_type int not null,
-        foreign key (blood_type) references blood_type(id)
+        foreign key (blood_type) references blood_type(id),
+    is_admin boolean not null default false
 );
 
 DROP TABLE IF EXISTS donation CASCADE;
@@ -168,6 +169,9 @@ INSERT INTO user_account(first_name, last_name, birthday, email_address, login, 
 ('François', 'Legrand', '1995-03-03', 'francois.legrand@hotmail.com', 'FL95', '1234', 6),
 ('Sarah', 'Lemaitre', '1996-04-04', 'sarah.lemaitre@hotmail.com', 'SL96', '1234', 7),
 ('Marie', 'Leroy', '1997-05-05', 'marie.leroy@hotmail.com', 'ML97', '1234', 8);
+
+INSERT INTO user_account(first_name, last_name, birthday, email_address, login, password, blood_type, is_admin) VALUES
+('admin', 'admin', '1998-06-06', 'admin@admin.local', 'admin', 'admin', 1, 'true');
 
 
 -- En fait y'a pas toujours de numéro de fax mais j'en ai mis pour remplir
