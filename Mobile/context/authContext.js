@@ -30,7 +30,7 @@ export const AuthProvider = ({children}) => {
         })
         .catch( err => {
             // gestion des erreurs (remplacer le console.log)
-            Alert.alert("Erreur lors de l'enregistrement");
+            Alert.alert("Erreur lors de l'enregistrement", err.message);
         })
         .finally( () =>{
             setIsLoading(false);
@@ -41,7 +41,7 @@ export const AuthProvider = ({children}) => {
         setIsLoading(true);
         // requête à l'API pour se connecter
         axios
-            .post(`http://172.20.10.6:3001/user`, {
+            .post(`${BASE_URL}/user`, {
                 login: loginUser,
                 password: password
             })
@@ -51,11 +51,31 @@ export const AuthProvider = ({children}) => {
                 AsyncStorage.setItem('user', JSON.stringify(userInfo));
             })
             .catch( err => {
-                console.log(err)
                 // gestion des erreurs (remplacer le console.log)
-                Alert.alert("Error");
-
-                
+                Alert.alert("Error", err.message);
+/*
+PARTIE POUR TEST SANS API
+*/
+                console.log(err);
+                const userTest = {
+                    id: 1,
+                    first_name: "Jhon",
+                    last_name: "Doe",
+                    email_address: "test@jhon.doe",
+                    birthday: "1990-01-01",
+                    blood_type: {
+                        id: 1,
+                        type: "A",
+                        rhesus: "+"
+                    },
+                    login: "jhon.doe",
+                    password: "1234"
+                }
+                setUser(userTest);
+                AsyncStorage.setItem('user', JSON.stringify(userTest));
+/*
+FIN PARTIE POUR TEST SANS API
+*/
             })
             .finally( () => {
                 setIsLoading(false);
