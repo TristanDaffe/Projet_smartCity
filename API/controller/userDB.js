@@ -6,7 +6,6 @@ const { validateString } = require('../utils/utils');
 module.exports.postUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
-
     const { login, password } = body;
 
     try {

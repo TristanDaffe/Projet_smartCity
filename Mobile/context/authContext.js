@@ -41,7 +41,7 @@ export const AuthProvider = ({children}) => {
         setIsLoading(true);
         // requête à l'API pour se connecter
         axios
-            .post(`${BASE_URL}/user`, {
+            .post(`${BASE_URL}/login`, {
                 login: loginUser,
                 password: password
             })
