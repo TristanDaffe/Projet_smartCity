@@ -7,4 +7,6 @@ router.get('/', BloodController.getBloodTypeFromName);
 router.post('/', BloodController.createBloodType);
 router.patch('/', BloodController.updateBloodType);
 
+router.post('/all', BloodController.getAllBloodType);
+
 module.exports = router;

@@ -59,7 +59,7 @@ module.exports.getBloodTypeFromName = async (req, res) => {
     }
 }
 
-module.exports.getBloodTypes = async (req, res) => {
+module.exports.getAllBloodType = async (req, res) => {
     const client = await pool.connect();
 
     try {

@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const process = require('process');
 const jwt = require('jsonwebtoken');
 
