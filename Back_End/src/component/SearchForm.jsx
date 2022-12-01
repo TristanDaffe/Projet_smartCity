@@ -2,6 +2,9 @@ import React from 'react';
 import SearchBar from './SearchBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Select from 'react-select';
+import { useState } from 'react';
+import Droplist from './DropList';
 
 class SearchForm extends React.Component {
 
@@ -55,19 +58,36 @@ class SearchForm extends React.Component {
     }
 
     render() {
+        const options = [
+            { value: 'id', label: 'Id' },
+            { value: 'date', label: 'Date' },
+            { value: 'time', label: 'Time' },
+            { value: 'donor', label: 'Donor' },
+            { value: 'donationType', label: 'Donation type' },
+            { value: 'bloodType', label: 'Blood type' },
+            { value: 'donationCenter', label: 'Donation center' },
+        ];
+ 
         return (
+
             <div>
                 <div className="searchBar">
-                <p>Search for a donor:  </p>
-                <SearchBar callback={(searchValue) => this.changeValuesToDisplay(searchValue)} />
+                    <p>Search for a :  </p>
+                    <Droplist />
+                    <Select 
+                        options={options} 
+                        // onChange={(choice)=>{setUserChoice(choice)}}
+                    />
+                    <SearchBar callback={(searchValue) => this.changeValuesToDisplay(userChoice)} />
                 </div>
                 <table>
                     <thead>
                         <tr>
+                            <th>Id</th>
                             <th>Date</th>
                             <th>Time</th>
                             <th>Donor</th>
-                            <th>Donation Type</th>
+                            <th>Donation type</th>
                             <th>Blood type</th>
                             <th>Donation center</th>
                             <th>Update</th>
@@ -77,6 +97,7 @@ class SearchForm extends React.Component {
                         {this.state.donationsToDisplay.map((don, index) => {
                             return (
                                 <tr key={index}>
+                                    <td>{don.id}</td>
                                     <td>{don.date}</td>
                                     <td>{don.time}</td>
                                     <td>{don.donor}</td>
@@ -84,7 +105,7 @@ class SearchForm extends React.Component {
                                     <td>{don.bloodType}</td>
                                     <td>{don.donationCenter}</td>
                                     <td>
-                                        <Link to={`/donationUpdate/${don.id}`}>Update</Link>
+                                        <Link to={`/donationUpdate/${don.user}`}>Update</Link>
                                     </td>
                                     <td>
                                         <button onClick={() => this.props.deleteDonation(don.id)}>Delete</button>

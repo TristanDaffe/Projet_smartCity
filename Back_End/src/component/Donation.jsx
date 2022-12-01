@@ -86,6 +86,7 @@ class Donation extends React.Component {
             zIndex: "1",
             position: "relative",
         }
+
         return (
             <div style={formStyle}>
                 <form style={container}>
