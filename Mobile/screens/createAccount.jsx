@@ -15,24 +15,25 @@ export default function CreateAccountTest({navigation}) {
   const [firstName, setFirstName] = React.useState('');
   const [birthdate, setBirthdate] = React.useState('');
   const [bloodType, setBloodType] = React.useState('');
+  const [rhesus, setRhesus] = React.useState('');
   const [login, setLogin] = React.useState('');
   const [password, setPassword] = React.useState('');
 
   const {isLoading, register} = React.useContext(AuthContext);
 
   function handleRegister () {
-    register(email, lastName, firstName, birthdate, bloodType, login, password);
+    register(email, lastName, firstName, birthdate, bloodType, rhesus, login, password);
   }
 
   // temoporaire pour tester le bouton (viendra de la DB)
-  const typeBlood = [
+  const bloodTypeDB = [
     { value: 'A', key: 'A'},
     { value: 'B', key: 'B'},
     { value: 'AB', key: 'AB'},
     { value: 'O', key: 'O'},
   ];
 
-  const rH = [
+  const rhesusDB = [
     { value: '+', key: '+' },
     { value: '-', key: '-' },
   ];
@@ -72,7 +73,7 @@ export default function CreateAccountTest({navigation}) {
         <Text style={styles.title}>Birth Date</Text>
           <TextInput 
             style={styles.textField}
-            placeHolder="DD/MM/YYYY"
+            placeholder="DD/MM/YYYY"
             keyboardType={'numbers-and-punctuation'}
             onChangeText={text => setBirthdate(text)}
           >
@@ -80,11 +81,33 @@ export default function CreateAccountTest({navigation}) {
 
         <Text style={styles.title}>Blood Type</Text>
         <View style={styles.radioButton}>
-          <View>
-            <RadioButton data={typeBlood}/>
+          <View style={styles.button}>
+            {bloodTypeDB.map((type) => {
+              return (
+                  <Pressable
+                      style={ type.value === bloodType ? styles.selected : ""}
+                      key= {type.value}
+                      onPress={() => setBloodType(type.value)}
+                      >     
+                      <Text style={styles.option}>{type.value}</Text>
+                  </Pressable>
+              );
+            })}
           </View>
           <View style={styles.spaceRadioButton}>
-              <RadioButton data={rH}/>
+          <View style={styles.button}>
+            {rhesusDB.map((rh) => {
+              return (
+                  <Pressable
+                      style={ rh.value === rhesus ? styles.selected : ""}
+                      key= {rh.value}
+                      onPress={() => setRhesus(rh.value)}
+                      >     
+                      <Text style={styles.option}>{rh.value}</Text>
+                  </Pressable>
+              );
+            })}
+          </View>
           </View>
         </View>
 
@@ -186,5 +209,22 @@ const styles = StyleSheet.create({
     borderColor: "red",
     borderWidth: 3,
     borderRadius: 5,
+  },
+  option: {
+    fontSize: 20,
+    color: 'black',
+    textAlign: 'center',
+    height: 30,
+    width: 50,
+    borderWidth: 3,
+  },
+  button: {
+    flexDirection: 'row',
+  },
+  unselected: {
+    backgroundColor: 'white',
+  },
+  selected: {
+    backgroundColor: '#e90707',
   },
 });

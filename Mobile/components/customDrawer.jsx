@@ -24,7 +24,7 @@ export default function CustomDrawer (props) {
                 onPress={() => props.navigation.navigate('AppStack', { screen: 'Account' })}
             >
                 <Image source={require('../images/user_account.png')} style={styles.image} />
-                <Text style={styles.text}>{user.first_name} {user.last_name}</Text>
+                <Text style={styles.text}>{user.firstName} {user.lastName}</Text>
             </Pressable>
 
             <DrawerContentScrollView {...props}>

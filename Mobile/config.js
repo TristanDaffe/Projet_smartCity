@@ -1,2 +1,2 @@
-const ip = '172.20.10.6';
+const ip = '192.168.1.56';
 export const BASE_URL = `http://${ip}:3001`;

@@ -8,25 +8,31 @@ export const AuthContext = createContext();
 // https://youtu.be/kXVJYXd3C8k
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState({});
+    const [token, setToken] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    const register = (email, lastName, firstName, BirthDate, bloodType, Login, password) => {
+    const register = (emailAddress, lastName, firstName, birthdate, bloodType, rhesus, login, password) => {
         setIsLoading(true);
         // requête à l'API pour créer un utilisateur
         axios
-            .post(`${BASE_URL}/register`, {
-                email,
+            .post(`${BASE_URL}/user/register`, {
+                emailAddress,
                 lastName,
                 firstName,
-                BirthDate,
+                birthdate,
                 bloodType,
-                Login,
+                rhesus,
+                login,
                 password
         })
         .then( res => {
-            let userInfos = res.json();
-            setUser(userInfos);
-            AsyncStorage.setItem('user', JSON.stringify(userInfos));  
+            let userInfo = res.data.user;
+            let token = res.data.token;
+            setUser(userInfo);
+            setToken(token);
+            AsyncStorage.setItem('user', JSON.stringify(userInfo));
+            AsyncStorage.setItem('token', JSON.stringify(token));
+            console.log("register", userInfo, token);
         })
         .catch( err => {
             // gestion des erreurs (remplacer le console.log)
@@ -41,14 +47,17 @@ export const AuthProvider = ({children}) => {
         setIsLoading(true);
         // requête à l'API pour se connecter
         axios
-            .post(`${BASE_URL}/login`, {
+            .post(`${BASE_URL}/user/login`, {
                 login: loginUser,
                 password: password
             })
             .then( res => {
-                let userInfo = res.data;
+                let userInfo = res.data.user;
+                let token = res.data.token;
                 setUser(userInfo);
+                setToken(token);
                 AsyncStorage.setItem('user', JSON.stringify(userInfo));
+                AsyncStorage.setItem('token', JSON.stringify(token));
             })
             .catch( err => {
                 // gestion des erreurs (remplacer le console.log)
@@ -85,7 +94,9 @@ FIN PARTIE POUR TEST SANS API
     const logout = () => {
         setIsLoading(true);
         AsyncStorage.removeItem('user');
+        AsyncStorage.removeItem('token');
         setUser({});
+        setToken(null);
         setIsLoading(false);
     }
     
@@ -93,6 +104,7 @@ FIN PARTIE POUR TEST SANS API
         <AuthContext.Provider value={{
             isLoading,
             user,
+            token,
             register,
             login,
             logout

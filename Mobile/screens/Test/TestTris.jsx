@@ -7,8 +7,8 @@ import {BloodContext} from "../../context/bloodContext";
 export default function TestTris ( )  {   
 
   const {user} = useContext(AuthContext);
-  const {getBloods} = useContext(BloodContext);
-  const bloods = getBloods();
+  //const {getBloods} = useContext(BloodContext);
+  //const bloods = getBloods();
 
     return (
       <View style={styles.container}>

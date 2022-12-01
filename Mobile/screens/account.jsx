@@ -25,7 +25,7 @@ export default function Account ( {navigation} )  {
           <View>
             <Text style={styles.sectionTitle}>Name </Text>
             <View style={styles.section}>
-              <Text style={styles.sectionText}>{user.first_name} {user.last_name}</Text>
+              <Text style={styles.sectionText}>{user.firstName} {user.lastName}</Text>
             </View>
           </View>
           <View>
@@ -38,25 +38,19 @@ export default function Account ( {navigation} )  {
 {/* Section de la date de naissance*/}
         <Text style={styles.sectionTitle}>Birth date</Text>
         <View style={styles.section}>
-          <Text style={styles.sectionText}>{user.birthday}</Text>
+          <Text style={styles.sectionText}>{user.birthDay}</Text>
         </View>
 
 {/* Section de l'addresse mail*/}
         <Text style={styles.sectionTitle}>Email</Text>
         <View style={styles.section}>
-          <Text style={styles.sectionText}>{user.email_address}</Text>
+          <Text style={styles.sectionText}>{user.emailAddress}</Text>
         </View>
 
 {/* Section du login*/}
         <Text style={styles.sectionTitle}>Login</Text>
         <View style={styles.section}>
           <Text style={styles.sectionText}>{user.login}</Text>
-        </View>
-
-{/* Section du mot de passe*/}
-        <Text style={styles.sectionTitle}>Password</Text>
-        <View style={styles.section}>
-          <Text style={styles.sectionText}>{user.password}</Text>
         </View>
 
 {/* Section du temps avant la prochaine donation*/}

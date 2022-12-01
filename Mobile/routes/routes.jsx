@@ -11,13 +11,13 @@ import { AuthContext } from '../context/authContext';
 const Stack = createNativeStackNavigator();
 
 export default function Routes() {
-  const { user } = React.useContext(AuthContext);
+  const { token } = React.useContext(AuthContext);
 
     return (      
     <NavigationContainer>
         <Stack.Navigator screenOptions={{ headerShown: false,}}>
           {/* le gestion des écrans se fait via si un user est login ou pas */}
-          {user.id ? (
+          {token ? (
             <>
             {/* si user login alors on affiche le drawer */}
               <Stack.Screen name="AppStack" component={AppStack} />
