@@ -15,6 +15,7 @@ function DropList () {
     return (
         <div>
             <Select
+                defaultValue={options[0]}
                 value={userChoice}
                 options={options}
                 onChange={userChoice=>setUserChoice(userChoice.target.value)}

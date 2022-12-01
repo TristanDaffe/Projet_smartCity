@@ -2,10 +2,7 @@ import React from 'react';
 import SearchBar from './SearchBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Select from 'react-select';
-import { useState } from 'react';
-import Droplist from './DropList';
-import DropList2 from './DropList2';
+import DropList from './DropList';
 
 class SearchForm extends React.Component {
 
@@ -53,11 +50,10 @@ class SearchForm extends React.Component {
 
     changeValuesToDisplay(string) {
         const donationsToDisplay = this.state.donations;
-        console.log(Droplist.userChoice);
         const afterFiltering = donationsToDisplay.filter(don => {
 
             if (this.state.filter === "id") {
-                return don.id == parseInt(string);
+                return don.id. parseInt(string);
             }
             else if (this.state.filter === "date") {
                 return don.date.includes(string);
@@ -89,23 +85,12 @@ class SearchForm extends React.Component {
     }
 
     render() {
-        const options = [
-            { value: 'id', label: 'Id' },
-            { value: 'date', label: 'Date' },
-            { value: 'time', label: 'Time' },
-            { value: 'donor', label: 'Donor' },
-            { value: 'donationType', label: 'Donation type' },
-            { value: 'bloodType', label: 'Blood type' },
-            { value: 'donationCenter', label: 'Donation center' },
-        ];
- 
-        return (
-
+        return (    
             <div>
                 <h1>Donations</h1>
                 <div className="searchBar">
                     <p>Search by :</p>
-                    <DropList2 callback={(filter) => this.changeFilter(filter)} ></DropList2>
+                    <DropList callback={(filter) => this.changeFilter(filter)} ></DropList>
                     <p>Input :</p>
                     <SearchBar callback={(userChoice) => this.changeValuesToDisplay(userChoice)} />
                 </div>
