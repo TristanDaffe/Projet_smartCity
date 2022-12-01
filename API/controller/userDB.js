@@ -1,9 +1,14 @@
+require('dotenv').config();
+const process = require('process');
+const jwt = require('jsonwebtoken');
+
+const { validateString } = require('../utils/utils');
+
 const pool = require('../model/database');
 const UserModele = require("../model/userDB");
 const BloodTypeModel = require("../model/bloodTypeDB");
-const { validateString } = require('../utils/utils');
 
-module.exports.postUser = async (req, res) => {
+module.exports.loginUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
     const { login, password } = body;
@@ -13,16 +18,42 @@ module.exports.postUser = async (req, res) => {
             res.sendStatus(400);
         }
         else {
-            const {rows: users} = await UserModele.postUser(login, password, client);
-            const user = users[0];
+            const result = await UserModele.postUser(login, password, client);
+            const {userType, value} = result;
 
-            if(user === undefined) {
+            if(userType === 'unknown') {
                 res.sendStatus(404);
             }
+            else if(userType === 'admin') {
+                const {id, login} = value;
+                const playload = {status: userType, value: {id, login}};
+                const token = jwt.sign(
+                    playload, 
+                    process.env.SECRET_TOKEN, 
+                    {expiresIn: '1h'}
+                );
+                res.json({token});
+            }
             else {
-                const {rows: bloodTypes} = await BloodTypeModel.getBloodType(user.blood_type, client);
-                user.blood_type = bloodTypes[0];
-                res.json(user);
+                const {id, first_name, last_name, email_address, login, birthday, blood_type} = value;
+                const bloods = await BloodTypeModel.getBloodType(blood_type, client);
+                const blood = bloods.rows[0];
+                const user = {id, 
+                    firstName: first_name, 
+                    lastName: last_name,
+                    emailAddress: email_address, 
+                    login, 
+                    birthDay: birthday, 
+                    blood_type: blood
+                };
+
+                const playload = {status: userType, value: {id, login}};
+                const token = jwt.sign(
+                    playload,
+                    process.env.SECRET_TOKEN,
+                    {expiresIn: '1h'}
+                );
+                res.json({token, user});
             }
         }
     } 
@@ -68,39 +99,73 @@ module.exports.registerUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
 
-    const { lastname, 
-            firstname, 
+    const { lastName, 
+            firstName, 
             emailAddress,
-            birthDay,
+            birthdate,
             bloodType,
             rhesus,
             login, 
             password } = body;
-    
     try {
-        if(!validateString(lastname) || 
-            !validateString(firstname) || 
-            !validateString(emailAddress) || 
-            !validateString(birthDay) || 
-            !validateString(bloodType) || 
-            !validateString(rhesus) ||
-            !validateString(login) || 
-            !validateString(password)) {
+        if(!validateString(lastName) || 
+                !validateString(firstName) || 
+                !validateString(emailAddress) || 
+                !validateString(birthdate) || 
+                !validateString(bloodType) || 
+                !validateString(rhesus) ||
+                !validateString(login) || 
+                !validateString(password)) {
             res.sendStatus(400);
         }
         else {
-            const blood_type = await BloodTypeModel.getBloodTypeFromName(bloodType, rhesus, client);
-            if(blood_type === undefined) {
+            const bloodTypesDB = await BloodTypeModel.getBloodTypeFromName(bloodType, rhesus, client);
+            const bloodTypeDB = bloodTypesDB.rows[0];
+            if(bloodTypeDB === undefined) {
                 res.sendStatus(404);
             }
             else {
-                const {rows: users} = await UserModele.registerUser(lastname, firstname, emailAddress, birthDay, blood_type.id, login, password, client);
-                const user = users[0];
-                res.json(user);
+                const result = await UserModele.registerUser(lastName, firstName, emailAddress, birthdate, bloodTypeDB.id, login, password, client);
+                const {userType, value} = result;
+                if(userType === 'unknown') {
+                    res.sendStatus(404);
+                }
+                else if(userType === 'admin') {
+                    const {id, login} = value;
+                    const playload = {status: userType, value: {id, login}};
+                    const token = jwt.sign(
+                        playload, 
+                        process.env.SECRET_TOKEN, 
+                        {expiresIn: '1h'}
+                    );
+                    res.json({token});
+                }
+                else {
+                    const {id, first_name, last_name, email_address, login, birthday, blood_type} = value;
+                    const bloods = await BloodTypeModel.getBloodType(blood_type, client);
+                    const blood = bloods.rows[0];
+                    const user = {id, 
+                        firstName: first_name, 
+                        lastName: last_name,
+                        emailAddress: email_address, 
+                        login, 
+                        birthDay: birthday, 
+                        blood_type: blood
+                    };
+    
+                    const playload = {status: userType, value: {id, login}};
+                    const token = jwt.sign(
+                        playload,
+                        process.env.SECRET_TOKEN,
+                        {expiresIn: '1h'}
+                    );
+                    res.json({token, user});
+                }
             }
         }
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
 }
