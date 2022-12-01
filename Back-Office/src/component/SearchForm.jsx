@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Select from 'react-select';
 import { useState } from 'react';
 import Droplist from './DropList';
+import DropList2 from './DropList2';
 
 class SearchForm extends React.Component {
 
@@ -13,6 +14,7 @@ class SearchForm extends React.Component {
         this.state = {
             donations: this.props.donations,
             donationsToDisplay: this.props.donations,
+            filter : "id",
             inputDate: "",
             inputTime: "",
             inputDonor: "",
@@ -51,10 +53,39 @@ class SearchForm extends React.Component {
 
     changeValuesToDisplay(string) {
         const donationsToDisplay = this.state.donations;
+        console.log(Droplist.userChoice);
         const afterFiltering = donationsToDisplay.filter(don => {
-            return don.donor.includes(string);
+
+            if (this.state.filter === "id") {
+                return don.id == parseInt(string);
+            }
+            else if (this.state.filter === "date") {
+                return don.date.includes(string);
+            }
+            else if (this.state.filter === "time") {
+                return don.time.includes(string);
+            }
+            else if (this.state.filter === "donor") {
+                return don.donor.includes(string);
+            }
+            else if (this.state.filter === "donationType") {
+                return don.donationType.includes(string);
+            }
+            else if (this.state.filter === "bloodType") {
+                return don.bloodType.includes(string);
+            }
+            else if (this.state.filter === "donationCenter") {
+                return don.donationCenter.includes(string);
+            }
+
         });
         this.setState({ donationsToDisplay: afterFiltering });
+    }
+
+    changeFilter(string) {
+        const newFilter = string;
+        console.log(newFilter);
+        this.setState({ filter: newFilter });
     }
 
     render() {
@@ -71,14 +102,12 @@ class SearchForm extends React.Component {
         return (
 
             <div>
+                <h1>Donations</h1>
                 <div className="searchBar">
-                    <p>Search for a :  </p>
-                    <Droplist />
-                    <Select 
-                        options={options} 
-                        // onChange={(choice)=>{setUserChoice(choice)}}
-                    />
-                    <SearchBar callback={(searchValue) => this.changeValuesToDisplay(userChoice)} />
+                    <p>Search by :</p>
+                    <DropList2 callback={(filter) => this.changeFilter(filter)} ></DropList2>
+                    <p>Input :</p>
+                    <SearchBar callback={(userChoice) => this.changeValuesToDisplay(userChoice)} />
                 </div>
                 <table>
                     <thead>
@@ -105,7 +134,7 @@ class SearchForm extends React.Component {
                                     <td>{don.bloodType}</td>
                                     <td>{don.donationCenter}</td>
                                     <td>
-                                        <Link to={`/donationUpdate/${don.user}`}>Update</Link>
+                                        <Link to={`/donationUpdate/${don.id}`}>Update</Link>
                                     </td>
                                     <td>
                                         <button onClick={() => this.props.deleteDonation(don.id)}>Delete</button>

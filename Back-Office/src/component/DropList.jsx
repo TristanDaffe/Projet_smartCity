@@ -11,15 +11,16 @@ function DropList () {
         { value: 'bloodType', label: 'Blood type' },
         { value: 'donationCenter', label: 'Donation center' },
     ];
-    const [userChoice, setUserChoice] = useState("")
+    const [userChoice, setUserChoice] = useState();
     return (
         <div>
             <Select
+                value={userChoice}
                 options={options}
-                onChange={(choice)=>{setUserChoice(choice)}}
+                onChange={userChoice=>setUserChoice(userChoice.target.value)}
             />
         </div>
     );
 }
 
-export default DropList(userChoice);
+export default DropList;
