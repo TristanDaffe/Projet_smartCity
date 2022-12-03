@@ -1,27 +1,41 @@
-import React, { useState } from 'react';
-import Select from 'react-select';
+import React from 'react';
 
-function DropList () {
-    const options = [
-        { value: 'id', label: 'Id' },
-        { value: 'date', label: 'Date' },
-        { value: 'time', label: 'Time' },
-        { value: 'donor', label: 'Donor' },
-        { value: 'donationType', label: 'Donation type' },
-        { value: 'bloodType', label: 'Blood type' },
-        { value: 'donationCenter', label: 'Donation center' },
-    ];
-    const [userChoice, setUserChoice] = useState();
-    return (
-        <div>
-            <Select
-                defaultValue={options[0]}
-                value={userChoice}
-                options={options}
-                onChange={userChoice=>setUserChoice(userChoice.target.value)}
-            />
-        </div>
-    );
+class DropList2 extends React.Component {
+
+    constructor(props) {
+        super(props)
+        this.state = {
+            result: '',
+            callback: props.callback
+        };
+    }
+
+    handleSelectChange = (event) => {
+        this.setState({
+            result: event.target.value
+        }, () => {
+            this.state.callback(this.state.result);
+        }
+        )
+
+    }
+    render() {
+        return (
+            <div>
+                <select onClick={
+                (event) => this.handleSelectChange(event)
+            }>
+                    <option value="id">Id</option>
+                    <option value="date">Date</option>
+                    <option value="time">Time</option>
+                    <option value="donor">Donor</option>
+                    <option value="donationType">Donation type</option>
+                    <option value="bloodType">Blood type</option>
+                    <option value="donationCenter">Donation center</option>
+                </select>
+            </div>
+        );
+    }
 }
 
-export default DropList;
+export default DropList2;

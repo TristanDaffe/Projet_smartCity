@@ -53,7 +53,7 @@ class SearchForm extends React.Component {
         const afterFiltering = donationsToDisplay.filter(don => {
 
             if (this.state.filter === "id") {
-                return don.id. parseInt(string);
+                return don.id.toString().includes(string);
             }
             else if (this.state.filter === "date") {
                 return don.date.includes(string);
