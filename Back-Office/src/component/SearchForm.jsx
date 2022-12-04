@@ -3,6 +3,8 @@ import SearchBar from './SearchBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from './DropList';
+import Donation from './Donation';
+// mettre defaultValue dans ke time
 
 class SearchForm extends React.Component {
 
@@ -11,7 +13,7 @@ class SearchForm extends React.Component {
         this.state = {
             donations: this.props.donations,
             donationsToDisplay: this.props.donations,
-            filter : "id",
+            filter: "id",
             inputDate: "",
             inputTime: "",
             inputDonor: "",
@@ -80,19 +82,27 @@ class SearchForm extends React.Component {
 
     changeFilter(string) {
         const newFilter = string;
-        console.log(newFilter);
         this.setState({ filter: newFilter });
     }
 
     render() {
-        return (    
+        return (
             <div>
-                <h1>Donations</h1>
+                <div className="header">
+                    <h1>Donation Settings</h1>
+                    <img
+                        className='imgCroixRouge'
+                        src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png"
+                        alt="settings" />
+                </div>
                 <div className="searchBar">
                     <p>Search by :</p>
                     <DropList callback={(filter) => this.changeFilter(filter)} ></DropList>
                     <p>Input :</p>
                     <SearchBar callback={(userChoice) => this.changeValuesToDisplay(userChoice)} />
+                    <Link to={`/addDonation`} className="addButton">
+                        <button>Add Donation</button>
+                    </Link>
                 </div>
                 <table>
                     <thead>
@@ -105,6 +115,7 @@ class SearchForm extends React.Component {
                             <th>Blood type</th>
                             <th>Donation center</th>
                             <th>Update</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -129,45 +140,6 @@ class SearchForm extends React.Component {
                         })}
                     </tbody>
                 </table>
-                <form>
-                    <label >Date:</label>
-                    <input type="text"
-                        onChange={(event) => {
-                            this.setState({ inputDate: event.target.value });
-                        }} />
-                    <br />
-                    <label >Time:</label>
-                    <input type="Time"
-                        onChange={(event) => {
-                            this.setState({ inputTime: event.target.value });
-                        }} />
-                    <br />
-                    <label >Donor:</label>
-                    <input type="text"
-                        onChange={(event) => {
-                            this.setState({ inputDonor: event.target.value });
-                        }} />
-                    <br />
-                    <label >Donation type:</label>
-                    <input type="text"
-                        onChange={(event) => {
-                            this.setState({ inputDonationType: event.target.value });
-                        }} />
-                    <br />
-                    <label >Blood type:</label>
-                    <input type="text"
-                        onChange={(event) => {
-                            this.setState({ inputBloodType: event.target.value });
-                        }} />
-                    <br />
-                    <label >Donation Center:</label>
-                    <input type="text"
-                        onChange={(event) => {
-                            this.setState({ inputDonationCenter: event.target.value });
-                        }} />
-                    <br />
-                    <button onClick={(event) => this.addDonation(event)}>Add</button>
-                </form>
             </div>
         );
     }

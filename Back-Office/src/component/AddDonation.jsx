@@ -6,7 +6,7 @@ function withParams(Component) {
     return (props) => { return <Component {...props} params={useParams()} /> };
 }
 
-class Donation extends React.Component {
+class AddDonation extends React.Component {
 
     constructor(props) {
         super(props);
@@ -15,14 +15,28 @@ class Donation extends React.Component {
         const [donation] = donations.filter(d => d.id === id);
         this.state = {
             id,
-            date: donation.date,
-            time: donation.time,
-            donor: donation.donor,
-            donationType: donation.donationType,
-            bloodType: donation.bloodType,
-            donationCenter: donation.donationCenter,
+            date: new Date().toISOString().slice(0, 10),
+            time: new Date().toISOString().slice(11, 16),
+            donor: donation ? donation.donor : "",
+            donationType: donation ? donation.donationType : "",
+            bloodType: donation ? donation.bloodType : "",
+            donationCenter: donation ? donation.donationCenter : "",
             redirect: false
         }
+    }
+
+    addDonation(event) {
+        event.preventDefault();
+        const newDonation = {
+            date: this.state.inputDate,
+            time: this.state.inputTime,
+            donor: this.state.inputDonor,
+            donationType: this.state.inputDonationType,
+            bloodType: this.state.inputBloodType,
+            donationCenter: this.state.inputDonationCenter,
+        }
+        this.props.addDonation(newDonation);
+        this.setState({ redirect: true });
     }
 
 
@@ -88,6 +102,7 @@ class Donation extends React.Component {
         }
 
         return (
+            
             <div style={formStyle}>
                 <div className="header">
                 <h1>Donation Settings</h1>
@@ -96,65 +111,55 @@ class Donation extends React.Component {
                     src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png" 
                     alt="settings" />
                 </div>
-                <h2>Update donation</h2>
-                <form style={container}>
+                <h2>Add donation</h2>
+
+                <form style = {container}>
                     <div style={firstItem}>
-                        <label>Id</label>
-                        <input type="text"
-                            value={this.state.id}
-                            onChange={(d) => this.setState({ id: d.target.value })}
-                        />
+                    <label >Date:</label>
+                    <input type="text"
+                        onChange={(event) => {
+                            this.setState({ inputDate: event.target.value });
+                        }} />
                     </div>
                     <div style={item}>
-                        <label>Date</label>
-                        <input type="text"
-                            value={this.state.date}
-                            onChange={(d) => this.setState({ date: d.target.value })}
-                        />
+                    <label >Time:</label>
+                    <input type="Time"
+                        onChange={(event) => {
+                            this.setState({ inputTime: event.target.value });
+                        }} />
                     </div>
                     <div style={item}>
-                        <label>Donor</label>
-                        <input type="text"
-                            value={this.state.donor}
-                            onChange={(d) => this.setState({ donor: d.target.value })}
-                        />
+                    <label >Donor:</label>
+                    <input type="text"
+                        onChange={(event) => {
+                            this.setState({ inputDonor: event.target.value });
+                        }} />
+                    </div>  
+                    <div style={item}>
+                    <label >Donation type:</label>
+                    <input type="text"
+                        onChange={(event) => {
+                            this.setState({ inputDonationType: event.target.value });
+                        }} />
                     </div>
                     <div style={item}>
-                        <label>Donation type</label>
-                        <input type="text"
-                            value={this.state.donationType}
-                            onChange={(d) => this.setState({ donationType: d.target.value })}
-                        />
+                    <label >Blood type:</label>
+                    <input type="text"
+                        onChange={(event) => {
+                            this.setState({ inputBloodType: event.target.value });
+                        }} />
                     </div>
                     <div style={item}>
-                        <label>Blood type</label>
-                        <input type="text"
-                            value={this.state.bloodType}
-                            onChange={(d) => this.setState({ bloodType: d.target.value })}
-                        />
-                    </div>
-                    <div style={item}>
-                        <label>Donation Center</label>
-                        <input type="text"
-                            value={this.state.donationCenter}
-                            onChange={(d) => this.setState({ donationCentre: d.target.value })}
-                        />
-                    </div>
-                    <div style={item}>
-                        <label>Time</label>
-                        <input type="time"
-                            value={this.state.date}
-                            onChange={(d) => this.setState({ time: d.target.value })}
-                        />
+                    <label >Donation Center:</label>
+                    <input type="text"
+                        onChange={(event) => {
+                            this.setState({ inputDonationCenter: event.target.value });
+                        }} />
                     </div>
                     <div style={lastItem}>
-                        <button
-                            onClick={
-                                (d) => this.save(d)
-                            }>
-                            Save
-                        </button>
-                        {this.state.redirect && <Navigate to={"/"} />}
+                    <button onClick={(event) => this.addDonation(event)}>Add</button>
+                    
+                    {this.state.redirect && <Navigate to={"/"} />}
                     </div>
                 </form>
             </div>
@@ -180,4 +185,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default withParams(connect(mapStateToProps, mapDispatchToProps)(Donation));
+export default withParams(connect(mapStateToProps, mapDispatchToProps)(AddDonation));
