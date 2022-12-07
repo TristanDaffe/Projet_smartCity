@@ -13,7 +13,6 @@ module.exports.identification = async (req, res, next) => {
             next();
         }
         catch (e) {
-            console.error(e);
             res.sendStatus(400);
         }
     } else {
