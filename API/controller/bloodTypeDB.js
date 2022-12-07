@@ -1,5 +1,5 @@
 const pool = require('../model/database');
-const bloodTypeModel = require("../model/bloodTypeDB");
+const BloodTypeModel = require("../model/bloodTypeDB");
 
 module.exports.getBloodType = async (req, res) => {
     const client = await pool.connect();
@@ -11,7 +11,7 @@ module.exports.getBloodType = async (req, res) => {
             res.sendStatus(400);
         }
         else {
-            const {rows: bloodTypes} = await bloodTypeModel.getBloodType(id, client);
+            const {rows: bloodTypes} = await BloodTypeModel.getBloodType(id, client);
             const bloodType = bloodTypes[0];
             
             if(bloodType === undefined) {
@@ -40,7 +40,7 @@ module.exports.getBloodTypeFromName = async (req, res) => {
             res.sendStatus(400);
         }
         else {
-            const {rows: bloodTypes} = await bloodTypeModel.getBloodTypeFromName(type, rhesus, client);
+            const {rows: bloodTypes} = await BloodTypeModel.getBloodTypeFromName(type, rhesus, client);
             const bloodType = bloodTypes[0];
             
             if(bloodType === undefined) {
@@ -61,9 +61,8 @@ module.exports.getBloodTypeFromName = async (req, res) => {
 
 module.exports.getAllBloodType = async (req, res) => {
     const client = await pool.connect();
-
     try {
-        const {rows: bloodTypes} = await bloodTypeModel.getBloodTypes(client);
+        const {rows: bloodTypes} = await BloodTypeModel.getBloodTypes(client);
         res.json(bloodTypes);
     }
     catch (error) {
@@ -87,13 +86,13 @@ module.exports.createBloodType = async (req, res) => {
             // vérifier si le type de sang existe déjà
             // déjà en contrainte de base de données ( à voir si utiles pour le code erreur )
 
-            const {rows: bloodTypes} = await bloodTypeModel.getBloodTypeFromName(type, rhesus, client);
+            const {rows: bloodTypes} = await BloodTypeModel.getBloodTypeFromName(type, rhesus, client);
             const bloodType = bloodTypes[0];
             if(bloodType !== undefined) {
                 res.sendStatus(409);
             }
             else {
-                const bloodType = await bloodTypeModel.createBloodType(type, rhesus, client);
+                const bloodType = await BloodTypeModel.createBloodType(type, rhesus, client);
                 res.sendStatus(201);
             }
         }
@@ -118,7 +117,7 @@ module.exports.updateBloodType = async (req, res) => {
             res.sendStatus(400);
         }
         else {
-            await bloodTypeModel.updateBloodType(id, type, rhesus, client);
+            await BloodTypeModel.updateBloodType(id, type, rhesus, client);
             res.sendStatus(200);
         }
     }
