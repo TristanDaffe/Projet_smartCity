@@ -34,7 +34,7 @@ class WelcomePannel extends React.Component {
 
           <LinkButton
             txt="Donation Centers"
-            link="centers"
+            link="donationCenterList"
             img="https://www.quickenloans.com/blog/wp-content/uploads/2015/03/donation-center.jpg"
             alt="Donation Centers"
           />

@@ -73,12 +73,13 @@ label {
   opacity: 0.6;
   border-inline-style: solid;
   border-color : white;
-  
+  filter: blur(2px);
 }
 
 .LinkButtonImg:hover {
   opacity: 0.75;
   scale: 1.1;
+  filter: blur(0px);
 }
 
 .LinkButtonContainer {
@@ -86,6 +87,7 @@ label {
   align-items: center;
   justify-content: center;
   position: relative;
+
 }
 
 .LinkButtonText {

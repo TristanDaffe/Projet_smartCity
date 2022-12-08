@@ -108,8 +108,7 @@ class DonationList extends React.Component {
                                 { value: 'donationType', label: 'Donation type', key : 'donationType' },
                                 { value: 'bloodType', label: 'Blood type', key : 'bloodType' },
                                 { value: 'donationCenter', label: 'Donation center', key : 'donationCenter' }
-                                
-                                
+                                                               
                             ]
                         }
                         callback={(filter) => this.changeFilter(filter)} ></DropList>

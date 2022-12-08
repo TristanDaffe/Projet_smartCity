@@ -6,6 +6,8 @@ function withParams(Component) {
     return (props) => { return <Component {...props} params={useParams()} /> };
 }
 
+// petit probleme avec la date, qui ne s'affiche correctement à l'ouverture de la page
+
 class DonationUpdate extends React.Component {
 
     constructor(props) {
@@ -61,11 +63,21 @@ class DonationUpdate extends React.Component {
                         />
                     </div>
                     <div className="item">
-                        <label>Date</label>
-                        <input type="text"
-                            value={this.state.date}
-                            onChange={(d) => this.setState({ date: d.target.value })}
+                    <label >Date:</label>
+                        <input className='addUpdateInput'
+                        defaultValue={this.state.date}
+                            type="date"
+                            onChange={(event) => this.setState({ inputDate: event.target.value.toString() })}
                         />
+                    </div>
+                    <div className="item">
+                        <label>Time</label>
+                        <input className='addUpdateInput'
+                            type="Time"
+                            value={this.state.time}
+                            onChange={(event) => {
+                                this.setState({ inputTime: event.target.value });
+                            }} />
                     </div>
                     <div className="item">
                         <label>Donor</label>
@@ -83,23 +95,27 @@ class DonationUpdate extends React.Component {
                     </div>
                     <div className="item">
                         <label>Blood type</label>
-                        <input type="text"
-                            value={this.state.bloodType}
-                            onChange={(d) => this.setState({ bloodType: d.target.value })}
-                        />
+                        <select className='addUpdateInput'
+                            defaultValue={this.state.b}
+                            onChange={(event) => {
+                                this.setState({ inputBloodType: event.target.value });
+                            }} >
+                           
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
                     </div>
                     <div className="item">
                         <label>Donation Center</label>
                         <input type="text"
                             value={this.state.donationCenter}
                             onChange={(d) => this.setState({ donationCentre: d.target.value })}
-                        />
-                    </div>
-                    <div className="item">
-                        <label>Time</label>
-                        <input type="time"
-                            value={this.state.date}
-                            onChange={(d) => this.setState({ time: d.target.value })}
                         />
                     </div>
                     <div className='lastItem'>

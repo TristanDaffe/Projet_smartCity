@@ -58,8 +58,6 @@ class DonationAdd extends React.Component {
 
     render() {
 
-
-
         return (
 
             <div className='addUpdateForm'>
@@ -78,7 +76,6 @@ class DonationAdd extends React.Component {
                         <input className='addUpdateInput'
                             type="date"
                             onChange={(event) => this.setState({ inputDate: event.target.value.toString() })}
-
                         />
                     </div>
                     <div className='item'>
