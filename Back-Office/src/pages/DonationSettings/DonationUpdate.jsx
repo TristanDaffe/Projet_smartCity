@@ -6,7 +6,7 @@ function withParams(Component) {
     return (props) => { return <Component {...props} params={useParams()} /> };
 }
 
-class Donation extends React.Component {
+class DonationUpdate extends React.Component {
 
     constructor(props) {
         super(props);
@@ -154,7 +154,7 @@ class Donation extends React.Component {
                             }>
                             Save
                         </button>
-                        {this.state.redirect && <Navigate to={"/"} />}
+                        {this.state.redirect && <Navigate to={"/donationList"} />}
                     </div>
                 </form>
             </div>
@@ -180,4 +180,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default withParams(connect(mapStateToProps, mapDispatchToProps)(Donation));
+export default withParams(connect(mapStateToProps, mapDispatchToProps)(DonationUpdate));

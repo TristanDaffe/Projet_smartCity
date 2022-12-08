@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createPath, Navigate, useParams } from 'react-router-dom';
-import DropList from './DropList';
-import {CustomTable} from './CustomTable';
+
 
 
 function withParams(Component) {
     return (props) => { return <Component {...props} params={useParams()} /> };
 }
 
-class AddDonation extends React.Component {
+class DonationAdd extends React.Component {
 
     constructor(props) {
         super(props);
@@ -186,7 +185,7 @@ class AddDonation extends React.Component {
                     <div style={lastItem}>
                         <button onClick={(event) => this.addDonation(event)}>Add</button>
 
-                        {this.state.redirect && <Navigate to={"/"} />}
+                        {this.state.redirect && <Navigate to={"/donationList"} />}
                     </div>
                 </form>
 
@@ -213,4 +212,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default withParams(connect(mapStateToProps, mapDispatchToProps)(AddDonation));
+export default withParams(connect(mapStateToProps, mapDispatchToProps)(DonationAdd));

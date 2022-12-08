@@ -19,19 +19,29 @@ class DropList extends React.Component {
         )
 
     }
+
+    options = [
+        { value: 'id', label: 'Id' },
+        { value: 'date', label: 'Date' },
+        { value: 'time', label: 'Time' },
+        { value: 'donor', label: 'Donor' },
+        { value: 'donationType', label: 'Donation type' },
+        { value: 'bloodType', label: 'Blood type' },
+        { value: 'donationCenter', label: 'Donation center' }
+    ];
+
     render() {
         return (
             <div>
                 <select onClick={
                     (event) => this.handleSelectChange(event)
                 }>
-                    <option value="id">Id</option>
-                    <option value="date">Date</option>
-                    <option value="time">Time</option>
-                    <option value="donor">Donor</option>
-                    <option value="donationType">Donation type</option>
-                    <option value="bloodType">Blood type</option>
-                    <option value="donationCenter">Donation center</option>
+                    {this.options.map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.label}
+                        </option>
+                    ))}
+                    
                 </select>
             </div>
         );

@@ -1,12 +1,12 @@
 import React from 'react';
-import SearchBar from './SearchBar';
+import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import DropList from './DropList';
-import Donation from './Donation';
-// mettre defaultValue dans ke time
+import DropList from '../../component/DropList';
 
-class SearchForm extends React.Component {
+// mettre defaultValue dans le time
+
+class DonationList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -163,4 +163,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(SearchForm);
+export default connect(mapStateToProps, mapDispatchToProps)(DonationList);
