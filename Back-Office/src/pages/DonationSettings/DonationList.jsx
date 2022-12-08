@@ -31,7 +31,7 @@ class DonationList extends React.Component {
             });
         }
     }
-    
+
 
     addDonation(event) {
         event.preventDefault();
@@ -98,7 +98,21 @@ class DonationList extends React.Component {
                 </div>
                 <div className="searchBar">
                     <p>Search by :</p>
-                    <DropList callback={(filter) => this.changeFilter(filter)} ></DropList>
+                    <DropList
+                        options={
+                            [
+                                { value: 'id', label: 'Id', key : 'id' },
+                                { value: 'date', label: 'Date', key : 'date' },
+                                { value: 'time', label: 'Time', key : 'time' },
+                                { value: 'donor', label: 'Donor', key : 'donor' },
+                                { value: 'donationType', label: 'Donation type', key : 'donationType' },
+                                { value: 'bloodType', label: 'Blood type', key : 'bloodType' },
+                                { value: 'donationCenter', label: 'Donation center', key : 'donationCenter' }
+                                
+                                
+                            ]
+                        }
+                        callback={(filter) => this.changeFilter(filter)} ></DropList>
                     <p>Input :</p>
                     <SearchBar callback={(userChoice) => this.changeValuesToDisplay(userChoice)} />
                     <Link to={`/addDonation`} className="addButton">

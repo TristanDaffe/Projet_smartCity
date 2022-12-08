@@ -4,7 +4,7 @@
   align-items: center;
   flex-direction: row;
   column-gap: 10px;
-  padding-top: 20px;
+  padding-top: 20px; 
 }
 
 .imgCroixRouge {
@@ -108,8 +108,61 @@ label {
   column-gap: 20px;
   align-items: center;
   justify-content: center;
+
   position: relative;
   margin: 20px;
   width: 100%;
   height: 100%;
+}
+
+.firstItem {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: center;
+  width: 100%;
+  padding: 4px; 
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.item {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: center;
+  width: 100%;
+  padding: 4px;
+}
+
+.lastItem {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+  align-items: left;
+  justify-content: center;
+  width: 100%;
+  padding: 4px;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+.addUpdateContainer {
+  border: 6px solid black;
+  border-radius: 10px;
+  padding-right: 10px;
+  background-color: none;
+  z-index: 1;
+  position: relative;
+}
+
+.addUpdateForm {
+  padding-top: 40px;
+}
+
+.addUpdateInput {
+  width: 175px;
+  display: flex;
 }

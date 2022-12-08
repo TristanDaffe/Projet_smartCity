@@ -5,6 +5,7 @@ class DropList extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            options : props.options,
             result: '',
             callback: props.callback
         };
@@ -20,28 +21,17 @@ class DropList extends React.Component {
 
     }
 
-    options = [
-        { value: 'id', label: 'Id' },
-        { value: 'date', label: 'Date' },
-        { value: 'time', label: 'Time' },
-        { value: 'donor', label: 'Donor' },
-        { value: 'donationType', label: 'Donation type' },
-        { value: 'bloodType', label: 'Blood type' },
-        { value: 'donationCenter', label: 'Donation center' }
-    ];
-
     render() {
         return (
             <div>
                 <select onClick={
                     (event) => this.handleSelectChange(event)
                 }>
-                    {this.options.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                    
+                    {this.state.options.map((option) => {
+                        return <option 
+                        value={option.value}
+                        key = {option.key}>{option.label}</option>
+                    })}
                 </select>
             </div>
         );

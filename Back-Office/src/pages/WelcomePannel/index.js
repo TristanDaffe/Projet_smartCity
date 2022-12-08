@@ -11,7 +11,12 @@ class WelcomePannel extends React.Component {
     return (
       <div>
         <div className="header">
-        <h1>Welcome</h1>
+        <h1
+            style={{
+                fontSize: "60px",
+                
+            }}
+        >Welcome</h1>
                     <img
                         className='imgCroixRouge'
                         src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png"

@@ -41,54 +41,9 @@ class DonationUpdate extends React.Component {
     }
 
     render() {
-        const formStyle = {
-            paddingTop: "40px",
-        }
-        const item = {
-            border: "1px solid black",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "left",
-            justifyContent: "center",
-            width: "100%",
-            padding: "4px",
-        };
-
-        const firstItem = {
-            border: "1px solid black",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "left",
-            justifyContent: "center",
-            width: "100%",
-            padding: "4px",
-            borderTopLeftRadius: "3px",
-            borderTopRightRadius: "3px",
-        };
-
-        const lastItem = {
-            border: "1px solid black",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "left",
-            justifyContent: "center",
-            width: "100%",
-            padding: "4px",
-            borderBottomLeftRadius: "3px",
-            borderBottomRightRadius: "3px",
-        };
-
-        const container = {
-            border: "6px solid black",
-            borderRadius: "10px",
-            paddingRight: "10px",
-            backgroundColor: "none",
-            zIndex: "1",
-            position: "relative",
-        }
-
+        
         return (
-            <div style={formStyle}>
+            <div className='addUpdateForm'>
                 <div className="header">
                     <h1>Donation Settings</h1>
                     <img
@@ -97,57 +52,57 @@ class DonationUpdate extends React.Component {
                         alt="settings" />
                 </div>
                 <h2>Update donation</h2>
-                <form style={container}>
-                    <div style={firstItem}>
+                <form className='addUpdateContainer'>
+                    <div className='firstItem'>
                         <label>Id</label>
                         <input type="text"
                             value={this.state.id}
                             onChange={(d) => this.setState({ id: d.target.value })}
                         />
                     </div>
-                    <div style={item}>
+                    <div className="item">
                         <label>Date</label>
                         <input type="text"
                             value={this.state.date}
                             onChange={(d) => this.setState({ date: d.target.value })}
                         />
                     </div>
-                    <div style={item}>
+                    <div className="item">
                         <label>Donor</label>
                         <input type="text"
                             value={this.state.donor}
                             onChange={(d) => this.setState({ donor: d.target.value })}
                         />
                     </div>
-                    <div style={item}>
+                    <div className="item">
                         <label>Donation type</label>
                         <input type="text"
                             value={this.state.donationType}
                             onChange={(d) => this.setState({ donationType: d.target.value })}
                         />
                     </div>
-                    <div style={item}>
+                    <div className="item">
                         <label>Blood type</label>
                         <input type="text"
                             value={this.state.bloodType}
                             onChange={(d) => this.setState({ bloodType: d.target.value })}
                         />
                     </div>
-                    <div style={item}>
+                    <div className="item">
                         <label>Donation Center</label>
                         <input type="text"
                             value={this.state.donationCenter}
                             onChange={(d) => this.setState({ donationCentre: d.target.value })}
                         />
                     </div>
-                    <div style={item}>
+                    <div className="item">
                         <label>Time</label>
                         <input type="time"
                             value={this.state.date}
                             onChange={(d) => this.setState({ time: d.target.value })}
                         />
                     </div>
-                    <div style={lastItem}>
+                    <div className='lastItem'>
                         <button
                             onClick={
                                 (d) => this.save(d)

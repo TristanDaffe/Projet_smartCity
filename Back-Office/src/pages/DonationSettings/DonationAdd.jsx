@@ -57,61 +57,12 @@ class DonationAdd extends React.Component {
     }
 
     render() {
-        const formStyle = {
-            paddingTop: "40px",
-        }
-        const item = {
-            border: "1px solid black",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "left",
-            justifyContent: "center",
-            width: "100%",
-            padding: "4px",
-        };
 
-        const firstItem = {
-            border: "1px solid black",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "left",
-            justifyContent: "center",
-            width: "100%",
-            padding: "4px",
-            borderTopLeftRadius: "3px",
-            borderTopRightRadius: "3px",
-        };
-
-        const lastItem = {
-            border: "1px solid black",
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "left",
-            justifyContent: "center",
-            width: "100%",
-            padding: "4px",
-            borderBottomLeftRadius: "3px",
-            borderBottomRightRadius: "3px",
-        };
-
-        const container = {
-            border: "6px solid black",
-            borderRadius: "10px",
-            paddingRight: "10px",
-            backgroundColor: "none",
-            zIndex: "1",
-            position: "relative",
-        }
-
-        const handleDateChange = (date) => {
-            this.setState({ date });
-            console.log(date);
-        }
 
 
         return (
 
-            <div style={formStyle}>
+            <div className='addUpdateForm'>
                 <div className="header">
                     <h1>Donation Settings</h1>
                     <img
@@ -121,32 +72,34 @@ class DonationAdd extends React.Component {
                 </div>
                 <h2>Add donation</h2>
 
-                <form style={container}>
-                    <div style={firstItem}>
+                <form className='addUpdateContainer'>
+                    <div className='firstItem'>
                         <label >Date:</label>
-                        <input
+                        <input className='addUpdateInput'
                             type="date"
-                            onChange={(event) => this.setState({ inputDate: event.target.value.toString() })}    
+                            onChange={(event) => this.setState({ inputDate: event.target.value.toString() })}
 
                         />
                     </div>
-                    <div style={item}>
+                    <div className='item'>
                         <label >Time:</label>
-                        <input type="Time"
+                        <input className='addUpdateInput'
+                            type="Time"
                             onChange={(event) => {
                                 this.setState({ inputTime: event.target.value });
                             }} />
                     </div>
-                    <div style={item}>
+                    <div className='item'>
                         <label >Donor:</label>
-                        <input type="text"
+                        <input className='addUpdateInput'
+                            type="text"
                             onChange={(event) => {
                                 this.setState({ inputDonor: event.target.value });
                             }} />
                     </div>
-                    <div style={item}>
+                    <div className='item'>
                         <label >Donation type:</label>
-                        <select 
+                        <select className='addUpdateInput'
                             defaultValue="none"
                             onChange={(event) => {
                                 this.setState({ inputDonationType: event.target.value });
@@ -157,9 +110,9 @@ class DonationAdd extends React.Component {
                             <option value="Whole blood">Whole blood</option>
                         </select>
                     </div>
-                    <div style={item}>
+                    <div className='item'>
                         <label >Blood type:</label>
-                        <select
+                        <select className='addUpdateInput'
                             defaultValue="none"
                             onChange={(event) => {
                                 this.setState({ inputBloodType: event.target.value });
@@ -175,14 +128,15 @@ class DonationAdd extends React.Component {
                             <option value="O-">O-</option>
                         </select>
                     </div>
-                    <div style={item}>
+                    <div className='item'>
                         <label >Donation Center:</label>
-                        <input type="text"
+                        <input className='addUpdateInput'
+                            type="text"
                             onChange={(event) => {
                                 this.setState({ inputDonationCenter: event.target.value });
                             }} />
                     </div>
-                    <div style={lastItem}>
+                    <div className='lastItem'>
                         <button onClick={(event) => this.addDonation(event)}>Add</button>
 
                         {this.state.redirect && <Navigate to={"/donationList"} />}
