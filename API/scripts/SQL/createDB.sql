@@ -70,7 +70,7 @@ CREATE TABLE time_between_donation(
         foreign key (first_donation_type_id) references donation_type(id),
     next_donation_type_id int not null,
         foreign key (next_donation_type_id) references donation_type(id),
-    interval interval not null,
+    time_between interval not null,
     primary key (first_donation_type_id,next_donation_type_id)
 );
 
@@ -93,7 +93,8 @@ DROP TABLE IF EXISTS donation CASCADE;
 CREATE TABLE donation(
     id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     date date not null,
-    user_id int not null,
+    hour time not null,
+    user_id int,
         foreign key (user_id) references user_account(id),
     donation_type_id int not null,
         foreign key (donation_type_id) references donation_type(id),
@@ -133,7 +134,7 @@ INSERT INTO donation_type(name, time_of_donation) VALUES
 ('Plasma', '00:45:00'),
 ('Platelets', '01:30:00');
 
-INSERT INTO time_between_donation(first_donation_type_id, next_donation_type_id, interval) VALUES
+INSERT INTO time_between_donation(first_donation_type_id, next_donation_type_id, time_between) VALUES
 (1, 1, '3 month'),
 (1, 2, '2 week'),
 (1, 3, '4 week'),
@@ -234,13 +235,18 @@ Insert into donation_available(center_id, blood_type_id) VALUES
 (4, 3),
 (5, 1);
 
-Insert into donation(date, user_id, donation_type_id, donation_center_id) VALUES
-('2019-01-01', 1, 1, 1),
-('2020-03-24', 2, 1, 1),
-('2022-06-15', 3, 1, 1),
-('2019-11-21', 4, 1, 1),
-('2020-02-03', 5, 1, 1),
-('2022-11-23', 6, 1, 1),
-('2021-09-09', 7, 1, 1),
-('2022-04-12', 8, 1, 1);
+Insert into donation(date, hour, user_id, donation_type_id, donation_center_id) VALUES
+('2019-01-01', '13:10', 1, 1, 1),
+('2018-01-01', '13:10', 1, 1, 1),
+('2018-01-01', '13:10', 1, 2, 1),
+('2018-01-01', '13:10', 1, 3, 1),
+('2020-01-01', '13:10', 1, 3, 1),
+
+('2020-03-24', '13:10', 2, 1, 1),
+('2022-06-15', '13:10', 3, 1, 1),
+('2019-11-21', '13:10', 4, 1, 1),
+('2020-02-03', '13:10', 5, 1, 1),
+('2022-11-23', '13:10', 6, 1, 1),
+('2021-09-09', '13:10', 7, 1, 1),
+('2022-04-12', '13:10', 8, 1, 1);
 

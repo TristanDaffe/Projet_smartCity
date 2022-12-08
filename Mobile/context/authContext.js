@@ -5,7 +5,7 @@ import { Alert } from "react-native";
 import axios from "axios";
 
 export const AuthContext = createContext();
-// https://youtu.be/kXVJYXd3C8k
+
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState({});
     const [token, setToken] = useState(null);

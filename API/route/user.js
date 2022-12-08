@@ -7,7 +7,7 @@ const AuthMiddleWare = require("../middleware/authorization");
 router.get('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.getUser);
 router.post('/login', UserConroller.loginUser);
 router.post('/register', UserConroller.registerUser);
-// router.patch('/user', UserConroller.patchUser);
-// router.delete('/user', UserConroller.deleteUser);
+router.patch('/patch', UserConroller.patchUser);
+router.delete('/delete/:id', UserConroller.deleteUser);
 
 module.exports = router;

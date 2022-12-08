@@ -165,7 +165,98 @@ module.exports.registerUser = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
+    }
+}
+
+module.exports.patchUser = async (req, res) => {
+    const client = await pool.connect();
+    const body = req.body;
+
+    const { 
+            id,
+            lastName, 
+            firstName, 
+            emailAddress,
+            birthdate,
+            bloodTypeId,
+            login, 
+            password } = body;
+
+    try {
+        if(!validateString(lastName) || 
+                !validateString(firstName) || 
+                !validateString(emailAddress) || 
+                !validateString(birthdate) || 
+                !validateString(login) || 
+                !validateString(password)) {
+            res.sendStatus(400);
+        }
+        else {
+            const result = await UserModele.updateUser(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, password, client);
+            const {userType, value} = result;
+            
+            if(userType === 'unknown') {
+                res.sendStatus(404);
+            }
+            else if(userType === 'admin') {
+                const {id, login} = value;
+                const playload = {status: userType, value: {id, login}};
+                const token = jwt.sign(
+                    playload, 
+                    process.env.SECRET_TOKEN, 
+                    {expiresIn: '1h'}
+                );
+                res.json({token});
+            }
+            else {
+                const {id, first_name, last_name, email_address, login, birthday, blood_type} = value;
+                const bloods = await BloodTypeModel.getBloodType(blood_type, client);
+                const blood = bloods.rows[0];
+                const user = {id, 
+                    firstName: first_name, 
+                    lastName: last_name,
+                    emailAddress: email_address, 
+                    login, 
+                    birthDay: birthday, 
+                    blood_type: blood
+                };
+
+                const playload = {status: userType, value: {id, login}};
+                const token = jwt.sign(
+                    playload,
+                    process.env.SECRET_TOKEN,
+                    {expiresIn: '1h'}
+                );
+            res.json({token, user});
+            }
+        }
+    }
+    catch (error) {
+        console.log(error)
+        res.sendStatus(500);
+    }
+
+}
+
+module.exports.deleteUser = async (req, res) => {
+    const client = await pool.connect();
+    const idText = req.params.id;
+    const id = parseInt(idText);
+
+    try {
+        if(isNaN(id)) {
+            res.sendStatus(400);
+        }
+        else {
+            await UserModele.deleteUser(id, client);
+            res.sendStatus(200);
+        }
+    }
+    catch (error) {
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
     }
 }
