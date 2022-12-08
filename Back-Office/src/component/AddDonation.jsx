@@ -1,6 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Navigate, useParams } from 'react-router-dom';
+import { createPath, Navigate, useParams } from 'react-router-dom';
+import DropList from './DropList';
+import {CustomTable} from './CustomTable';
+
 
 function withParams(Component) {
     return (props) => { return <Component {...props} params={useParams()} /> };
@@ -101,67 +104,92 @@ class AddDonation extends React.Component {
             position: "relative",
         }
 
+        const handleDateChange = (date) => {
+            this.setState({ date });
+            console.log(date);
+        }
+
+
         return (
-            
+
             <div style={formStyle}>
                 <div className="header">
-                <h1>Donation Settings</h1>
-                <img 
-                    className='imgCroixRouge' 
-                    src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png" 
-                    alt="settings" />
+                    <h1>Donation Settings</h1>
+                    <img
+                        className='imgCroixRouge'
+                        src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png"
+                        alt="settings" />
                 </div>
                 <h2>Add donation</h2>
 
-                <form style = {container}>
+                <form style={container}>
                     <div style={firstItem}>
-                    <label >Date:</label>
-                    <input type="text"
-                        onChange={(event) => {
-                            this.setState({ inputDate: event.target.value });
-                        }} />
+                        <label >Date:</label>
+                        <input
+                            type="date"
+                            onChange={(event) => this.setState({ inputDate: event.target.value.toString() })}    
+
+                        />
                     </div>
                     <div style={item}>
-                    <label >Time:</label>
-                    <input type="Time"
-                        onChange={(event) => {
-                            this.setState({ inputTime: event.target.value });
-                        }} />
+                        <label >Time:</label>
+                        <input type="Time"
+                            onChange={(event) => {
+                                this.setState({ inputTime: event.target.value });
+                            }} />
                     </div>
                     <div style={item}>
-                    <label >Donor:</label>
-                    <input type="text"
-                        onChange={(event) => {
-                            this.setState({ inputDonor: event.target.value });
-                        }} />
-                    </div>  
-                    <div style={item}>
-                    <label >Donation type:</label>
-                    <input type="text"
-                        onChange={(event) => {
-                            this.setState({ inputDonationType: event.target.value });
-                        }} />
+                        <label >Donor:</label>
+                        <input type="text"
+                            onChange={(event) => {
+                                this.setState({ inputDonor: event.target.value });
+                            }} />
                     </div>
                     <div style={item}>
-                    <label >Blood type:</label>
-                    <input type="text"
-                        onChange={(event) => {
-                            this.setState({ inputBloodType: event.target.value });
-                        }} />
+                        <label >Donation type:</label>
+                        <select 
+                            defaultValue="none"
+                            onChange={(event) => {
+                                this.setState({ inputDonationType: event.target.value });
+                            }} >
+                            <option value="none" disabled hidden>Choose a donation type</option>
+                            <option value="Plasma">Plasma</option>
+                            <option value="Platelets">Platelets</option>
+                            <option value="Whole blood">Whole blood</option>
+                        </select>
                     </div>
                     <div style={item}>
-                    <label >Donation Center:</label>
-                    <input type="text"
-                        onChange={(event) => {
-                            this.setState({ inputDonationCenter: event.target.value });
-                        }} />
+                        <label >Blood type:</label>
+                        <select
+                            defaultValue="none"
+                            onChange={(event) => {
+                                this.setState({ inputBloodType: event.target.value });
+                            }} >
+                            <option value="none" disabled hidden>Choose a blood type</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                        </select>
+                    </div>
+                    <div style={item}>
+                        <label >Donation Center:</label>
+                        <input type="text"
+                            onChange={(event) => {
+                                this.setState({ inputDonationCenter: event.target.value });
+                            }} />
                     </div>
                     <div style={lastItem}>
-                    <button onClick={(event) => this.addDonation(event)}>Add</button>
-                    
-                    {this.state.redirect && <Navigate to={"/"} />}
+                        <button onClick={(event) => this.addDonation(event)}>Add</button>
+
+                        {this.state.redirect && <Navigate to={"/"} />}
                     </div>
                 </form>
+
             </div>
         );
     }

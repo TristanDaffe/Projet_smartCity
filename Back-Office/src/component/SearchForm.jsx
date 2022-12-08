@@ -31,6 +31,7 @@ class SearchForm extends React.Component {
             });
         }
     }
+    
 
     addDonation(event) {
         event.preventDefault();

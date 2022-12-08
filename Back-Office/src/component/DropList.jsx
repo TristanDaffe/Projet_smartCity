@@ -1,6 +1,6 @@
 import React from 'react';
 
-class DropList2 extends React.Component {
+class DropList extends React.Component {
 
     constructor(props) {
         super(props)
@@ -23,8 +23,8 @@ class DropList2 extends React.Component {
         return (
             <div>
                 <select onClick={
-                (event) => this.handleSelectChange(event)
-            }>
+                    (event) => this.handleSelectChange(event)
+                }>
                     <option value="id">Id</option>
                     <option value="date">Date</option>
                     <option value="time">Time</option>
@@ -38,4 +38,4 @@ class DropList2 extends React.Component {
     }
 }
 
-export default DropList2;
+export default DropList;

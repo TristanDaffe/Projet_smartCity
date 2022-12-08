@@ -3,7 +3,7 @@ import {configureStore} from '@reduxjs/toolkit';
 const liste = [
     {
         id: 1,
-        date : "22/01/2022",
+        date: "2020-01-01",
         time : "10:00",
         donor : "Daffe Tristan",
         donationType : "Plasma",

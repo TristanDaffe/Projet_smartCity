@@ -1,28 +1,28 @@
 import React from 'react';
 
-class SearchBar extends React.Component{
+class SearchBar extends React.Component {
 
     constructor(props) {
         super();
         this.state = {
-            searchValue : "",
+            searchValue: "",
             callback: props.callback
         }
     }
 
-    changeSearchValue(event){
-        this.setState({searchValue: event.target.value}, () => {
+    changeSearchValue(event) {
+        this.setState({ searchValue: event.target.value }, () => {
             this.state.callback(this.state.searchValue);
         });
     }
 
-    render(){
+    render() {
         return (
-        <input
-            type="text"
-            onChange={
-                (event) => this.changeSearchValue(event)
-            }/>);        
+            <input
+                type="text"
+                onChange={
+                    (event) => this.changeSearchValue(event)
+                } />);
     }
 }
 

@@ -90,11 +90,11 @@ class Donation extends React.Component {
         return (
             <div style={formStyle}>
                 <div className="header">
-                <h1>Donation Settings</h1>
-                <img 
-                    className='imgCroixRouge' 
-                    src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png" 
-                    alt="settings" />
+                    <h1>Donation Settings</h1>
+                    <img
+                        className='imgCroixRouge'
+                        src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png"
+                        alt="settings" />
                 </div>
                 <h2>Update donation</h2>
                 <form style={container}>
