@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 //     return (props) => { return <Component {...props} params={useParams()} /> };
 // }
 
-class DonationCenterAdd extends React.Component {
+class DonationCenterUpdate extends React.Component {
         
             constructor(props) {
                 super(props);
@@ -65,5 +65,5 @@ class DonationCenterAdd extends React.Component {
     
     // export default connect(null, mapDispatchToProps)(DonationCenterAdd);
 
-    export default DonationCenterAdd;
+    export default DonationCenterUpdate;
 

@@ -24,7 +24,8 @@ class DropList extends React.Component {
     render() {
         return (
             <div>
-                <select onClick={
+                <select className="select"
+                 onClick={
                     (event) => this.handleSelectChange(event)
                 }>
                     {this.state.options.map((option) => {

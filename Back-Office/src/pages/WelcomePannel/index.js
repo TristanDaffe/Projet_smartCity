@@ -14,7 +14,6 @@ class WelcomePannel extends React.Component {
         <h1
             style={{
                 fontSize: "60px",
-                
             }}
         >Welcome</h1>
                     <img
@@ -42,13 +41,13 @@ class WelcomePannel extends React.Component {
         <div className="WelcomePannelContainer">
             <LinkButton
                 txt="Donation Types"
-                link="types"
+                link="donationTypeList"
                 img="https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/e4Gpia8/videoblocks-close-up-footage-of-a-bag-of-blood-at-the-blood-transfusion-department-the-_bv6nvm9qn_thumbnail-1080_01.png"
                 alt="Donation Types"
             />
             <LinkButton
                 txt="Donors"
-                link="donors"
+                link="donorList"
                 img="https://media.istockphoto.com/photos/young-medical-students-interview-patient-during-hospital-rounds-picture-id813533532"
                 alt="Donors"
             />
