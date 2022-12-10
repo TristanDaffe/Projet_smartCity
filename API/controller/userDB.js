@@ -2,7 +2,7 @@ require('dotenv').config();
 const process = require('process');
 const jwt = require('jsonwebtoken');
 
-const { validateString } = require('../utils/utils');
+const { validateString, validateEmail, validateDate } = require('../utils/utils');
 
 const pool = require('../model/database');
 const UserModele = require("../model/userDB");
@@ -21,40 +21,7 @@ module.exports.loginUser = async (req, res) => {
             const result = await UserModele.postUser(login, password, client);
             const {userType, value} = result;
 
-            if(userType === 'unknown') {
-                res.sendStatus(404);
-            }
-            else if(userType === 'admin') {
-                const {id, login} = value;
-                const playload = {status: userType, value: {id, login}};
-                const token = jwt.sign(
-                    playload, 
-                    process.env.SECRET_TOKEN, 
-                    {expiresIn: '1h'}
-                );
-                res.json({token});
-            }
-            else {
-                const {id, first_name, last_name, email_address, login, birthday, blood_type} = value;
-                const bloods = await BloodTypeModel.getBloodType(blood_type, client);
-                const blood = bloods.rows[0];
-                const user = {id, 
-                    firstName: first_name, 
-                    lastName: last_name,
-                    emailAddress: email_address, 
-                    login, 
-                    birthDay: birthday, 
-                    blood_type: blood
-                };
-
-                const playload = {status: userType, value: {id, login}};
-                const token = jwt.sign(
-                    playload,
-                    process.env.SECRET_TOKEN,
-                    {expiresIn: '1h'}
-                );
-                res.json({token, user});
-            }
+            manageAuth(userType, value, res);
         }
     } 
     catch (error) {
@@ -107,65 +74,52 @@ module.exports.registerUser = async (req, res) => {
             rhesus,
             login, 
             password } = body;
-    try {
-        if(!validateString(lastName) || 
-                !validateString(firstName) || 
-                !validateString(emailAddress) || 
-                !validateString(birthdate) || 
-                !validateString(bloodType) || 
-                !validateString(rhesus) ||
-                !validateString(login) || 
-                !validateString(password)) {
-            res.sendStatus(400);
-        }
-        else {
-            const bloodTypesDB = await BloodTypeModel.getBloodTypeFromName(bloodType, rhesus, client);
-            const bloodTypeDB = bloodTypesDB.rows[0];
-            if(bloodTypeDB === undefined) {
-                res.sendStatus(404);
-            }
-            else {
-                const result = await UserModele.registerUser(lastName, firstName, emailAddress, birthdate, bloodTypeDB.id, login, password, client);
-                const {userType, value} = result;
-                if(userType === 'unknown') {
-                    res.sendStatus(404);
-                }
-                else if(userType === 'admin') {
-                    const {id, login} = value;
-                    const playload = {status: userType, value: {id, login}};
-                    const token = jwt.sign(
-                        playload, 
-                        process.env.SECRET_TOKEN, 
-                        {expiresIn: '1h'}
-                    );
-                    res.json({token});
-                }
-                else {
-                    const {id, first_name, last_name, email_address, login, birthday, blood_type} = value;
-                    const bloods = await BloodTypeModel.getBloodType(blood_type, client);
-                    const blood = bloods.rows[0];
-                    const user = {id, 
-                        firstName: first_name, 
-                        lastName: last_name,
-                        emailAddress: email_address, 
-                        login, 
-                        birthDay: birthday, 
-                        blood_type: blood
-                    };
     
-                    const playload = {status: userType, value: {id, login}};
-                    const token = jwt.sign(
-                        playload,
-                        process.env.SECRET_TOKEN,
-                        {expiresIn: '1h'}
-                    );
-                    res.json({token, user});
+    let errors = [];
+    errors[0] = validateString(lastName, "LastName");
+    errors[1] = validateString(firstName, "Firstname"); 
+    errors[2] = validateEmail(emailAddress);
+    errors[3] = validateDate(birthdate);
+    errors[4] = validateString(login, "Login"); 
+    errors[5] = validateString(password, "Password");
+    errors[6] = validateString(rhesus, "rhesus");
+    errors[7] = validateString(bloodType, "rhesus");
+
+    let i = 0;
+    while(i < errors.length && errors[i].errorCode > 200 && errors[i].errorCode < 299) {
+        i++;
+    }
+    if(i < errors.length) {
+        res.status(errors[i].errorCode).send(errors[i].message);
+    }
+    else {
+        try {
+            const loginExist = await UserModele.loginExist(login, client);
+            if(loginExist)
+                res.status(409).send("Login already exist");
+            else {
+                const emailExist = await UserModele.emailExist(emailAddress, client);
+                if(emailExist)
+                    res.status(409).send("Email already exist");
+                else {
+                    const bloodTypesDB = await BloodTypeModel.getBloodTypeFromName(bloodType, rhesus, client);
+                    const bloodTypeDB = bloodTypesDB.rows[0];
+                    if(bloodTypeDB === undefined) {
+                        res.status(404).send("Blood type not found");
+                    }
+                    else {
+                        const result = await UserModele.registerUser(lastName, firstName, emailAddress, birthdate, bloodTypeDB.id, login, password, client);
+                        const {userType, value} = result;
+
+                        await manageAuth(userType, value, res);
+                    }
                 }
             }
         }
-    }
-    catch (error) {
-        res.sendStatus(500);
+        catch (error) {
+            console.log(error)
+            res.sendStatus(500);
+        }
     }
 }
 
@@ -183,60 +137,33 @@ module.exports.patchUser = async (req, res) => {
             login, 
             password } = body;
 
-    try {
-        if(!validateString(lastName) || 
-                !validateString(firstName) || 
-                !validateString(emailAddress) || 
-                !validateString(birthdate) || 
-                !validateString(login) || 
-                !validateString(password)) {
-            res.sendStatus(400);
+        let errors = [];
+        errors[0] = validateString(lastName, "LastName");
+        errors[1] = validateString(firstName, "Firstname"); 
+        errors[2] = validateEmail(emailAddress);
+        errors[3] = validateDate(birthdate);
+        errors[4] = validateString(login, "Login"); 
+        errors[5] = validateString(password, "Password");dd
+    
+        let i = 0;
+        while(i < errors.length && errors[i].errorCode > 200 && errors[i].errorCode < 299) {
+            i++;
+        }
+        if(i < errors.length) {
+            res.status(errors[i].errorCode).send(errors[i].message);
         }
         else {
+            try {
             const result = await UserModele.updateUser(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, password, client);
             const {userType, value} = result;
             
-            if(userType === 'unknown') {
-                res.sendStatus(404);
-            }
-            else if(userType === 'admin') {
-                const {id, login} = value;
-                const playload = {status: userType, value: {id, login}};
-                const token = jwt.sign(
-                    playload, 
-                    process.env.SECRET_TOKEN, 
-                    {expiresIn: '1h'}
-                );
-                res.json({token});
-            }
-            else {
-                const {id, first_name, last_name, email_address, login, birthday, blood_type} = value;
-                const bloods = await BloodTypeModel.getBloodType(blood_type, client);
-                const blood = bloods.rows[0];
-                const user = {id, 
-                    firstName: first_name, 
-                    lastName: last_name,
-                    emailAddress: email_address, 
-                    login, 
-                    birthDay: birthday, 
-                    blood_type: blood
-                };
-
-                const playload = {status: userType, value: {id, login}};
-                const token = jwt.sign(
-                    playload,
-                    process.env.SECRET_TOKEN,
-                    {expiresIn: '1h'}
-                );
-            res.json({token, user});
-            }
+            await manageAuth(userType, value, res);
+        }
+        catch (error) {
+            console.log(error)
+            res.sendStatus(500);
         }
     }
-    catch (error) {
-        console.log(error)
-        res.sendStatus(500);
-    }
-
 }
 
 module.exports.deleteUser = async (req, res) => {
@@ -258,5 +185,44 @@ module.exports.deleteUser = async (req, res) => {
     }
     finally {
         client.release();
+    }
+}
+
+const manageAuth = async (userType, value, res) => {
+
+    if(userType === 'unknown') {
+        res.status(404).send("User not found");
+    }
+    else if(userType === 'admin') {
+        const {id, login} = value;
+        const playload = {status: userType, value: {id, login}};
+        const token = jwt.sign(
+            playload, 
+            process.env.SECRET_TOKEN, 
+            {expiresIn: '24h'}
+        );
+        res.json({token});
+    }
+    else {
+        const {id, first_name, last_name, email_address, login, birthday, blood_type} = value;
+        const bloods = await BloodTypeModel.getBloodType(blood_type, client);
+        const blood = bloods.rows[0];
+        const user = {
+            id, 
+            firstName: first_name, 
+            lastName: last_name,
+            emailAddress: email_address, 
+            login, 
+            birthDay: birthday, 
+            blood_type: blood
+        };
+
+        const playload = {status: userType, value: {id, login}};
+        const token = jwt.sign(
+            playload,
+            process.env.SECRET_TOKEN,
+            {expiresIn: '24h'}
+        );
+        res.json({token, user});
     }
 }

@@ -9,5 +9,5 @@ router.post('/login', UserConroller.loginUser);
 router.post('/register', UserConroller.registerUser);
 router.patch('/patch', UserConroller.patchUser);
 router.delete('/delete/:id', UserConroller.deleteUser);
-
+//get all
 module.exports = router;

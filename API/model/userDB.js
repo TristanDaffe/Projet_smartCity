@@ -35,3 +35,14 @@ module.exports.deleteUser = async (id, client) => {
     await client.query("UPDATE donation SET user_id = NULL WHERE user_id = $1", [id]);
     await client.query("DELETE FROM user_account WHERE id = $1", [id]);
 }
+
+module.exports.loginExist = async (login, client) => {
+    const loginDB = await client.query("SELECT login FROM user_account WHERE login = $1", [login]);
+    return loginDB !== undefined;
+}
+
+module.exports.emailExist = async (email, client) => {
+    const emailDB = await client.query("SELECT login FROM user_account WHERE emai_address = $1", [email]);
+    return emailDB !== undefined;
+}
+
