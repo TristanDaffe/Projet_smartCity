@@ -21,7 +21,7 @@ module.exports.loginUser = async (req, res) => {
             const result = await UserModele.postUser(login, password, client);
             const {userType, value} = result;
 
-            manageAuth(userType, value, res);
+            manageAuth(userType, value, res, client);
         }
     } 
     catch (error) {
@@ -111,7 +111,7 @@ module.exports.registerUser = async (req, res) => {
                         const result = await UserModele.registerUser(lastName, firstName, emailAddress, birthdate, bloodTypeDB.id, login, password, client);
                         const {userType, value} = result;
 
-                        await manageAuth(userType, value, res);
+                        await manageAuth(userType, value, res, client);
                     }
                 }
             }
@@ -143,7 +143,7 @@ module.exports.patchUser = async (req, res) => {
         errors[2] = validateEmail(emailAddress);
         errors[3] = validateDate(birthdate);
         errors[4] = validateString(login, "Login"); 
-        errors[5] = validateString(password, "Password");dd
+        errors[5] = validateString(password, "Password");
     
         let i = 0;
         while(i < errors.length && errors[i].errorCode > 200 && errors[i].errorCode < 299) {
@@ -157,7 +157,7 @@ module.exports.patchUser = async (req, res) => {
             const result = await UserModele.updateUser(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, password, client);
             const {userType, value} = result;
             
-            await manageAuth(userType, value, res);
+            await manageAuth(userType, value, res, client);
         }
         catch (error) {
             console.log(error)
@@ -188,7 +188,7 @@ module.exports.deleteUser = async (req, res) => {
     }
 }
 
-const manageAuth = async (userType, value, res) => {
+const manageAuth = async (userType, value, res, client) => {
 
     if(userType === 'unknown') {
         res.status(404).send("User not found");
