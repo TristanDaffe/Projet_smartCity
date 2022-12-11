@@ -8,14 +8,14 @@ module.exports.getBloodType = async (req, res) => {
 
     try {
         if(isNaN(id)) {
-            res.sendStatus(400);
+            res.stauts(400).send('Id is not a number');
         }
         else {
             const {rows: bloodTypes} = await BloodTypeModel.getBloodType(id, client);
             const bloodType = bloodTypes[0];
             
             if(bloodType === undefined) {
-                res.sendStatus(404);
+                res.status(404).send('Blood type not found');
             }   
             else {
                 res.json(bloodType);
@@ -44,7 +44,7 @@ module.exports.getBloodTypeFromName = async (req, res) => {
             const bloodType = bloodTypes[0];
             
             if(bloodType === undefined) {
-                res.sendStatus(404);
+                res.status(404).send('Blood type not found');
             }   
             else {
                 res.json(bloodType);
@@ -89,7 +89,7 @@ module.exports.createBloodType = async (req, res) => {
             const {rows: bloodTypes} = await BloodTypeModel.getBloodTypeFromName(type, rhesus, client);
             const bloodType = bloodTypes[0];
             if(bloodType !== undefined) {
-                res.sendStatus(409);
+                res.status(409).send("Blood type already exists");
             }
             else {
                 const bloodType = await BloodTypeModel.createBloodType(type, rhesus, client);
@@ -118,6 +118,28 @@ module.exports.updateBloodType = async (req, res) => {
         }
         else {
             await BloodTypeModel.updateBloodType(id, type, rhesus, client);
+            res.sendStatus(200);
+        }
+    }
+    catch (error) {
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
+    }
+}
+
+module.exports.deleteBloodType = async (req, res) => {
+    const client = await pool.connect();
+    const idT = req.params.id;
+    const id = parseInt(idT);
+
+    try {
+        if(isNaN(id)) {
+            res.status(400).send('Id is not a number');
+        }
+        else {
+            await BloodTypeModel.deleteBloodType(id, client);
             res.sendStatus(200);
         }
     }

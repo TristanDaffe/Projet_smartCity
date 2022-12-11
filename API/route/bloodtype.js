@@ -8,7 +8,8 @@ router.get('/:id', JWTMiddleWare.identification, BloodController.getBloodType);
 router.get('/', JWTMiddleWare.identification, BloodController.getBloodTypeFromName);
 router.post('/', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, BloodController.createBloodType);
 router.patch('/', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, BloodController.updateBloodType);
-//delete
+router.delete('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, BloodController.deleteBloodType);
+
 router.post('/all', JWTMiddleWare.identification, BloodController.getAllBloodType);
 
 module.exports = router;

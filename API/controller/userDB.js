@@ -2,20 +2,67 @@ require('dotenv').config();
 const process = require('process');
 const jwt = require('jsonwebtoken');
 
-const { validateString, validateEmail, validateDate } = require('../utils/utils');
+const { validateString, validateEmail, validateDate } = require('../utils/validator');
 
 const pool = require('../model/database');
 const UserModele = require("../model/userDB");
 const BloodTypeModel = require("../model/bloodTypeDB");
+
+const manageAuth = async (userType, value, res, client) => {
+
+    if(userType === 'unknown') {
+        res.status(404).send("User not found");
+    }
+    else if(userType === 'admin') {
+        const {id, login} = value;
+        const playload = {status: userType, value: {id, login}};
+        const token = jwt.sign(
+            playload, 
+            process.env.SECRET_TOKEN, 
+            {expiresIn: '24h'}
+        );
+        res.json({token});
+    }
+    else {
+        const {id, first_name, last_name, email_address, login, birthday, blood_type} = value;
+        const bloods = await BloodTypeModel.getBloodType(blood_type, client);
+        const blood = bloods.rows[0];
+        const user = {
+            id, 
+            firstName: first_name, 
+            lastName: last_name,
+            emailAddress: email_address, 
+            login, 
+            birthDay: birthday, 
+            blood_type: blood
+        };
+
+        const playload = {status: userType, value: {id, login}};
+        const token = jwt.sign(
+            playload,
+            process.env.SECRET_TOKEN,
+            {expiresIn: '24h'}
+        );
+        res.json({token, user});
+    }
+}
 
 module.exports.loginUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
     const { login, password } = body;
 
+    let errors = [];
+    errors[0] = validateString(lastName, "LastName");
+    errors[1] = validateString(firstName, "Firstname"); 
+
     try {
-        if(!validateString(login) || !validateString(password)) {
-            res.sendStatus(400);
+        let i = 0;
+        while(i < errors.length && errors[i].errorCode > 200 && errors[i].errorCode < 299) {
+            i++;
+        }
+        if(i < errors.length) {
+            res.status(errors[i].errorCode).json(errors[i].message);
         }
         else {
             const result = await UserModele.postUser(login, password, client);
@@ -39,13 +86,13 @@ module.exports.getUser = async (req, res) => {
 
     try {
         if(isNaN(id)) {
-            res.sendStatus(400);
+            res.status(400).send("Id is not a number");
         }
         else {
             const {rows: users} = await UserModele.getUser(id, client);
             const user = users[0];
             if(user === undefined) {
-                res.sendStatus(404);
+                res.status(404).send("User not found");
             }
             else {
                 const {rows: bloodTypes} = await BloodTypeModel.getBloodType(user.blood_type, client);
@@ -85,15 +132,18 @@ module.exports.registerUser = async (req, res) => {
     errors[6] = validateString(rhesus, "rhesus");
     errors[7] = validateString(bloodType, "rhesus");
 
-    let i = 0;
-    while(i < errors.length && errors[i].errorCode > 200 && errors[i].errorCode < 299) {
-        i++;
-    }
-    if(i < errors.length) {
-        res.status(errors[i].errorCode).send(errors[i].message);
-    }
-    else {
-        try {
+
+    try {
+        let i = 0;
+        while(i < errors.length && errors[i].errorCode > 200 && errors[i].errorCode < 299) {
+            i++;
+        }
+        if(i < errors.length) {
+            res.status(errors[i].errorCode).send(errors[i].message);
+            client.release();
+        }
+        else {
+
             const loginExist = await UserModele.loginExist(login, client);
             if(loginExist)
                 res.status(409).send("Login already exist");
@@ -116,10 +166,12 @@ module.exports.registerUser = async (req, res) => {
                 }
             }
         }
-        catch (error) {
-            console.log(error)
-            res.sendStatus(500);
-        }
+    }
+    catch (error) {
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
     }
 }
 
@@ -137,14 +189,15 @@ module.exports.patchUser = async (req, res) => {
             login, 
             password } = body;
 
-        let errors = [];
-        errors[0] = validateString(lastName, "LastName");
-        errors[1] = validateString(firstName, "Firstname"); 
-        errors[2] = validateEmail(emailAddress);
-        errors[3] = validateDate(birthdate);
-        errors[4] = validateString(login, "Login"); 
-        errors[5] = validateString(password, "Password");
-    
+    let errors = [];
+    errors[0] = validateString(lastName, "LastName");
+    errors[1] = validateString(firstName, "Firstname"); 
+    errors[2] = validateEmail(emailAddress);
+    errors[3] = validateDate(birthdate);
+    errors[4] = validateString(login, "Login"); 
+    errors[5] = validateString(password, "Password");
+
+    try {
         let i = 0;
         while(i < errors.length && errors[i].errorCode > 200 && errors[i].errorCode < 299) {
             i++;
@@ -153,16 +206,17 @@ module.exports.patchUser = async (req, res) => {
             res.status(errors[i].errorCode).send(errors[i].message);
         }
         else {
-            try {
             const result = await UserModele.updateUser(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, password, client);
             const {userType, value} = result;
             
             await manageAuth(userType, value, res, client);
         }
-        catch (error) {
-            console.log(error)
-            res.sendStatus(500);
-        }
+    }
+    catch (error) {
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
     }
 }
 
@@ -173,7 +227,7 @@ module.exports.deleteUser = async (req, res) => {
 
     try {
         if(isNaN(id)) {
-            res.sendStatus(400);
+            res.status(400).send('Id is not a number');
         }
         else {
             await UserModele.deleteUser(id, client);
@@ -188,41 +242,17 @@ module.exports.deleteUser = async (req, res) => {
     }
 }
 
-const manageAuth = async (userType, value, res, client) => {
+module.exports.getAllUsers = async (req, res) => {
+    const client = await pool.connect();
 
-    if(userType === 'unknown') {
-        res.status(404).send("User not found");
+    try {
+        const {rows: users} = await UserModele.getAllUsers(client);
+        res.json(users);
     }
-    else if(userType === 'admin') {
-        const {id, login} = value;
-        const playload = {status: userType, value: {id, login}};
-        const token = jwt.sign(
-            playload, 
-            process.env.SECRET_TOKEN, 
-            {expiresIn: '24h'}
-        );
-        res.json({token});
+    catch (error) {
+        res.sendStatus(500);
     }
-    else {
-        const {id, first_name, last_name, email_address, login, birthday, blood_type} = value;
-        const bloods = await BloodTypeModel.getBloodType(blood_type, client);
-        const blood = bloods.rows[0];
-        const user = {
-            id, 
-            firstName: first_name, 
-            lastName: last_name,
-            emailAddress: email_address, 
-            login, 
-            birthDay: birthday, 
-            blood_type: blood
-        };
-
-        const playload = {status: userType, value: {id, login}};
-        const token = jwt.sign(
-            playload,
-            process.env.SECRET_TOKEN,
-            {expiresIn: '24h'}
-        );
-        res.json({token, user});
+    finally {
+        client.release();
     }
 }

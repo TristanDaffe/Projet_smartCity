@@ -33,3 +33,7 @@ module.exports.updateDonation = async (date, donationTypeId, userId, donationCen
     return await client.query("UPDATE donation SET date = $1, donation_type_id = $2, user_id = $3, donation_center_id = $4 WHERE id = $5",
         [date, donationTypeId, userId, donationCenterId, id]);
 }
+
+module.exports.deleteDonation = async (id, client) => {
+    return await client.query("DELETE FROM donation WHERE id = $1", [id]);
+}

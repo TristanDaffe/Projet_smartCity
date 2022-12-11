@@ -17,6 +17,10 @@ module.exports.getUser = async (id, client) => {
     return await client.query("SELECT * FROM user_account WHERE id = $1", [id]);
 }
 
+module.exports.getAllUsers = async (client) => {
+    return await client.query("SELECT * FROM user_account");
+}
+
 module.exports.registerUser = async (lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password, client) => {
     await client.query("INSERT INTO user_account (last_name, first_name, email_address, birthday, blood_type, login, password) VALUES "+
     "($1, $2, $3, $4, $5, $6, $7)", [lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password]);

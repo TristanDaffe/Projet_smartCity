@@ -10,7 +10,8 @@ DROP TABLE IF EXISTS locality CASCADE;
 CREATE TABLE locality(
     id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name varchar(50) not null,
-    postal_code int not null
+    postal_code int not null,
+    unique (name, postal_code)
 );
 
 DROP TABLE IF EXISTS blood_type CASCADE;

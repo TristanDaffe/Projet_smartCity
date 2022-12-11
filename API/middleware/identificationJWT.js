@@ -3,7 +3,7 @@ const process = require('process');
 const jwt = require('jsonwebtoken');
 
 module.exports.identification = async (req, res, next) => {
-    const headerAuth = req.get('authorization');
+    const headerAuth = req.get('Authorization');
     if(headerAuth !== undefined && headerAuth.includes("Bearer")){
         const jwtToken =  headerAuth.split(' ')[1];
         try{

@@ -1,0 +1,172 @@
+const pool = require('../model/database');
+const DonationCenterModel = require("../model/donationCenterDB");
+
+module.exports.getDonationCenter = async (req, res) => {
+    const client = await pool.connect();
+    const idT = req.params.id;
+    const id = parseInt(idT);
+
+    try {
+        if(isNaN(id)) {
+            res.stauts(400).send('Id is not a number');
+        }
+        else {
+            const {rows: donationCenters} = await DonationCenterModel.getDonationCenter(id, client);
+            const donationCenter = donationCenters[0];
+            
+            if(donationCenter === undefined) {
+                res.status(404).send('Donation center not found');
+            }   
+            else {
+                res.json(donationCenter);
+            }
+        }
+    }
+    catch (error) {
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
+    }
+}
+
+module.exports.getAllDonationCenters = async (req, res) => {
+    const client = await pool.connect();
+
+    try {
+        const {rows: donationCenters} = await DonationCenterModel.getAllDonationCenters(client);
+        res.json(donationCenters);
+    }
+    catch (error) {
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
+    }
+}
+
+module.exports.createDonationCenter = async (req, res) => {
+    const client = await pool.connect();
+    const body = req.body;
+    const { 
+        name, 
+        phoneNumber, 
+        emailAddress, 
+        fax, 
+        streetName, 
+        numberInStreet, 
+        localityId } = body;
+
+    try {
+
+        if(name === undefined){
+            res.status(400).send('Name is undefined');
+        }
+        else if(localityId === undefined){
+            res.status(400).send('Locality id is undefined');
+        }
+        else if(phoneNumber === undefined){
+            res.status(400).send('Phone number is undefined');
+        }
+        else if(streetName === undefined){
+            res.status(400).send('Street name is undefined');
+        }
+        else if(numberInStreet === undefined){
+            res.status(400).send('Number in street is undefined');
+        }
+        else {
+            await DonationCenterModel.createDonationCenter(name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, client);
+            res.sendStatus(201);
+        }
+    }
+    catch (error) {
+        console.log(error);
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
+    }
+}
+
+module.exports.updateDonationCenter = async (req, res) => {
+    const client = await pool.connect();
+    const body = req.body;
+    const {
+        id,
+        name, 
+        phoneNumber, 
+        emailAddress, 
+        fax, 
+        streetName, 
+        numberInStreet, 
+        localityId } = body;
+
+    try {
+        if(id === undefined){
+            res.status(400).send('Id is undefined');
+        }
+        else if(name === undefined){
+            res.status(400).send('Name is undefined');
+        }
+        else if(localityId === undefined){
+            res.status(400).send('Locality id is undefined');
+        }
+        else if(phoneNumber === undefined){
+            res.status(400).send('Phone number is undefined');
+        }
+        else if(streetName === undefined){
+            res.status(400).send('Street name is undefined');
+        }
+        else if(numberInStreet === undefined){
+            res.status(400).send('Number in street is undefined');
+        }
+        else {
+            const {rows: donationCenters} = await DonationCenterModel.getDonationCenter(id, client);
+            const donationCenter = donationCenters[0];
+            
+            if(donationCenter === undefined) {
+                res.status(404).send('Donation center not found');
+            }   
+            else {
+                await DonationCenterModel.updateDonationCenter(id, name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, client);
+                res.sendStatus(200);
+            }
+        }
+    }
+    catch (error) {
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
+    }
+}
+
+module.exports.deleteDonationCenter = async (req, res) => {
+    const client = await pool.connect();
+    const idT = req.params.id;
+    const id = parseInt(idT);
+
+    try {
+        if(isNaN(id)) {
+            res.stauts(400).send('Id is not a number');
+        }
+        else {
+            const {rows: donationCenters} = await DonationCenterModel.getDonationCenter(id, client);
+            const donationCenter = donationCenters[0];
+            
+            if(donationCenter === undefined) {
+                res.status(404).send('Donation center not found');
+            }   
+            else {
+                await DonationCenterModel.deleteDonationCenter(id, client);
+                res.sendStatus(200);
+            }
+        }
+    }
+    catch (error) {
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
+    }
+}

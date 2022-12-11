@@ -17,3 +17,7 @@ module.exports.createBloodType = async (type, rhesus, client) => {
 module.exports.updateBloodType = async (id, type, rhesus, client) => {
     return await client.query("UPDATE blood_type SET type = $1, rhesus = $2 WHERE id = $3", [type.toUpperCase(), rhesus, id]);
 }
+
+module.exports.deleteBloodType = async (id, client) => {
+    return await client.query("DELETE FROM blood_type WHERE id = $1", [id]);
+}

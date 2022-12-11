@@ -8,14 +8,14 @@ module.exports.getDonation = async (req, res) => {
 
     try {
         if(isNaN(id)) {
-            res.sendStatus(400);
+            res.status(400).send('Id is not a number');
         }
         else {
             const {rows: donations} = await DonationModel.getDonation(id, client);
             const donation = donations[0];
             
             if(donation === undefined) {
-                res.sendStatus(404);
+                res.status(404).send('Donation not found');
             }   
             else {
                 res.json(donation);
@@ -37,14 +37,14 @@ module.exports.getDonationsOfUser = async (req, res) => {
 
     try {
         if(isNaN(id)) {
-            res.sendStatus(400);
+            res.stauts(400).send('Id is not a number');
         }
         else {
             const {rows: donations} = await DonationModel.getDonationsOfUser(id, client);
             res.json(donations);
             
             if(donation === undefined) {
-                res.sendStatus(404);
+                res.status(404).send('Donation not found');
             }   
             else {
                 res.json(donation);
@@ -86,6 +86,7 @@ module.exports.createDonation = async (req, res) => {
         donationCenterId,
     } = body;
     const dateFormatDB = new Date(date);
+    
     try {
         // récupérer les dons de l'utilisateur
         const maxIntervals = await DonationModel.getLongestInterval(client);
@@ -111,7 +112,6 @@ module.exports.createDonation = async (req, res) => {
             const timeMiliSec = Math.abs(dateFormatDB - (lastDonationOfEveryType[i].date));
             const timeDays = Math.ceil(timeMiliSec / (1000 * 3600 * 24));
             canAdd =  timeDays >= interval;
-            console.log(timeDays, interval )
             i++;
         }
 
@@ -120,7 +120,7 @@ module.exports.createDonation = async (req, res) => {
             res.sendStatus(201);
         }
         else {
-            res.sendStatus(400);
+            res.status(400).send("You can't add a donation of this type at this date");
         }
     }
     catch (error) {
@@ -146,6 +146,28 @@ module.exports.updateDonation = async (req, res) => {
     try {
         await DonationModel.updateDonation(id, hour, date, donationTypeId, userId, donationCenterId, client);
         res.sendStatus(200);
+    }
+    catch (error) {
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
+    }
+}
+
+module.exports.deleteDonation = async (req, res) => {
+    const client = await pool.connect();
+    const idT = req.params.id;
+    const id = parseInt(idT);
+
+    try {
+        if(isNaN(id)) {
+            res.status(400).send('Id is not a number');
+        }
+        else {
+            await DonationModel.deleteDonation(id, client);
+            res.sendStatus(200);
+        }
     }
     catch (error) {
         res.sendStatus(500);
