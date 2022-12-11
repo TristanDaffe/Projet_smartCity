@@ -1,15 +1,22 @@
 import axios from 'axios';
 
 const URL_API = `http://192.168.1.56:3001`;
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJhZG1pbiIsInZhbHVlIjp7ImlkIjo5LCJsb2dpbiI6ImFkbWluIn0sImlhdCI6MTY3MDY4NTMzOSwiZXhwIjoxNjcwNzcxNzM5fQ.4WZqZ7LBwQqpjpJk-1K75kD4ddzm_eIhZanxRjbD9GU";
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJhZG1pbiIsInZhbHVlIjp7ImlkIjo5LCJsb2dpbiI6ImFkbWluIn0sImlhdCI6MTY3MDY5MDA4NiwiZXhwIjoxNjcwNzc2NDg2fQ.EVUvocXrTtj4aQiWX5DpwQuFki0bV_cEVst5XmLehuI";
 
 const getAllDonations = async () => {
-    const rep = await axios.post(`${URL_API}/donation/all`,
-         { headers: { 'Authorization': `Bearer ${TOKEN}`}
-         
-    });
-    console.log(rep.data);
-    return rep.data;
+    const rep = await axios.post(`${URL_API}/donation/all`,{
+        headers: {
+            Authorization: `Bearer ${TOKEN}`
+        }
+        })
+        .then(response => {
+            return response.data;
+            // do something with the response
+        })
+        .catch(error => {
+            console.log(error);
+            // handle error
+      });
 }
 
 const connexion = async (login, password) => {
