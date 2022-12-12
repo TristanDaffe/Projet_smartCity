@@ -53,8 +53,8 @@ module.exports.loginUser = async (req, res) => {
     const { login, password } = body;
 
     let errors = [];
-    errors[0] = validateString(lastName, "LastName");
-    errors[1] = validateString(firstName, "Firstname"); 
+    errors[0] = validateString(login, "Login");
+    errors[1] = validateString(password, "Password"); 
 
     try {
         let i = 0;
