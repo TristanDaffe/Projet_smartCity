@@ -56,8 +56,7 @@ export const AuthProvider = ({children}) => {
                 let token = res.data.token;
                 setUser(userInfo);
                 setToken(token);
-                console.log("login", userInfo, token);
-                AsyncStorage.setItem('user', JSON.stringify(userInfo));
+                 AsyncStorage.setItem('user', JSON.stringify(userInfo));
                 AsyncStorage.setItem('token', JSON.stringify(token));
             })
             .catch( err => {

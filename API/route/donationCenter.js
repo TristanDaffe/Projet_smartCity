@@ -9,6 +9,8 @@ router.post('/', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, Cente
 router.patch('/', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, CenterController.updateDonationCenter);
 router.delete('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, CenterController.deleteDonationCenter);
 
+router.post('/opening/:id', JWTMiddleWare.identification, CenterController.getOpeningDaysForCenter);
+
 router.post('/all', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, CenterController.getAllDonationCenters);
 
 module.exports = router;

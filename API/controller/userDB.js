@@ -2,7 +2,7 @@ require('dotenv').config();
 const process = require('process');
 const jwt = require('jsonwebtoken');
 
-const { validateString, validateEmail, validateDate } = require('../utils/validator');
+const { validateString, validateEmail, validateDate } = require('../validation/validator');
 
 const pool = require('../model/database');
 const UserModele = require("../model/userDB");

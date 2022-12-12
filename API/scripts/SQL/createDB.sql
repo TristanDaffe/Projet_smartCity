@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS opening_day CASCADE;
 CREATE TABLE opening_day(
     id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     day_label varchar(50) not null,
+        check (day_label in ('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')),
     opening_time time not null,
     closing_time time not null CHECK (opening_time < closing_time)
 );

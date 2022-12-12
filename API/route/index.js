@@ -3,6 +3,7 @@ const BloodRouter = require('./bloodtype');
 const DonationRouter = require('./donation');
 const LocalityRouter = require('./locality');
 const DonationCenterRouter = require('./donationCenter');
+const OpeningDayRouter = require('./openingDay');
 
 const router = require('express').Router();
 
@@ -11,5 +12,6 @@ router.use("/bloodtype", BloodRouter);
 router.use("/donation", DonationRouter);
 router.use("/locality", LocalityRouter);
 router.use("/center", DonationCenterRouter);
+router.use("/openingday", OpeningDayRouter);
 
 module.exports = router;

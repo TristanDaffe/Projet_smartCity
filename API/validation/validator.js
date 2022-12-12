@@ -49,3 +49,15 @@ module.exports.validateDate = (date) =>{
 
     return {errorCode, message};
 }
+
+module.exports.validateDay = (string) => {
+    let validDays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    let {errorCode, message} = this.validateString(string, "Day");
+    if(errorCode === 202){
+        if(!validDays.includes(string)){
+            errorCode = 412;
+            message = "Day is unvalid";
+        }
+    }
+    return {errorCode, message};
+}

@@ -1,5 +1,6 @@
 const pool = require('../model/database');
 const DonationCenterModel = require("../model/donationCenterDB");
+const OpeningDayModel = require("../model/openingDayDB");
 
 module.exports.getDonationCenter = async (req, res) => {
     const client = await pool.connect();
@@ -164,6 +165,24 @@ module.exports.deleteDonationCenter = async (req, res) => {
         }
     }
     catch (error) {
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
+    }
+}
+
+module.exports.getOpeningDaysForCenter = async (req, res) => {
+    const client = await pool.connect();
+    const idT = req.params.id;
+    const id = parseInt(idT);
+    
+    try{
+        const {rows: openingDays} = await OpeningDayModel.getOpeningDaysForCenter(id, client);
+        res.json(openingDays);
+    }
+    catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
     finally {
