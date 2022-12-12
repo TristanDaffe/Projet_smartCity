@@ -20,7 +20,6 @@ export default function TestTris ( )  {
         <Text> bloodtype {user.bloodtype} </Text>
         <Text> login = {user.login} </Text>
         <Text> password : {user.password} </Text>
-    
       </View>
     );
 };

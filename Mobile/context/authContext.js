@@ -80,8 +80,11 @@ PARTIE POUR TEST SANS API
                     login: "jhon.doe",
                     password: "1234"
                 }
+                const token = "Test";
                 setUser(userTest);
+                setToken(token);
                 AsyncStorage.setItem('user', JSON.stringify(userTest));
+                AsyncStorage.setItem('token', JSON.stringify(token));
 /*
 FIN PARTIE POUR TEST SANS API
 */
