@@ -12,14 +12,6 @@ export default function TestTris ( )  {
 
     return (
       <View style={styles.container}>
-        <Text> id : {user.id} </Text>
-        <Text> firstName : {user.firstName} </Text>
-        <Text> lastName : {user.lastName} </Text>
-        <Text> email : {user.email} </Text>
-        <Text> birthday : {user.birthday} </Text>
-        <Text> bloodtype {user.bloodtype} </Text>
-        <Text> login = {user.login} </Text>
-        <Text> password : {user.password} </Text>
       </View>
     );
 };

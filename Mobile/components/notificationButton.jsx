@@ -21,7 +21,7 @@ export default function textField(props) {
 
 const styles = StyleSheet.create({
   Switchcontainer: {
-    position: 'fixed',
+    //position: 'fixed',
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",

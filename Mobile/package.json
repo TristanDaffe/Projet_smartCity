@@ -26,6 +26,7 @@
     "react-native-loading-spinner-overlay": "^3.0.1",
     "react-native-popup-confirm-toast": "^2.2.2",
     "react-native-reanimated": "~2.9.1",
+    "react-native-table-component": "^1.2.0",
     "stack": "^0.1.0"
   },
   "devDependencies": {
