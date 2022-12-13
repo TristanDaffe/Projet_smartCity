@@ -3,6 +3,7 @@ import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
+import { loadData } from '../../component/API';
 
 // mettre defaultValue dans le time
 
@@ -11,15 +12,19 @@ class DonationList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            donations: this.props.donations,
-            donationsToDisplay: this.props.donations,
+            // donations: this.props.donations,
+            // donationsToDisplay: this.props.donations,
+            donations: [],
+            donationsToDisplay: [],
             filter: "id",
             inputDate: "",
             inputTime: "",
             inputDonor: "",
             inputDonationType: "",
             inputBloodType: "",
-            inputDonationCenter: ""
+            inputDonationCenter: "",
+            loading: true,
+            error: false,
         }
     }
 
@@ -32,18 +37,31 @@ class DonationList extends React.Component {
         }
     }
 
+    componentDidMount() {
+        this.setDonations();
+    }
 
-    addDonation(event) {
-        event.preventDefault();
-        const newDonation = {
-            date: this.state.inputDate,
-            time: this.state.inputTime,
-            donor: this.state.inputDonor,
-            donationType: this.state.inputDonationType,
-            bloodType: this.state.inputBloodType,
-            donationCenter: this.state.inputDonationCenter,
-        }
-        this.props.addDonation(newDonation);
+    setDonations() {
+
+        this.setState({loading: true, error: false}, async () => {
+            try{
+                const data = await loadData();
+                console.log("data");
+                console.log(data);
+                this.setState({loading: false, error: false});
+                const state = {
+                    donations: data,
+                    donationsToDisplay: data,
+                };
+                this.setState(state);
+                console.log("state");
+                console.log(this.state.donations);
+            } catch (error) {
+                console.log(error);
+                this.setState({loading: false, error: true});
+            }
+        });
+
     }
 
     deleteDonation(event) {
@@ -87,6 +105,7 @@ class DonationList extends React.Component {
     }
 
     render() {
+
         return (
             <div>
                 <div className="header">
@@ -136,16 +155,20 @@ class DonationList extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
+                        {/* {console.log("ALLO")}
+                        {console.log(this.state.donationsToDisplay)}
+                        {console.log(this.state.donations)}
+                        {console.log("PROUT")} */}
                         {this.state.donationsToDisplay.map((don, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{don.id}</td>
                                     <td>{don.date}</td>
-                                    <td>{don.time}</td>
-                                    <td>{don.donor}</td>
-                                    <td>{don.donationType}</td>
-                                    <td>{don.bloodType}</td>
-                                    <td>{don.donationCenter}</td>
+                                    <td>{don.hour}</td>
+                                    <td>{don.user_id}</td>
+                                    <td>{don.donation_type_id}</td>
+                                    {/* <td>{don.bloodType}</td> */}
+                                    <td>{don.donation_center_id}</td>
                                     <td>
                                         <Link to={`/donationUpdate/${don.id}`}>Update</Link>
                                     </td>

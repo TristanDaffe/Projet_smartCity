@@ -1,8 +1,10 @@
 import {getAllDonations} from './http';
 
 
-const loadData = async (cityName) => {
+const loadData = async () => {
     const data = await getAllDonations();
+    console.log("data de index");
+    console.log(data);
     return data;
 };
 
