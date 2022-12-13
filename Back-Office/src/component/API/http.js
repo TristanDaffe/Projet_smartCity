@@ -1,10 +1,10 @@
 import axios from 'axios';
 
-const URL_API = `http://10.101.102.12:3001`;
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJhZG1pbiIsInZhbHVlIjp7ImlkIjo5LCJsb2dpbiI6ImFkbWluIn0sImlhdCI6MTY3MDkyNDY3NSwiZXhwIjoxNjcxMDExMDc1fQ.58VHdYkxrA0uUnBEM0aT5-tenJ3hBU1xUmu_bKOnQno";
+const URL_API = `http://10.101.10.10:3001`;
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJhZG1pbiIsInZhbHVlIjp7ImlkIjo5LCJsb2dpbiI6ImFkbWluIn0sImlhdCI6MTY3MDkzNzk3NSwiZXhwIjoxNjcxMDI0Mzc1fQ.jFiLXocaHHm6C6X6HpEq9GxvqTRZYNhO6kEL6ymRm0c";
 
 const getAllDonations = async () => {
-    axios
+    return await axios
         .get(`${URL_API}/donation/all`, {
             headers: {
                 "Content-Type": 'application/json',
@@ -12,13 +12,11 @@ const getAllDonations = async () => {
             }
         })
         .then(response => {
-            console.log(response.data);
+            // console.log(response.data);
             return response.data;
-            // do something with the response
         })
         .catch(error => {
             console.log(error);
-            // handle error
       });
 }
 
@@ -55,4 +53,4 @@ const getAllDonations = async () => {
 //     return await rep.json();
 // }
 
-export {getWeatherById, getWeatherByIdFetch};
+export {getAllDonations};
