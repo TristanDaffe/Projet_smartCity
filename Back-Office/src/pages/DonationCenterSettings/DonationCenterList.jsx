@@ -20,6 +20,9 @@ class DonationCenterList extends React.Component {
         return (
             <div>
                 <div className="header">
+                <Link to={`/`} className='backButtonContainer' >
+                        <button className="addBackButton">Back</button>
+                    </Link>
                     <h1>Donation Centers Settings</h1>
                     <img
                         className='imgCroixRouge'
@@ -45,8 +48,8 @@ class DonationCenterList extends React.Component {
                         callback={(filter) => this.changeFilter(filter)} ></DropList>
                     <p>Input :</p>
                     <SearchBar callback={(userChoice) => this.changeValuesToDisplay(userChoice)} />
-                    <Link to={`/addDonationCenter`} className="addButton">
-                        <button>Add Donation Center</button>
+                    <Link to={`/addDonationCenter`} className='addButtonContainer'>
+                        <button className="addBackButton">Add Donation center</button>
                     </Link>
                 </div>
                 <table>

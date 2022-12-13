@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
 import LinkButton from '../../component/LinkButton';
+import ConfirmationPopup from '../../component/ConfirmationPopup';
 
 
 class DonationTypeList extends React.Component {
@@ -14,12 +15,19 @@ class DonationTypeList extends React.Component {
         //     donationCenters: this.props.donationCenters,
         //     redirect: false
         // }
-    }
+
+}
+isShowPopup = (status) => {  
+    this.setState({ showModalPopup: status });  
+  };
 
     render() {
         return (
             <div>
                 <div className="header">
+                <Link to={`/`} className='backButtonContainer' >
+                        <button className="addBackButton">Back</button>
+                    </Link>
                     <h1>Donation Types Settings</h1>
                     <img
                         className='imgCroixRouge'
@@ -40,8 +48,8 @@ class DonationTypeList extends React.Component {
                         callback={(filter) => this.changeFilter(filter)} ></DropList>
                     <p>Input :</p>
                     <SearchBar callback={(userChoice) => this.changeValuesToDisplay(userChoice)} />
-                    <Link to={`/addDonationType`} className="addButton">
-                        <button>Add Donation Type</button>
+                    <Link to={`/addDonationType`} className='addButtonContainer'>
+                        <button className="addBackButton">Add Donation Type</button>
                     </Link>
                 </div>
                 <table>
@@ -56,6 +64,11 @@ class DonationTypeList extends React.Component {
                         </tr>
                     </thead>
                     </table>
+
+                    <ConfirmationPopup/>
+                    
+
+                    
             </div>
 
                             

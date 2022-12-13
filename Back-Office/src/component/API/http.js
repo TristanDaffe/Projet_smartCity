@@ -1,30 +1,30 @@
 import axios from 'axios';
 
-const URL_API = `http://192.168.1.56:3001`;
-const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJhZG1pbiIsInZhbHVlIjp7ImlkIjo5LCJsb2dpbiI6ImFkbWluIn0sImlhdCI6MTY3MDY5MDA4NiwiZXhwIjoxNjcwNzc2NDg2fQ.EVUvocXrTtj4aQiWX5DpwQuFki0bV_cEVst5XmLehuI";
+const ipAdress = "192.168.1.53";
+const URL_API = `http://${ip}:3001;`;
 
-const getAllDonations = async () => {
-    const rep = await axios.post(`${URL_API}/donation/all`,{
-        headers: {
-            Authorization: `Bearer ${TOKEN}`
+
+const getWeatherById = async (id) => {
+    const rep = await axios.get(URL_API, {
+        params: {
+            id,
+            appid: KEY,
+            units: 'metric',
+            lang: "fr"
         }
-        })
-        .then(response => {
-            return response.data;
-            // do something with the response
-        })
-        .catch(error => {
-            console.log(error);
-            // handle error
-      });
+    });
+    return rep.data;
 }
 
-const connexion = async (login, password) => {
-    const rep = await axios.post(`${URL_API}/user/login`, {
-        login,
-        password
+const getAllDonations = async () => {
+    const rep = await axios.get(URL_API, {
+        params: {
+            id,
+            appid: KEY,
+            units: 'metric',
+            lang: "fr"
+        }
     });
-    console.log(rep.data);
     return rep.data;
 }
 
@@ -40,4 +40,16 @@ const getAllUsersFetch = async () => {
     return await rep.json();
 }
 
-export {getAllDonations};
+
+//vous pouvez choisir cette méthode à la place de l'autre, si vous le désirez
+const getWeatherByIdFetch = async (id) => {
+    const params = new URLSearchParams();
+    params.append("id", id);
+    params.append("appid", KEY);
+    params.append("units", "metric");
+    params.append("lang", "fr")
+    const rep = await fetch(`${URL_API}?${params.toString()}`);
+    return await rep.json();
+}
+
+export {getWeatherById, getWeatherByIdFetch};

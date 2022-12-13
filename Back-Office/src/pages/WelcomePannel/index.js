@@ -1,21 +1,13 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import LinkButton from "../../component/LinkButton";
-import {getAllDonations} from "../../component/API/http";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }
 
-
 class WelcomePannel extends React.Component {
-  
-  afficheTest = async () =>{
-    console.log( await getAllDonations())
-  }
-
   render() {
-    this.afficheTest();
     return (
       <div>
         <div className="header">
