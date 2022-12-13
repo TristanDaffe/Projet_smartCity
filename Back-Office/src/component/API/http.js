@@ -45,14 +45,14 @@ const getAllDonations = async () => {
 
 
 //vous pouvez choisir cette méthode à la place de l'autre, si vous le désirez
-const getWeatherByIdFetch = async (id) => {
-    const params = new URLSearchParams();
-    params.append("id", id);
-    params.append("appid", KEY);
-    params.append("units", "metric");
-    params.append("lang", "fr")
-    const rep = await fetch(`${URL_API}?${params.toString()}`);
-    return await rep.json();
-}
+// const getWeatherByIdFetch = async (id) => {
+//     const params = new URLSearchParams();
+//     params.append("id", id);
+//     params.append("appid", KEY);
+//     params.append("units", "metric");
+//     params.append("lang", "fr")
+//     const rep = await fetch(`${URL_API}?${params.toString()}`);
+//     return await rep.json();
+// }
 
 export {getWeatherById, getWeatherByIdFetch};

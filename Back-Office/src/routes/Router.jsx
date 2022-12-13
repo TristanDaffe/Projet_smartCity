@@ -4,23 +4,23 @@ import {
     Routes,
     Route,
 } from "react-router-dom";
-import WelcomePannel from "../Pages/WelcomePannel";
+import WelcomePannel from "../pages/WelcomePannel";
 
-import DonationList from "../Pages/DonationSettings/DonationList.jsx";
-import AddDonation from "../Pages/DonationSettings/DonationAdd.jsx";
-import UpdateDonation from "../Pages/DonationSettings/DonationUpdate.jsx";
+import DonationList from "../pages/DonationSettings/DonationList.jsx";
+import AddDonation from "../pages/DonationSettings/DonationAdd.jsx";
+import UpdateDonation from "../pages/DonationSettings/DonationUpdate.jsx";
 
-import DonationCenterList from "../Pages/DonationCenterSettings/DonationCenterList.jsx";
-import AddDonationCenter from "../Pages/DonationCenterSettings/DonationCenterAdd.jsx";
-import UpdateDonationCenter from "../Pages/DonationCenterSettings/DonationCenterUpdate.jsx";
+import DonationCenterList from "../pages/DonationCenterSettings/DonationCenterList.jsx";
+import AddDonationCenter from "../pages/DonationCenterSettings/DonationCenterAdd.jsx";
+import UpdateDonationCenter from "../pages/DonationCenterSettings/DonationCenterUpdate.jsx";
 
-import DonationTypeList from "../Pages/DonationTypeSettings/DonationTypeList";
-import AddDonationType from "../Pages/DonationTypeSettings/DonationTypeAdd";
-import UpdateDonationType from "../Pages/DonationTypeSettings/DonationTypeUpdate";
+import DonationTypeList from "../pages/DonationTypeSettings/DonationTypeList";
+import AddDonationType from "../pages/DonationTypeSettings/DonationTypeAdd";
+import UpdateDonationType from "../pages/DonationTypeSettings/DonationTypeUpdate";
 
-import DonorList from "../Pages/DonorSettings/DonorList";
-import AddDonor from "../Pages/DonorSettings/DonorAdd";
-import UpdateDonor from "../Pages/DonorSettings/DonorUpdate";
+import DonorList from "../pages/DonorSettings/DonorList";
+import AddDonor from "../pages/DonorSettings/DonorAdd";
+import UpdateDonor from "../pages/DonorSettings/DonorUpdate";
 
 export default function Router(){
     return(
