@@ -55,4 +55,4 @@ const getAllDonations = async () => {
 //     return await rep.json();
 // }
 
-export {getWeatherById, getWeatherByIdFetch};
+export {getAllDonations};

@@ -1,6 +1,9 @@
 
 module.exports.getDonation = async (id, client) => {
-    return await client.query("SELECT * FROM donation WHERE id = $1", [id]);
+    return await client.query(`SELECT *, ua.last_name, ua.first_name, type.name FROM donation 
+        INNER JOIN user_account ua on ua.id = donation.user_id
+        INNER JOIN donation_type type on type.id = donation.donation_type_id
+        WHERE donation.id = $1`, [id]);
 }
 
 module.exports.getLongestInterval = async (client) => {
@@ -8,7 +11,10 @@ module.exports.getLongestInterval = async (client) => {
 }
 
 module.exports.getDonationOfUserFromDate = async (userId, date, client) => {
-    return await client.query("SELECT * FROM donation WHERE user_id = $1 and date >= $2 order by date desc", [userId, date]);
+    return await client.query(`SELECT *, ua.last_name, ua.first_name, type.name FROM donation 
+        INNER JOIN user_account ua on ua.id = donation.user_id
+        INNER JOIN donation_type type on type.id = donation.donation_type_idWHERE user_id = $1 and date >= $2 order by date desc`, 
+        [userId, date]);
 }
 
 module.exports.getInterval = async (idFirstDonation, idSecondDonation, client) => {
@@ -17,11 +23,14 @@ module.exports.getInterval = async (idFirstDonation, idSecondDonation, client) =
 }
 
 module.exports.getDonationsOfUser = async (id, client) => {
-    return await client.query("SELECT * FROM donation WHERE user_id = $1 order by date desc", [id]);
+    return await client.query(`SELECT *, ua.last_name, ua.first_name, type.name FROM donation 
+        INNER JOIN user_account ua on ua.id = donation.user_id
+        INNER JOIN donation_type type on type.id = donation.donation_type_idWHERE user_id = $1 order by date desc`, 
+        [id]);
 }
 
 module.exports.getAllDonation = async (client) => {
-    return await client.query("SELECT * FROM donation");
+    return await client.query("SELECT *, ua.last_name, ua.first_name, type.name FROM donation INNER JOIN user_account ua on ua.id = donation.user_id INNER JOIN donation_type type on type.id = donation.donation_type_id");
 }
 
 module.exports.createDonation = async (date, hour, donationTypeId, userId, donationCenterId, client ) => {
