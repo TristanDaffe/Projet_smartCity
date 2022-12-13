@@ -1,44 +1,47 @@
 import axios from 'axios';
 
-const ipAdress = "192.168.1.53";
-const URL_API = `http://${ip}:3001;`;
-
-
-const getWeatherById = async (id) => {
-    const rep = await axios.get(URL_API, {
-        params: {
-            id,
-            appid: KEY,
-            units: 'metric',
-            lang: "fr"
-        }
-    });
-    return rep.data;
-}
+const URL_API = `http://10.101.102.12:3001`;
+const TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdGF0dXMiOiJhZG1pbiIsInZhbHVlIjp7ImlkIjo5LCJsb2dpbiI6ImFkbWluIn0sImlhdCI6MTY3MDkyNDY3NSwiZXhwIjoxNjcxMDExMDc1fQ.58VHdYkxrA0uUnBEM0aT5-tenJ3hBU1xUmu_bKOnQno";
 
 const getAllDonations = async () => {
-    const rep = await axios.get(URL_API, {
-        params: {
-            id,
-            appid: KEY,
-            units: 'metric',
-            lang: "fr"
-        }
-    });
-    return rep.data;
+    axios
+        .get(`${URL_API}/donation/all`, {
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": `Bearer ${TOKEN}`
+            }
+        })
+        .then(response => {
+            console.log(response.data);
+            return response.data;
+            // do something with the response
+        })
+        .catch(error => {
+            console.log(error);
+            // handle error
+      });
 }
 
-const getAllDonationsFetch = async () => { 
-    const rep = await fetch(`${URL_API}/donation/all`, {
-        method: 'POST'});
-    return await rep.json();
-}
+// const connexion = async (login, password) => {
+//     const rep = await axios.post(`${URL_API}/user/login`, {
+//         login,
+//         password
+//     });
+//     console.log(rep.data);
+//     return rep.data;
+// }
 
-const getAllUsersFetch = async () => {
-    const rep = await fetch(`${URL_API}/user/1`, {
-        method: 'GET'});
-    return await rep.json();
-}
+// const getAllDonationsFetch = async () => { 
+//     const rep = await fetch(`${URL_API}/donation/all`, {
+//         method: 'POST'});
+//     return await rep.json();
+// }
+
+// const getAllUsersFetch = async () => {
+//     const rep = await fetch(`${URL_API}/user/1`, {
+//         method: 'GET'});
+//     return await rep.json();
+// }
 
 
 //vous pouvez choisir cette méthode à la place de l'autre, si vous le désirez

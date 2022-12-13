@@ -96,10 +96,12 @@ FIN PARTIE POUR TEST SANS API
 
     const logout = () => {
         setIsLoading(true);
+        
         AsyncStorage.removeItem('user');
         AsyncStorage.removeItem('token');
         setUser({});
         setToken(null);
+
         setIsLoading(false);
     }
     
