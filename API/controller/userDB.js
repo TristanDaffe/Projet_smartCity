@@ -21,7 +21,8 @@ const manageAuth = async (userType, value, res, client) => {
             process.env.SECRET_TOKEN, 
             {expiresIn: '24h'}
         );
-        res.json({token});
+        const isAdmin = true;
+        res.json({token, isAdmin});
     }
     else {
         const {id, first_name, last_name, email_address, login, birthday, blood_type} = value;
@@ -43,7 +44,8 @@ const manageAuth = async (userType, value, res, client) => {
             process.env.SECRET_TOKEN,
             {expiresIn: '24h'}
         );
-        res.json({token, user});
+        const isAdmin = false;
+        res.json({token, isAdmin, user});
     }
 }
 
