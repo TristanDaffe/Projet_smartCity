@@ -14,37 +14,25 @@ import DonationCenterList from "../pages/DonationCenterSettings/DonationCenterLi
 import AddDonationCenter from "../pages/DonationCenterSettings/DonationCenterAdd.jsx";
 import UpdateDonationCenter from "../pages/DonationCenterSettings/DonationCenterUpdate.jsx";
 
-import DonationTypeList from "../pages/DonationTypeSettings/DonationTypeList";
-import AddDonationType from "../pages/DonationTypeSettings/DonationTypeAdd";
-import UpdateDonationType from "../pages/DonationTypeSettings/DonationTypeUpdate";
+import OpeningDayList from "../pages/DonationTypeSettings/OpeningDayList";
+import AddOpeningDay from "../pages/DonationTypeSettings/OpeningDayAdd";
+import UpdateOpeningDay from "../pages/DonationTypeSettings/OpeningDayUpdate";
 
 import DonorList from "../pages/DonorSettings/DonorList";
 import AddDonor from "../pages/DonorSettings/DonorAdd";
 import UpdateDonor from "../pages/DonorSettings/DonorUpdate";
 
-export default function Router(){
-    return(
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<WelcomePannel/>}/>
-                {/* Donations */}
-                <Route path="/donationList" element={<DonationList/>}/>
-                <Route path="/donationUpdate/:id" element={<UpdateDonation/>}/>
-                <Route path="/addDonation" element={<AddDonation/>}/>
-                {/* Donation Centers */}
-                <Route path="/donationCenterList" element={<DonationCenterList/>}/>
-                <Route path="/donationCenterUpdate/:id" element={<UpdateDonationCenter/>}/>
-                <Route path="/addDonationCenter" element={<AddDonationCenter/>}/>
-                {/* Donation Types */}
-                <Route path="/donationTypeList" element={<DonationTypeList/>}/>
-                <Route path="/donationTypeUpdate/:id" element={<UpdateDonationType/>}/>
-                <Route path="/addDonationType" element={<AddDonationType/>}/>
-                {/* Donors */}
-                <Route path="/donorList" element={<DonorList/>}/>
-                <Route path="/donorUpdate/:id" element={<UpdateDonor/>}/>
-                <Route path="/addDonor" element={<AddDonor/>}/>
+import LoginPannel from "../pages/LoginPannel";
 
-            </Routes>
+import { getToken } from "../context/LoginContext";
+
+import RoutesChecker from "../component/RoutesChecker";
+
+export default function Router() {
+
+    return (
+        <BrowserRouter>
+            <RoutesChecker/>
         </BrowserRouter>
     );
 }

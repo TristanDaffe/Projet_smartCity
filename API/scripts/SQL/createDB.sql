@@ -181,10 +181,10 @@ INSERT INTO user_account(first_name, last_name, birthday, email_address, login, 
 -- En fait y'a pas toujours de numéro de fax mais j'en ai mis pour remplir
 -- J'ai mis des vrais
 Insert into donation_center(name, phone_number, email_address, fax, street_name, street_number, locality) VALUES
-('Don de sang Croix-Rouge Namur', '081/22.10.10', 'info@croix-rouge.be', '0800 92 245', 'Rue des Dames Blanches', 34, 1),
-('Don de sang - Établissement de transfusion sanguine', '081/42.21.35', null , '0800 92 245', 'Rue Dr Gaston Therasse', 1, 8),
-('La Transfusion du Sang', '071/53.29.99', null , '0800 92 245', 'Bd Joseph II', 11, 9),
-('Don de sang à Marche-en-Famenne', '081/56.41.52', null , '0800 92 245', 'Rue du Vivier', 24, 10),
+('Don de sang Croix-Rouge Namur', '081/22.10.10', 'info@croix-rouge.be', '0800 78 929', 'Rue des Dames Blanches', 34, 1),
+('Don de sang - Établissement de transfusion sanguine', '081/42.21.35', null , '0800 29 749', 'Rue Dr Gaston Therasse', 1, 8),
+('La Transfusion du Sang', '071/53.29.99', null , '0800 10 382', 'Bd Joseph II', 11, 9),
+('Don de sang à Marche-en-Famenne', '081/56.41.52', null , '0800 19 919', 'Rue du Vivier', 24, 10),
 -- Celui-là il a même pas de numéro de tel
 ('prélèvement prise de sang spy', null, null , '0800 92 245', 'Rte de Saussin', 1, 6);
 
@@ -244,7 +244,6 @@ Insert into donation(date, hour, user_id, donation_type_id, donation_center_id) 
 ('2018-01-01', '13:10', 1, 2, 1),
 ('2018-01-01', '13:10', 1, 3, 1),
 ('2020-01-01', '13:10', 1, 3, 1),
-
 ('2020-03-24', '13:10', 2, 1, 1),
 ('2022-06-15', '13:10', 3, 1, 1),
 ('2019-11-21', '13:10', 4, 1, 1),

@@ -1,34 +1,26 @@
-import {getAllDonations} from './http';
+import {getAllDonations, getAllDonationCenters, getAllOpeningDays, getAllUsers} from './http';
 
 
-const loadData = async () => {
+const loadDonationData = async () => {
     const data = await getAllDonations();
-    console.log("data de index");
-    console.log(data);
     return data;
 };
 
-export {loadData};
+const loadDonationCenterData = async () => {
+    const data = await getAllDonationCenters();
+    return data;
+};
 
-// import {getWeatherById} from './http';
-// import {convertNameToID} from '../../utils';
+const loadOpeningDayData = async () => {
+    const data = await getAllOpeningDays();
+    return data;
+};
 
-// const loadData = async (cityName) => {
-//     const cityID = convertNameToID(cityName);
-//     if(cityID !== undefined){
-//         try {
-//             const data = await getWeatherById(cityID);
-//             return {
-//                 cityName: data.name,
-//                 weather: data.weather[0],
-//                 temp: data.main.temp
-//             };
-//         } catch (e) {
-//             throw new Error("Un problème est survenu, réessayer plus tard");
-//         }
-//     } else {
-//         throw new Error("Cette ville est inconnue");
-//     }
-// };
+const loadUsersData = async () => {
+    const data = await getAllUsers();
+    return data;
+};
 
-// export {loadData};
+
+export {loadDonationData, loadDonationCenterData, loadOpeningDayData, loadUsersData};
+

@@ -43,6 +43,7 @@ module.exports.getAllDonationCenters = async (req, res) => {
         res.json(donationCenters);
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
     finally {
