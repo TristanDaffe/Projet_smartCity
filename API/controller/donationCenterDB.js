@@ -18,16 +18,15 @@ module.exports.getDonationCenter = async (req, res) => {
             if(donationCenter === undefined) {
                 res.status(404).send('Donation center not found');
             }   
-            else {
-                for(let center of donationCenters) {
-                    const {rows: donationTypeAvailables} = await DonationCenterModel.getDonationTypeAvailableForCenter(id, client);
-                    center.donationTypeAvailable = donationTypeAvailables;
-                }                
+            else {           
+                const {rows: donationTypeAvailables} = await DonationCenterModel.getDonationTypeAvailableForCenter(donationCenter.id, client);
+                donationCenter.donationTypeAvailable = donationTypeAvailables;
                 res.json(donationCenter);
             }
         }
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -40,6 +39,10 @@ module.exports.getAllDonationCenters = async (req, res) => {
 
     try {
         const {rows: donationCenters} = await DonationCenterModel.getAllDonationCenters(client);
+        for(let center of donationCenters) {
+            const {rows: donationTypeAvailables} = await DonationCenterModel.getDonationTypeAvailableForCenter(center.id, client);
+            center.donationTypeAvailable = donationTypeAvailables;
+        }   
         res.json(donationCenters);
     }
     catch (error) {

@@ -1,5 +1,8 @@
 module.exports.getDonationCenter = async( id, client) => {
-    return await client.query("SELECT donation_center.id, donation_center.name, donation_center.phone_number, donation_center.email_address, donation_center.fax, donation_center.street_name, donation_center.number_in_street, locality.name AS locality_name FROM donation_center INNER JOIN locality ON donation_center.locality_id = locality.id  WHERE id = $1", [id]);
+    return await client.query(`SELECT donation_center.id, donation_center.name, donation_center.phone_number, donation_center.email_address, donation_center.fax, donation_center.street_name, donation_center.street_number, locality.name AS locality_name 
+    FROM donation_center 
+    INNER JOIN locality ON donation_center.locality = locality.id  
+    WHERE donation_center.id = $1`, [id]);
 }
 // faire une autre fonction pour récupérer les types de dons d'un centre de don
 module.exports.getDonationCenterDonations = async( id, client) => {
