@@ -50,21 +50,22 @@ CREATE TABLE open_day(
     primary key (center_id,day_id)
 );
 
-DROP TABLE IF EXISTS donation_available CASCADE;
-CREATE TABLE donation_available(
-    center_id int not null,
-        foreign key (center_id) references donation_center(id),
-    blood_type_id int not null,
-        foreign key (blood_type_id) references blood_type(id),
-    primary key (center_id,blood_type_id)
-);
-
 DROP TABLE IF EXISTS donation_type CASCADE;
 CREATE TABLE donation_type(
     id int PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
     name varchar(50) not null unique,
     time_of_donation time not null
 );
+
+DROP TABLE IF EXISTS donation_available CASCADE;
+CREATE TABLE donation_available(
+    center_id int not null,
+        foreign key (center_id) references donation_center(id),
+    donation_type_id int not null,
+        foreign key (donation_type_id) references donation_type(id),
+    primary key (center_id,donation_type_id)
+);
+
 
 DROP TABLE IF EXISTS time_between_donation CASCADE;
 CREATE TABLE time_between_donation(
@@ -224,7 +225,7 @@ Insert into open_day(center_id, day_id) VALUES
 (5, 6),
 (5, 7);
 
-Insert into donation_available(center_id, blood_type_id) VALUES
+Insert into donation_available(center_id, donation_type_id) VALUES
 (1, 1),
 (1, 2),
 (1, 3),

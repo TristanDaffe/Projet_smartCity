@@ -7,6 +7,7 @@ const AuthMiddleWare = require("../middleware/authorization");
 router.get('/all', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, DonationController.getAllDonation);
 
 router.get('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, DonationController.getDonation);
+router.get('/user/:id/last', JWTMiddleWare.identification, DonationController.getLastDonationOfEveryTypeOfUser);
 router.get('/user/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin,DonationController.getDonationsOfUser);
 router.post('/', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, DonationController.createDonation);
 router.patch('/', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, DonationController.updateDonation);
