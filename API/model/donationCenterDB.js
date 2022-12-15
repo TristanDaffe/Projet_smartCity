@@ -28,6 +28,7 @@ module.exports.deleteDonationCenter = async( id, client) => {
     await client.query('BEGIN TRANSACTION')
     try{
         await client.query("DELETE FROM open_day WHERE center_id = $1", [id]);
+        await client.query("DELETE FROM donation_available WHERE center_id = $1", [id]);
         await client.query("DELETE FROM donation_center WHERE id = $1", [id]);
         await client.query('COMMIT')
     }
