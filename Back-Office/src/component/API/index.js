@@ -1,4 +1,6 @@
-import {getAllDonations, getAllDonationCenters, getAllOpeningDays, getAllUsers} from './http';
+import {getAllDonations, getAllDonationCenters, getAllOpeningDays, getAllUsers,
+        deleteDonation, deleteDonationCenter, deleteOpeningDay, deleteDonor,
+        addDonor} from './http';
 
 
 const loadDonationData = async () => {
@@ -21,6 +23,34 @@ const loadUsersData = async () => {
     return data;
 };
 
+const deleteDonationData = async (id) => {
+    const data = await deleteDonation(id);
+    return data;
+};
 
-export {loadDonationData, loadDonationCenterData, loadOpeningDayData, loadUsersData};
+const deleteDonationCenterData = async (id) => {
+    const data = await deleteDonationCenter(id);
+    return data;
+};
+
+const deleteOpeningDayData = async (id) => {
+    const data = await deleteOpeningDay(id);
+    return data;
+};
+
+const deleteDonorData = async (id) => {
+    const data = await deleteDonor(id);
+    return data;
+};
+
+const addDonorData = async (donor) => {
+    const data = await addDonor(donor);
+    return data;
+};
+
+
+
+export {loadDonationData, loadDonationCenterData, loadOpeningDayData, loadUsersData, 
+        deleteDonationData, deleteDonationCenterData, deleteOpeningDayData, deleteDonorData,
+        addDonorData};
 

@@ -93,5 +93,101 @@ const getAllUsers = async () => {
         });
 }
 
+const deleteDonation = async (id) => {
+    return await axios
+        .delete(`${URL_API}/donation/${id}`, {
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": `Bearer ${getToken()}`
+            }
+        })
+        .then(response => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error => {
+            console.log("delete donation request failed");
+            console.log(error);
+        });
+}
 
-export {getAllDonations, login, getAllDonationCenters, getAllOpeningDays, getAllUsers};
+const deleteDonationCenter = async (id) => {
+    return await axios
+        .delete(`${URL_API}/center/${id}`, {
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": `Bearer ${getToken()}`
+            }
+        })
+        .then(response => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error => {
+            console.log("delete donation center request failed");
+            console.log(error);
+        });
+}
+
+const deleteOpeningDay = async (id) => {
+    return await axios
+        .delete(`${URL_API}/openingDay/${id}`, {
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": `Bearer ${getToken()}`
+            }
+        })
+        .then(response => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error => {
+            console.log("delete opening day request failed");
+            console.log(error);
+        });
+}
+
+const deleteDonor = async (id) => {
+    return await axios
+        .delete(`${URL_API}/user/${id}`, {
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": `Bearer ${getToken()}`
+            }
+        })
+        .then(response => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error => {
+            console.log("delete donor request failed");
+            console.log(error);
+        });
+}
+
+const addDonor = async (donor) => {
+    return await axios
+        .post(`${URL_API}/user/register`, donor, {
+            headers: {
+                "Content-Type": 'application/json',
+                "Authorization": `Bearer ${getToken()}`
+            }
+        })
+        .then(response => {
+            console.log(response.data);
+            return response.data;
+        })
+        .catch(error => {
+            console.log("add donor request failed");
+            console.log(error);
+        });
+}
+
+
+
+
+
+
+export {getAllDonations, login, getAllDonationCenters, getAllOpeningDays, getAllUsers, 
+        deleteDonation, deleteDonationCenter, deleteOpeningDay, deleteDonor,
+        addDonor};

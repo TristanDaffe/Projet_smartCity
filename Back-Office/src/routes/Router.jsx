@@ -14,9 +14,9 @@ import DonationCenterList from "../pages/DonationCenterSettings/DonationCenterLi
 import AddDonationCenter from "../pages/DonationCenterSettings/DonationCenterAdd.jsx";
 import UpdateDonationCenter from "../pages/DonationCenterSettings/DonationCenterUpdate.jsx";
 
-import OpeningDayList from "../pages/DonationTypeSettings/OpeningDayList";
-import AddOpeningDay from "../pages/DonationTypeSettings/OpeningDayAdd";
-import UpdateOpeningDay from "../pages/DonationTypeSettings/OpeningDayUpdate";
+import OpeningDayList from "../pages/OpeningDaySettings/OpeningDayList";
+import AddOpeningDay from "../pages/OpeningDaySettings/OpeningDayAdd";
+import UpdateOpeningDay from "../pages/OpeningDaySettings/OpeningDayUpdate";
 
 import DonorList from "../pages/DonorSettings/DonorList";
 import AddDonor from "../pages/DonorSettings/DonorAdd";

@@ -3,7 +3,7 @@ import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
-import { loadDonationData } from '../../component/API';
+import { loadDonationData, deleteDonationData } from '../../component/API';
 
 // mettre defaultValue dans le time
 
@@ -42,7 +42,6 @@ class DonationList extends React.Component {
     }
 
     setDonations() {
-
         this.setState({loading: true, error: false}, async () => {
             try{
                 const data = await loadDonationData();
@@ -55,13 +54,14 @@ class DonationList extends React.Component {
             } catch (error) {
                 this.setState({loading: false, error: true});
             }
+            console.log(this.state.donations);
         });
 
     }
 
-    deleteDonation(event) {
-        event.preventDefault();
-        this.props.deleteDonation(event.target.value);
+    deleteDonation(id) {
+        deleteDonationData(id);
+        this.setDonations();
     }
 
     changeValuesToDisplay(string) {
@@ -100,7 +100,6 @@ class DonationList extends React.Component {
     }
 
     render() {
-
         return (
             <div>
                 <div className="header">
@@ -165,7 +164,7 @@ class DonationList extends React.Component {
                                         <Link to={`/donationUpdate/${don.id}`}>Update</Link>
                                     </td>
                                     <td>
-                                        <button onClick={() => this.props.deleteDonation(don.id)}>Delete</button>
+                                        <button onClick={() => this.deleteDonation(don.id)}>Delete</button>
                                     </td>
                                 </tr>
                             );
@@ -179,7 +178,7 @@ class DonationList extends React.Component {
 
 const mapStateToProps = (state) => {
     return {
-        donations: state.donations.listeDonations
+        donations: state.donations
     }
 };
 
