@@ -21,7 +21,7 @@ module.exports.deleteOpeningDay = async (id, client) => {
 }
 
 module.exports.getAllOpeningDays = async (client) => {
-    return await client.query("SELECT * FROM opening_day order by day_label, opening_time");
+    return await client.query("SELECT * FROM opening_day order by id");
 }
 
 module.exports.getOpeningDaysForCenter = async (id, client) => {

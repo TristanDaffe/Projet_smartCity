@@ -1,5 +1,11 @@
 import {configureStore} from '@reduxjs/toolkit';
 
+const listeOpeningHours = [
+    {}
+]
+
+
+
 const liste = [
     {
         id: 1,
@@ -214,6 +220,39 @@ const donationReducer = (state = {listeDonations: liste}, action) => {
     }
 };
 
-const store = configureStore({reducer: {donations: donationReducer}});
+
+const openingHoursReducer = (state = {openingHours: listeOpeningHours}, action) => {
+    const openingHours = state.openingHours;
+    const newArray = [...openingHours];
+    switch (action.type) {
+        case "updateOpeningHours":
+            const updatedOpeningHours = action.payload.newOpeningHours;
+            const index = newArray.findIndex(oh => oh.id === updatedOpeningHours.id);
+            newArray[index] = updatedOpeningHours;
+            return {
+                openingHours: newArray
+            }
+        case "addOpeningHours":
+            const newOpeningHours = action.payload.newOpeningHours;
+            newOpeningHours.id = newArray.length + 1;
+            newArray.push(newOpeningHours);
+            return {
+                openingHours: newArray
+            }
+        case "deleteOpeningHour":
+            const id = action.payload.id;
+            const index2 = newArray.findIndex(oh => oh.id === id);
+            newArray.splice(index2, 1);
+            return {
+                openingHours: newArray
+            }
+            
+        default:
+            return state;
+    }
+};
+
+
+const store = configureStore({reducer: {donations: donationReducer, openingHours: openingHoursReducer}});
 
 export default store;

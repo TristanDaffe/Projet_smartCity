@@ -18,7 +18,12 @@ module.exports.getUser = async (id, client) => {
 }
 
 module.exports.getAllUsers = async (client) => {
-    return await client.query("SELECT * FROM user_account");
+    return await client.query(`SELECT user_account.id, user_account.last_name, user_account.first_name, user_account.email_address, user_account.birthday, 
+    blood_type.type, blood_type.rhesus,
+    user_account.login, user_account.password, user_account.is_admin
+    FROM user_account
+    INNER JOIN blood_type ON user_account.blood_type = blood_type.id
+    ORDER BY user_account.id`);
 }
 
 module.exports.registerUser = async (lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password, client) => {
