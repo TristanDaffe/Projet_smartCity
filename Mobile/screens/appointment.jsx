@@ -4,7 +4,7 @@ import {  View, Text, StyleSheet, Image, TextInput } from 'react-native';
 import TopBarDrawer from '../components/topBar/topBarDrawer';
 import SearchBar from '../components/SearchBar';
 import { AuthContext } from '../context/authContext';
-import TableApp from '../components/AppointmentTable';
+import AppointmentTable from '../components/AppointmentTableTest';
 
 export default function Appointment ( {navigation} )  {
 
@@ -22,6 +22,9 @@ export default function Appointment ( {navigation} )  {
           <Text style={styles.textBrowsing}>Browsing</Text>
           <SearchBar></SearchBar>
         </View>
+        <View style={styles.table}>
+          <AppointmentTable></AppointmentTable>
+        </View>
       </View>
     );
 };
@@ -35,6 +38,7 @@ const styles = StyleSheet.create({
     textBrowsing: {
       fontWeight: 'bold',
       fontSize: 30,
+      marginRight:60,
     },
     title: {
       fontWeight: 'bold',
@@ -42,20 +46,9 @@ const styles = StyleSheet.create({
       alignSelf: 'center',
       marginTop: 20,
     },
-    textResponseBlood: {
-      fontWeight: 'bold',
-      color:'red',
-      fontSize: 25,
-      textAlign: 'left',
-      marginTop: 25,
+    table: {
+      marginLeft: 5,
       alignSelf: 'center',
-      borderWidth: 1,
-      borderWidth: 2,
-      borderRadius: 5,
-      paddingLeft: 100,
-      paddingRight: 100,
-      paddingTop: 10,
-      paddingBottom: 10,
     },
     lineCenter: {
       flexDirection: 'row',
