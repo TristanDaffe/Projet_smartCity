@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createPath, Navigate, useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 
@@ -62,6 +63,9 @@ class DonationAdd extends React.Component {
 
             <div className='addUpdateForm'>
                 <div className="header">
+                <Link to={`/donationList`} className='backButtonContainer' >
+                        <button className="addBackButton">Back</button>
+                    </Link>
                     <h1>Donation Settings</h1>
                     <img
                         className='imgCroixRouge'

@@ -73,7 +73,7 @@ class WelcomePannel extends React.Component {
           <LinkButton
             txt="Opening Days"
             link="openingDayList"
-            img="https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/e4Gpia8/videoblocks-close-up-footage-of-a-bag-of-blood-at-the-blood-transfusion-department-the-_bv6nvm9qn_thumbnail-1080_01.png"
+            img="https://media.istockphoto.com/videos/signing-a-day-on-a-calendar-by-red-pen-video-id1087654284?s=640x640"
             alt="Donation Types"
           />
           <LinkButton

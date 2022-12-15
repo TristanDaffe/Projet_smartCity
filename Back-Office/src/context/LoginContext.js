@@ -13,5 +13,18 @@ function removeToken () {
     localStorage.removeItem("token");
 }
 
-export { setToken, getToken, removeToken };
+function getError () {
+    return localStorage.getItem("error");
+}
+
+function removeError () {
+    localStorage.removeItem("error");
+}
+
+function setError (error) {
+    localStorage.setItem("error", error);
+}
+
+export { setToken, getToken, removeToken,
+         getError, removeError, setError };
 

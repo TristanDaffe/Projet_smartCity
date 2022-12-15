@@ -13,7 +13,8 @@ module.exports.getAllDonationCenters = async( client) => {
     return await client.query(`SELECT donation_center.id, donation_center.name, donation_center.phone_number, donation_center.email_address, donation_center.fax, donation_center.street_name, donation_center.street_number, 
     locality.name AS locality_name
     FROM donation_center 
-    INNER JOIN locality ON donation_center.locality = locality.id`);
+    INNER JOIN locality ON donation_center.locality = locality.id
+    ORDER BY donation_center.id`);
 }
 
 module.exports.createDonationCenter = async( name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, client) => {

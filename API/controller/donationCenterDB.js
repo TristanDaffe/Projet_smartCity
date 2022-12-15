@@ -9,7 +9,7 @@ module.exports.getDonationCenter = async (req, res) => {
 
     try {
         if(isNaN(id)) {
-            res.stauts(400).send('Id is not a number');
+            res.status(400).send('Id is not a number');
         }
         else {
             const {rows: donationCenters} = await DonationCenterModel.getDonationCenter(id, client);
@@ -156,7 +156,7 @@ module.exports.deleteDonationCenter = async (req, res) => {
 
     try {
         if(isNaN(id)) {
-            res.stauts(400).send('Id is not a number');
+            res.status(400).send('Id is not a number');
         }
         else {
             const {rows: donationCenters} = await DonationCenterModel.getDonationCenter(id, client);
@@ -177,6 +177,7 @@ module.exports.deleteDonationCenter = async (req, res) => {
                         res.sendStatus(200);
                     }
                     catch (error) {
+                        console.log(error);
                         res.status(500).send('Error deleting donation center');
                     }
                 }

@@ -41,7 +41,7 @@ const deleteOpeningDayData = async (id) => {
 const deleteDonorData = async (id) => {
     const data = await deleteDonor(id);
     return data;
-};
+};  
 
 const addDonorData = async (donor) => {
     const data = await addDonor(donor);

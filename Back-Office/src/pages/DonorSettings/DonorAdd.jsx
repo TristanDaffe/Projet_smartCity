@@ -4,52 +4,77 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createPath, Navigate, useParams } from 'react-router-dom';
 import { addDonorData } from '../../component/API';
-
-// function withParams(Component) {
-//     return (props) => { return <Component {...props} params={useParams()} /> };
-// }
+import CustomModal from '../../component/CustomModal';
+import { Link } from 'react-router-dom';
 
 class DonorAdd extends React.Component {
-    
-        constructor(props) {
-            super(props);
-            this.state = {
-               donor : {
-                    login:"",
-                    firstName: "",
-                    lastName:"",
-                    birthDate: new Date().toISOString().slice(0, 10),
-                    email: "",
-                    bloodType: "",
-                    password: "",
-                    redirect: false
-                }
-                
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            donor: {
+                login: "",
+                firstName: "",
+                lastName: "",
+                birthDate: new Date().toISOString().slice(0, 10),
+                email: "",
+                bloodType: "",
+                password: "",
+                redirect: false,
+            },
+
+            modal: false,
+            header: "",
+            body: "",
+        }
+    }
+
+    addDonor(event) {
+        event.preventDefault();
+        const newDonor = {
+            login: this.state.login,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            birthDate: this.state.birthDate,
+            email: this.state.email,
+
+            bloodType: this.state.bloodType,
+            password: this.state.password,
+        }
+        try {
+            addDonorData(newDonor);
+            const errorMsg = localStorage.getItem("error");;
+            if (errorMsg != null) {
+                this.setState({ modal: true });
+                this.setState({ header: "Error" });
+                this.setState({ body: errorMsg });
+                localStorage.removeItem("error");
             }
+        } catch (error) {
+
         }
 
-        addDonor(event) {
-            event.preventDefault();
-            const newDonor = {
-                login: this.state.login,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                birthDate: this.state.birthDate,
-                email: this.state.email,
-                bloodType: this.state.bloodType,
-                password: this.state.password,
-        }
-        addDonorData(newDonor);
         // this.setState({ redirect: true });
+    }
+
+    handleClose = () => {
+        this.setState({ modal: false });
+        console.log("After close");
+        console.log(this.state.modal);
     }
 
 
 
-        render() {
-            return (
 
-                <div className='addUpdateForm'>
+
+    render() {
+        return (
+
+            <div className='addUpdateForm'>
                 <div className="header">
+                <Link to={`/donorList`} className='backButtonContainer' >
+                        <button className="addBackButton">Back</button>
+                    </Link>
                     <h1>Donor Settings</h1>
                     <img
                         className='imgCroixRouge'
@@ -128,17 +153,31 @@ class DonorAdd extends React.Component {
                         {/* {this.state.redirect && <Navigate to={"/donorList"} />} */}
                     </div>
                 </form>
+                {this.state.modal && (
+                    <CustomModal
+                        modal={this.state.modal}
+                        header={this.state.header}
+                        body={this.state.body}
+                        button={<button onClick={(event) => this.handleClose()} className="btn-modal">
+                            Close
+                        </button>}
 
+
+
+                    >
+                    </CustomModal>
+
+                )}
             </div>
-            );
-        }
+        );
     }
+}
 
-    // const mapStateToProps = (state) => {
-    //     return {
-    //         donationCenters: state.donationCenters
-    //     }
-    // }
+// const mapStateToProps = (state) => {
+//     return {
+//         donationCenters: state.donationCenters
+//     }
+// }
 
 export default DonorAdd;
 

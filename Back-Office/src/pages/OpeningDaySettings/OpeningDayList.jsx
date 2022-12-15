@@ -116,7 +116,7 @@ class OpeningDayList extends React.Component {
                         callback={(filter) => this.changeFilter(filter)} ></DropList>
                     <p>Input :</p>
                     <SearchBar callback={(userChoice) => this.changeValuesToDisplay(userChoice)} />
-                    <Link to={`/addDonationType`} className='addButtonContainer'>
+                    <Link to={`/addOpeningDay`} className='addButtonContainer'>
                         <button className="addBackButton">Add Donation Type</button>
                     </Link>
                 </div>

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
 import { loadDonationCenterData, deleteDonationCenterData } from '../../component/API/index';
+import CustomModal from '../../component/CustomModal';
 
 
 class DonationCenterList extends React.Component {
@@ -11,29 +12,36 @@ class DonationCenterList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            donationCenters : [],
-            donationCentersToDisplay : [],
+            donationCenters: [],
+            donationCentersToDisplay: [],
             loading: true,
-            error: false,     
+            error: false,
+            donationCenterToDeleteId: null,
+            modal: false,
+            header: "",
+            body: "",
+            modal2: false,
+            header2: "",
+            body2: "",
+        }
     }
-}
 
     componentDidMount() {
         this.setDonationCenters();
     }
 
     setDonationCenters() {
-        this.setState({loading: true, error: false}, async () => {
-            try{
+        this.setState({ loading: true, error: false }, async () => {
+            try {
                 const data = await loadDonationCenterData();
-                this.setState({loading: false, error: false});
+                this.setState({ loading: false, error: false });
                 const state = {
                     donationCenters: data,
                     donationCentersToDisplay: data,
                 };
                 this.setState(state);
             } catch (error) {
-                this.setState({loading: false, error: true});
+                this.setState({ loading: false, error: true });
             }
         });
     }
@@ -42,12 +50,30 @@ class DonationCenterList extends React.Component {
         this.setState({ filter: filter });
     }
 
-    deleteDonationCenter(id) {
+    handleClick = (newDonnationCenterToDeleteid) => {
+        this.setState({ donationCenterToDeleteId: newDonnationCenterToDeleteid });
+        this.setState({ modal: true });
+        this.setState({ header: "Confirmation" });
+        this.setState({ body: "Are you sure you want to delete this donation center?" });
+    }
+
+
+    deleteDonationCenter() {
         try {
-            deleteDonationCenterData(id);
-            this.setDonationCenters();
+            this.setState({ modal: false });
+            deleteDonationCenterData(this.state.donationCenterToDeleteId);
+            const errorMsg = localStorage.getItem("error");
+            if (errorMsg !== null) {
+                this.setState({ modal2: true });
+                this.setState({ header2: "Error" });
+                this.setState({ body2: errorMsg });
+                localStorage.removeItem("error");
+            }
         } catch (error) {
             console.log(error);
+        }
+        finally {
+            this.setDonationCenters();
         }
     }
 
@@ -66,7 +92,7 @@ class DonationCenterList extends React.Component {
                 return donCent.name.includes(string);
             }
             else if (this.state.filter === "address") {
-                return `${donCent.street_number} ${donCent.street_name}`.includes(string);
+                return `${donCent.street_number} ${donCent.street_name} - ${donCent.locality_name}`.includes(string);
             }
             else if (this.state.filter === "phone") {
                 let phone = " ";
@@ -99,13 +125,35 @@ class DonationCenterList extends React.Component {
         this.setState({ donationCentersToDisplay: afterFiltering });
     }
 
+    centerHasBloodDonation(donationCenter) {
+        for (let i = 0; i < donationCenter.donationTypeAvailable.length; i++) {
+            if (donationCenter.donationTypeAvailable[i].name === "Blood") {
+                return true;
+            }
+        }
+    }
 
+    centerHasPlasmaDonation(donationCenter) {
+        for (let i = 0; i < donationCenter.donationTypeAvailable.length; i++) {
+            if (donationCenter.donationTypeAvailable[i].name === "Plasma") {
+                return true;
+            }
+        }
+    }
+
+    centerHasPlateletsDonation(donationCenter) {
+        for (let i = 0; i < donationCenter.donationTypeAvailable.length; i++) {
+            if (donationCenter.donationTypeAvailable[i].name === "Platelets") {
+                return true;
+            }
+        }
+    }
 
     render() {
         return (
             <div>
                 <div className="header">
-                <Link to={`/welcome`} className='backButtonContainer' >
+                    <Link to={`/welcome`} className='backButtonContainer' >
                         <button className="addBackButton">Back</button>
                     </Link>
                     <h1>Donation Centers Settings</h1>
@@ -128,7 +176,7 @@ class DonationCenterList extends React.Component {
                                 { value: "blood", label: "Blood", key: "blood" },
                                 { value: "plasma", label: "Plasma", key: "plasma" },
                                 { value: "platelets", label: "Platelets", key: "platelets" },
-                                { value: "openingDays", label: "Opening days", key: "openingDays" },                               
+                                { value: "openingDays", label: "Opening days", key: "openingDays" },
                             ]
                         }
                         callback={(filter) => this.changeFilter(filter)} ></DropList>
@@ -155,32 +203,59 @@ class DonationCenterList extends React.Component {
                             <th>Delete</th>
                         </tr>
                     </thead>
-                    
+
                     <tbody>
                         {this.state.donationCentersToDisplay.map((donationCenter, index) => (
                             <tr key={index}>
                                 <td>{donationCenter.id}</td>
                                 <td>{donationCenter.name}</td>
-                                <td>{`${donationCenter.street_number} ${donationCenter.street_name}`}</td>
-                                <td>{donationCenter.phone_number ? donationCenter.phone_number : ""}</td>
-                                <td>{donationCenter.email_address}</td>
+                                <td>{`${donationCenter.street_number} ${donationCenter.street_name} - ${donationCenter.locality_name}`}</td>
+                                <td>{donationCenter.phone_number ? donationCenter.phone_number : "/"}</td>
+                                <td>{donationCenter.email_address ? donationCenter.email_address : "/"}</td>
                                 <td>{donationCenter.fax}</td>
+                                <td>{this.centerHasBloodDonation(donationCenter) ? "X" : "/"}</td>
+                                <td>{this.centerHasPlasmaDonation(donationCenter) ? "X" : "/"}</td>
+                                <td>{this.centerHasPlateletsDonation(donationCenter) ? "X" : "/"}</td>
                                 <td>todo</td>
-                                <td>todo</td>
-                                <td>todo</td>
-                                <td>todo</td>
-                                {/* <td>{donationCenter.blood}</td>
-                                <td>{donationCenter.plasma}</td>
-                                <td>{donationCenter.platelets}</td>
-                                <td>{donationCenter.openingDays}</td> */}
                                 <td><Link to={`/editDonationCenter/${donationCenter.id}`}>
                                     Update
                                 </Link></td>
-                                <td><button className="deleteBackButton" value={donationCenter.id} onClick={(event) => this.deleteDonationCenter(event)}>Delete</button></td>
+                                <td><button className="deleteBackButton" value={donationCenter.id} onClick={(event) => this.handleClick(donationCenter.id)}>Delete</button></td>
                             </tr>
                         ))}
+
                     </tbody>
-                    </table>
+                </table>
+
+                {this.state.modal && (
+                    <CustomModal
+                        modal={this.state.modal}
+                        header={this.state.header}
+                        body={this.state.body}
+                        button={<button onClick={(event) => this.deleteDonationCenter()} className="btn-modal">
+                            Confirm
+                        </button>}
+                        closeButton={<button onClick={(event) => this.setState({ modal: false })} className="btn-modal">
+                            Close
+                        </button>}
+                    >
+                    </CustomModal>
+
+                )}
+
+                {this.state.modal2 && (
+                    <CustomModal
+                        modal={this.state.modal2}
+                        header={this.state.header2}
+                        body={this.state.body2}
+                        button={<button onClick={(event) => this.setState({ modal2: false })} className="btn-modal">
+                            Close
+                        </button>}
+                    >
+                    </CustomModal>
+
+                )}
+
             </div>
         );
     }

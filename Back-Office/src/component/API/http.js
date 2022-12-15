@@ -59,7 +59,7 @@ const getAllDonationCenters = async () => {
 
 const getAllOpeningDays = async () => {
     return await axios
-        .get(`${URL_API}/openingDay/all`, {
+        .get(`${URL_API}/openingday/all`, {
             headers: {
                 "Content-Type": 'application/json',
                 "Authorization": `Bearer ${getToken()}`
@@ -112,6 +112,8 @@ const deleteDonation = async (id) => {
 }
 
 const deleteDonationCenter = async (id) => {
+    console.log("delete donation center");
+    console.log(id);
     return await axios
         .delete(`${URL_API}/center/${id}`, {
             headers: {
@@ -125,13 +127,13 @@ const deleteDonationCenter = async (id) => {
         })
         .catch(error => {
             console.log("delete donation center request failed");
-            console.log(error);
+            localStorage.setItem('error', error.response.data);
         });
 }
 
 const deleteOpeningDay = async (id) => {
     return await axios
-        .delete(`${URL_API}/openingDay/${id}`, {
+        .delete(`${URL_API}/openingday/${id}`, {
             headers: {
                 "Content-Type": 'application/json',
                 "Authorization": `Bearer ${getToken()}`
@@ -178,8 +180,7 @@ const addDonor = async (donor) => {
             return response.data;
         })
         .catch(error => {
-            console.log("add donor request failed");
-            console.log(error);
+            localStorage.setItem('error', error.response.data);
         });
 }
 

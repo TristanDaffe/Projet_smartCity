@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
 import { loadUsersData, deleteDonorData } from '../../component/API';
+import CustomModal from '../../component/CustomModal';
 
 
 class DonorList extends React.Component {
@@ -17,6 +18,9 @@ class DonorList extends React.Component {
             userChoice: '',
             loading: true,
             error: false,
+            modal: false,
+            header: "",
+            body: "",
     }
     }
 
@@ -143,8 +147,19 @@ class DonorList extends React.Component {
                             )
                         })}
                     </tbody>
-
                     </table>
+                    {this.state.modal && (
+                    <CustomModal
+                        modal={this.state.modal}
+                        header={this.state.header}
+                        body={this.state.body}
+                        button={<button onClick={() => this.setState({modal : false})} className="btn-modal">
+                            Close
+                        </button>}
+                    >
+                    </CustomModal>
+
+                )}
             </div>
 
                             
