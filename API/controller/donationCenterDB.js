@@ -26,7 +26,6 @@ module.exports.getDonationCenter = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -46,7 +45,6 @@ module.exports.getAllDonationCenters = async (req, res) => {
         res.json(donationCenters);
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -184,7 +182,6 @@ module.exports.deleteDonationCenter = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -202,7 +199,6 @@ module.exports.getOpeningDaysForCenter = async (req, res) => {
         res.json(openingDays);
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {

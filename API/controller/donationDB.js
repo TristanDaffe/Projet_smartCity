@@ -23,7 +23,6 @@ module.exports.getDonation = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -42,13 +41,12 @@ module.exports.getDonationsOfUser = async (req, res) => {
         }
         else {
             const {rows: donations} = await DonationModel.getDonationsOfUser(id, client);
-            res.json(donations);
             
-            if(donation === undefined) {
+            if(donations === undefined) {
                 res.status(404).send('Donation not found');
             }   
             else {
-                res.json(donation);
+                res.json(donations);
             }
         }
     }
@@ -138,16 +136,8 @@ module.exports.getLastDonationOfEveryTypeOfUser = async (req, res) => {
     const id = parseInt(idT);
 
     try {
-        // récupérer les dons de l'utilisateur
-        const maxIntervals = await DonationModel.getLongestInterval(client);
-        let maxInterval = maxIntervals.rows[0].time_between.months;
-        let minDate = new Date();
-        if(maxInterval.months)
-            maxInterval += 4 * maxInterval.months;
-
-        minDate.setDate(minDate.getDay() - (maxInterval * 7));
-
-        const {rows: donations} = await DonationModel.getDonationOfUserFromDate(id, minDate, client);
+        const {rows: donations} = await DonationModel.getDonationsOfUser(id, client);
+        (donations)
         if( donations.length === 0) {
             res.status(404).send('No donation found');
         }
@@ -162,7 +152,6 @@ module.exports.getLastDonationOfEveryTypeOfUser = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error)
         res.sendStatus(500);
     }
     finally {

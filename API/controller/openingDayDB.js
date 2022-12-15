@@ -46,7 +46,6 @@ module.exports.getOpeningForDay = async (req, res) => {
         }
     }
     catch(error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
