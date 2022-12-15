@@ -1,4 +1,4 @@
-module.exports.postUser = async (login, password, client) => {
+module.exports.loginUser = async (login, password, client) => {
     const users = await client.query('SELECT * FROM user_account WHERE login = $1 AND password = $2', [login, password]);
     const user = users.rows[0];
     if(user !== undefined && user.is_admin && user.password === password) {
@@ -37,7 +37,7 @@ module.exports.updateUser = async (id, lastname, firstname, emailAddress, birthD
     await client.query("UPDATE user_account SET last_name = $1, first_name = $2, email_address = $3, birthday = $4, blood_type = $5, login = $6, password = $7 WHERE id = $8", 
     [lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password, id]);
     
-    return await this.postUser(login, password, client);
+    return await this.loginUser(login, password, client);
 }
 
 module.exports.deleteUser = async (id, client) => {

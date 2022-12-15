@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderWidth: 3,
     borderRadius: 25,
-    marginLeft: 50,
     flexDirection: 'row',
     },
     imgSearchBarre: {
