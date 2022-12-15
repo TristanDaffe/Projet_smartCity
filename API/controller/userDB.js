@@ -7,6 +7,7 @@ const { validateString, validateEmail, validateDate } = require('../validation/v
 const pool = require('../model/database');
 const UserModele = require("../model/userDB");
 const BloodTypeModel = require("../model/bloodTypeDB");
+const DonationController = require("../controller/donationDB");
 
 const manageAuth = async (userType, value, res, client) => {
 
@@ -21,7 +22,8 @@ const manageAuth = async (userType, value, res, client) => {
             process.env.SECRET_TOKEN, 
             {expiresIn: '24h'}
         );
-        res.json({token});
+        const isAdmin = true;
+        res.json({token, isAdmin});
     }
     else {
         const {id, first_name, last_name, email_address, login, birthday, blood_type} = value;
@@ -43,7 +45,8 @@ const manageAuth = async (userType, value, res, client) => {
             process.env.SECRET_TOKEN,
             {expiresIn: '24h'}
         );
-        res.json({token, user});
+        const isAdmin = false;
+        res.json({token, isAdmin, user});
     }
 }
 
@@ -65,7 +68,7 @@ module.exports.loginUser = async (req, res) => {
             res.status(errors[i].errorCode).json(errors[i].message);
         }
         else {
-            const result = await UserModele.postUser(login, password, client);
+            const result = await UserModele.loginUser(login, password, client);
             const {userType, value} = result;
 
             manageAuth(userType, value, res, client);
@@ -230,8 +233,15 @@ module.exports.deleteUser = async (req, res) => {
             res.status(400).send('Id is not a number');
         }
         else {
-            await UserModele.deleteUser(id, client);
-            res.sendStatus(200);
+            const {rows: users} = await UserModele.getUser(id, client);
+            const user = users[0];
+            if(user === undefined) {
+                res.status(404).send("User not found");
+            }
+            else { 
+                await UserModele.deleteUser(id, client);
+                res.sendStatus(200);
+            }
         }
     }
     catch (error) {

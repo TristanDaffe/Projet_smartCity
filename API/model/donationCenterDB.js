@@ -1,9 +1,19 @@
 module.exports.getDonationCenter = async( id, client) => {
-    return await client.query("SELECT * FROM donation_center WHERE id = $1", [id]);
+    return await client.query(`SELECT donation_center.id, donation_center.name, donation_center.phone_number, donation_center.email_address, donation_center.fax, donation_center.street_name, donation_center.street_number, locality.name AS locality_name 
+    FROM donation_center 
+    INNER JOIN locality ON donation_center.locality = locality.id  
+    WHERE donation_center.id = $1`, [id]);
+}
+// faire une autre fonction pour récupérer les types de dons d'un centre de don
+module.exports.getDonationCenterDonations = async( id, client) => {
+    return await client.query("SELECT donation_type.name FROM donation_center_donation_type INNER JOIN donation_type ON donation_center_donation_type.donation_type_id = donation_type.id WHERE donation_center_donation_type.donation_center_id = $1", [id]);
 }
 
 module.exports.getAllDonationCenters = async( client) => {
-    return await client.query("SELECT * FROM donation_center");
+    return await client.query(`SELECT donation_center.id, donation_center.name, donation_center.phone_number, donation_center.email_address, donation_center.fax, donation_center.street_name, donation_center.street_number, 
+    locality.name AS locality_name
+    FROM donation_center 
+    INNER JOIN locality ON donation_center.locality = locality.id`);
 }
 
 module.exports.createDonationCenter = async( name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, client) => {
@@ -15,5 +25,26 @@ module.exports.updateDonationCenter = async( id, name, phoneNumber, emailAddress
 }
 
 module.exports.deleteDonationCenter = async( id, client) => {
-    return await client.query("DELETE FROM donation_center WHERE id = $1", [id]);
+    await client.query('BEGIN TRANSACTION')
+    try{
+        await client.query("DELETE FROM open_day WHERE center_id = $1", [id]);
+        await client.query("DELETE FROM donation_available WHERE center_id = $1", [id]);
+        await client.query("DELETE FROM donation_center WHERE id = $1", [id]);
+        await client.query('COMMIT')
+    }
+    catch(e){
+        await client.query('ROLLBACK')
+        throw e
+    }
+}
+
+module.exports.getDonationForCenter = async( id, client) => {
+    return await client.query("SELECT * FROM donation WHERE donation_center_id = $1", [id]);
+}
+
+module.exports.getDonationTypeAvailableForCenter = async( id, client) => {
+    return await client.query(`SELECT donation_type.id, donation_type.name 
+        FROM donation_available 
+        INNER JOIN donation_type ON donation_available.donation_type_id = donation_type.id
+        WHERE donation_available.center_id = $1`, [id]);
 }

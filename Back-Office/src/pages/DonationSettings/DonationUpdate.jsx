@@ -64,8 +64,10 @@ class DonationUpdate extends React.Component {
                     </div>
                     <div className="item">
                     <label >Date:</label>
+                    {console.log(this.state.date)}
                         <input className='addUpdateInput'
-                        defaultValue={this.state.date}
+                            format='YYYY-MM-DD'
+                            defaultValue={this.state.date}
                             type="date"
                             onChange={(event) => this.setState({ inputDate: event.target.value.toString() })}
                         />

@@ -41,13 +41,12 @@ module.exports.getDonationsOfUser = async (req, res) => {
         }
         else {
             const {rows: donations} = await DonationModel.getDonationsOfUser(id, client);
-            res.json(donations);
             
-            if(donation === undefined) {
+            if(donations === undefined) {
                 res.status(404).send('Donation not found');
             }   
             else {
-                res.json(donation);
+                res.json(donations);
             }
         }
     }
@@ -121,6 +120,35 @@ module.exports.createDonation = async (req, res) => {
         }
         else {
             res.status(400).send("You can't add a donation of this type at this date");
+        }
+    }
+    catch (error) {
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
+    }
+}
+
+module.exports.getLastDonationOfEveryTypeOfUser = async (req, res) => {
+    const client = await pool.connect();
+    const idT = req.params.id;
+    const id = parseInt(idT);
+
+    try {
+        const {rows: donations} = await DonationModel.getDonationsOfUser(id, client);
+        (donations)
+        if( donations.length === 0) {
+            res.status(404).send('No donation found');
+        }
+        else{
+            // filtre pour avoir le dernier don de chaque type de don fais
+            let lastDonationOfEveryType = [];
+            donations.map(donation => {
+                if(!lastDonationOfEveryType.some(d => d.donation_type_id === donation.donation_type_id))
+                lastDonationOfEveryType.push(donation);
+            });
+            res.json(lastDonationOfEveryType);
         }
     }
     catch (error) {

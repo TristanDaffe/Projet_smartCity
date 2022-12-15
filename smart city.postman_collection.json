@@ -1,0 +1,1110 @@
+{
+	"info": {
+		"_postman_id": "0b97b3cf-0465-4933-b2a8-4212573e2278",
+		"name": "smart city",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24698037"
+	},
+	"item": [
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "auth admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = pm.response.json();",
+									"pm.environment.set('tokenAdmin', res.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"admin\",\n    \"password\": \"admin\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/user/login",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "auth user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var res = pm.response.json();",
+									"pm.environment.set('tokenUser', res.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"login\": \"johnDoe90\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/user/login",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "get user id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/user/3",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"user",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"emailAddress\": \"postomddddan@test.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"02/02/2002\",\n    \"bloodType\": \"A\",\n    \"rhesus\": \"+\",\n    \"login\": \"poop\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/user/register",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/user/delete/2",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"user",
+								"delete",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "patch user",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 3,\n    \"emailAddress\": \"postman@test.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"02/02/2002\",\n    \"bloodTypeId\": \"1\",\n    \"login\": \"pp\",\n    \"password\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/user/patch",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"user",
+								"patch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "all user",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/user/all",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"user",
+								"all"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "donation",
+			"item": [
+				{
+					"name": "get all donation",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/donation/all",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"donation",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "last donation user everytype",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/donation/user/1/last",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"donation",
+								"user",
+								"1",
+								"last"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create new donation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"date\": \"2022-12-02\",\n    \"hour\": \"15:30\",\n    \"userId\": \"1\",\n    \"donationTypeId\": \"2\",\n    \"donationCenterId\": \"1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/donation/",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"donation",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "blood type",
+			"item": [
+				{
+					"name": "all blood type",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenUser}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/bloodtype/all",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"bloodtype",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get bloodtype",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/bloodtype/1",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"bloodtype",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "locality",
+			"item": [
+				{
+					"name": "all locality",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/locality/all",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"locality",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add locality",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Paris\",\n    \"postalCode\": \"5656\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/locality",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"locality"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "patch locality",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 20,\n    \"name\": \"Moustier\",\n    \"postalCode\": \"5656\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/locality",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"locality"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete locality",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/locality/11",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"locality",
+								"11"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "donation center",
+			"item": [
+				{
+					"name": "all donation center",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/center/all",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"center",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "donation center by id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/center/1",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"center",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "opening day of a donation center",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/center/opening/1",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"center",
+								"opening",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update donation center",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"test\",\n    \"phoneNumber\": \"0495/989898\",\n    \"streetName\": \"Le trou\",\n    \"numberInStreet\": 1,\n    \"localityId\": 2\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/center",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"center"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete donation center",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/center/6",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"center",
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "opening day",
+			"item": [
+				{
+					"name": "get from id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/openingday/1",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"openingday",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create opening day",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"dayLabel\": \"Monday\",\n    \"openingTime\": \"08:30\",\n    \"closingTime\": \"18:30\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/openingday/",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"openingday",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete opening day",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/openingday/15",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"openingday",
+								"15"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get for a day",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/openingday/day/Monday",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"openingday",
+								"day",
+								"Monday"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/openingday/all",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"openingday",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update opening",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{tokenAdmin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 5,\n    \"dayLabel\": \"Friday\",\n    \"openingTime\": \"08:05:00\",\n    \"closingTime\": \"12:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{Base_url}}:{{port}}/openingday",
+							"protocol": "http",
+							"host": [
+								"{{Base_url}}"
+							],
+							"port": "{{port}}",
+							"path": [
+								"openingday"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "donation type all",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenAdmin}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{Base_url}}:{{port}}/donationtype/all",
+					"protocol": "http",
+					"host": [
+						"{{Base_url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"donationtype",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "donation type by id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenAdmin}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{Base_url}}:{{port}}/donationtype/1",
+					"protocol": "http",
+					"host": [
+						"{{Base_url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"donationtype",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "donation type by id Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenAdmin}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{Base_url}}:{{port}}/donationtype/1",
+					"protocol": "http",
+					"host": [
+						"{{Base_url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"donationtype",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "donation type create",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenAdmin}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"White globule\",\n    \"timeOfDonation\": \"01:20:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{Base_url}}:{{port}}/donationtype",
+					"protocol": "http",
+					"host": [
+						"{{Base_url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"donationtype"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update donation type",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{tokenAdmin}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 4,\n    \"name\": \"Plasma\",\n    \"timeOfDonation\": \"04:20:00\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{Base_url}}:{{port}}/donationtype",
+					"protocol": "http",
+					"host": [
+						"{{Base_url}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"donationtype"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

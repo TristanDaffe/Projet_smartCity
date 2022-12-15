@@ -4,6 +4,8 @@ const DonationRouter = require('./donation');
 const LocalityRouter = require('./locality');
 const DonationCenterRouter = require('./donationCenter');
 const OpeningDayRouter = require('./openingDay');
+const DonationTypeRouter = require('./donationType');
+const DonationIntervalleRouter = require('./donationInterval');
 
 const router = require('express').Router();
 
@@ -13,5 +15,7 @@ router.use("/donation", DonationRouter);
 router.use("/locality", LocalityRouter);
 router.use("/center", DonationCenterRouter);
 router.use("/openingday", OpeningDayRouter);
+router.use("/donationtype", DonationTypeRouter);
+router.use('/donationinterval', DonationIntervalleRouter)
 
 module.exports = router;

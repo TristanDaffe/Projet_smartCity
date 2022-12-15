@@ -1,6 +1,13 @@
 
 module.exports.getDonation = async (id, client) => {
-    return await client.query("SELECT * FROM donation WHERE id = $1", [id]);
+    return await client.query(`SELECT donation.id, donation.date, donation.hour, donation.user_id, donation.donation_center_id, donation.donation_type_id, 
+        ua.last_name, ua.first_name, type.name, dc.name as donation_center_name, bt.type as blood_type_name, bt.rhesus as blood_type_rhesus
+        FROM donation 
+        INNER JOIN user_account ua on ua.id = donation.user_id
+        INNER JOIN donation_type type on type.id = donation.donation_type_id
+        INNER JOIN donation_center dc on dc.id = donation.donation_center_id
+        INNER JOIN blood_type bt on bt.id = ua.blood_type
+        WHERE donation.id = $1`, [id]);
 }
 
 module.exports.getLongestInterval = async (client) => {
@@ -8,7 +15,16 @@ module.exports.getLongestInterval = async (client) => {
 }
 
 module.exports.getDonationOfUserFromDate = async (userId, date, client) => {
-    return await client.query("SELECT * FROM donation WHERE user_id = $1 and date >= $2 order by date desc", [userId, date]);
+    return await client.query(`SELECT donation.id, donation.date, donation.hour, donation.user_id, donation.donation_center_id, donation.donation_type_id, ua.last_name, ua.first_name, 
+        type.name, dc.name as donation_center_name, bt.type as blood_type_name, bt.rhesus as blood_type_rhesus 
+        FROM donation 
+        INNER JOIN user_account ua on ua.id = donation.user_id
+        INNER JOIN donation_type type on type.id = donation.donation_type_id
+        INNER JOIN donation_center dc on dc.id = donation.donation_center_id
+        INNER JOIN blood_type bt on bt.id = ua.blood_type
+        WHERE user_id = $1 and date >= $2 
+        order by date desc`,
+        [userId, date]);
 }
 
 module.exports.getInterval = async (idFirstDonation, idSecondDonation, client) => {
@@ -17,11 +33,25 @@ module.exports.getInterval = async (idFirstDonation, idSecondDonation, client) =
 }
 
 module.exports.getDonationsOfUser = async (id, client) => {
-    return await client.query("SELECT * FROM donation WHERE user_id = $1 order by date desc", [id]);
+    return await client.query(`SELECT donation.id, donation.date, donation.hour, donation.user_id, donation.donation_center_id, donation.donation_type_id,  ua.last_name, ua.first_name, 
+        type.name, dc.name as donation_center_name, bt.type as blood_type_name, bt.rhesus as blood_type_rhesus FROM donation 
+        INNER JOIN user_account ua on ua.id = donation.user_id 
+        INNER JOIN donation_type type on type.id = donation.donation_type_id 
+        INNER JOIN donation_center dc on dc.id = donation.donation_center_id
+        INNER JOIN blood_type bt on bt.id = ua.blood_type
+        WHERE donation.user_id = $1 
+        order by date desc`,
+        [id]);
 }
 
 module.exports.getAllDonation = async (client) => {
-    return await client.query("SELECT * FROM donation");
+    return await client.query(`SELECT donation.id, donation.date, donation.hour, donation.user_id, donation.donation_center_id, 
+    donation.donation_type_id,  ua.last_name, ua.first_name, type.name, dc.name as donation_center_name, bt.type as blood_type_name, bt.rhesus as blood_type_rhesus
+    FROM donation 
+    INNER JOIN user_account ua on ua.id = donation.user_id 
+    INNER JOIN donation_type type on type.id = donation.donation_type_id 
+    INNER JOIN donation_center dc on dc.id = donation.donation_center_id 
+    INNER JOIN blood_type bt on bt.id = ua.blood_type`);
 }
 
 module.exports.createDonation = async (date, hour, donationTypeId, userId, donationCenterId, client ) => {

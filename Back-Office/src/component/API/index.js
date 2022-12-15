@@ -1,32 +1,56 @@
-import {getAllDonations} from './http';
+import {getAllDonations, getAllDonationCenters, getAllOpeningDays, getAllUsers,
+        deleteDonation, deleteDonationCenter, deleteOpeningDay, deleteDonor,
+        addDonor} from './http';
 
 
-const loadData = async (cityName) => {
+const loadDonationData = async () => {
     const data = await getAllDonations();
     return data;
 };
 
-export {loadData};
+const loadDonationCenterData = async () => {
+    const data = await getAllDonationCenters();
+    return data;
+};
 
-// import {getWeatherById} from './http';
-// import {convertNameToID} from '../../utils';
+const loadOpeningDayData = async () => {
+    const data = await getAllOpeningDays();
+    return data;
+};
 
-// const loadData = async (cityName) => {
-//     const cityID = convertNameToID(cityName);
-//     if(cityID !== undefined){
-//         try {
-//             const data = await getWeatherById(cityID);
-//             return {
-//                 cityName: data.name,
-//                 weather: data.weather[0],
-//                 temp: data.main.temp
-//             };
-//         } catch (e) {
-//             throw new Error("Un problème est survenu, réessayer plus tard");
-//         }
-//     } else {
-//         throw new Error("Cette ville est inconnue");
-//     }
-// };
+const loadUsersData = async () => {
+    const data = await getAllUsers();
+    return data;
+};
 
-// export {loadData};
+const deleteDonationData = async (id) => {
+    const data = await deleteDonation(id);
+    return data;
+};
+
+const deleteDonationCenterData = async (id) => {
+    const data = await deleteDonationCenter(id);
+    return data;
+};
+
+const deleteOpeningDayData = async (id) => {
+    const data = await deleteOpeningDay(id);
+    return data;
+};
+
+const deleteDonorData = async (id) => {
+    const data = await deleteDonor(id);
+    return data;
+};
+
+const addDonorData = async (donor) => {
+    const data = await addDonor(donor);
+    return data;
+};
+
+
+
+export {loadDonationData, loadDonationCenterData, loadOpeningDayData, loadUsersData, 
+        deleteDonationData, deleteDonationCenterData, deleteOpeningDayData, deleteDonorData,
+        addDonorData};
+

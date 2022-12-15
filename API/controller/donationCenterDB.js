@@ -18,7 +18,9 @@ module.exports.getDonationCenter = async (req, res) => {
             if(donationCenter === undefined) {
                 res.status(404).send('Donation center not found');
             }   
-            else {
+            else {           
+                const {rows: donationTypeAvailables} = await DonationCenterModel.getDonationTypeAvailableForCenter(donationCenter.id, client);
+                donationCenter.donationTypeAvailable = donationTypeAvailables;
                 res.json(donationCenter);
             }
         }
@@ -36,6 +38,10 @@ module.exports.getAllDonationCenters = async (req, res) => {
 
     try {
         const {rows: donationCenters} = await DonationCenterModel.getAllDonationCenters(client);
+        for(let center of donationCenters) {
+            const {rows: donationTypeAvailables} = await DonationCenterModel.getDonationTypeAvailableForCenter(center.id, client);
+            center.donationTypeAvailable = donationTypeAvailables;
+        }   
         res.json(donationCenters);
     }
     catch (error) {
@@ -81,7 +87,6 @@ module.exports.createDonationCenter = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -159,8 +164,20 @@ module.exports.deleteDonationCenter = async (req, res) => {
                 res.status(404).send('Donation center not found');
             }   
             else {
-                await DonationCenterModel.deleteDonationCenter(id, client);
-                res.sendStatus(200);
+                const {rows: donation} = await DonationCenterModel.getDonationForCenter(id, client);
+
+                if(donation.length > 0){
+                    res.status(400).send('Donation center has donations');
+                }
+                else {
+                    try {
+                        await DonationCenterModel.deleteDonationCenter(id, client);
+                        res.sendStatus(200);
+                    }
+                    catch (error) {
+                        res.status(500).send('Error deleting donation center');
+                    }
+                }
             }
         }
     }
@@ -182,7 +199,6 @@ module.exports.getOpeningDaysForCenter = async (req, res) => {
         res.json(openingDays);
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
