@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
 import ConfirmationPopup from '../../component/ConfirmationPopup';
-import { loadOpeningDayData } from '../../component/API';
+import { loadOpeningDayData, deleteOpeningDayData } from '../../component/API';
 
 
 class OpeningDayList extends React.Component {
@@ -50,10 +50,15 @@ class OpeningDayList extends React.Component {
         });
     }
 
-    deleteOpeningHour(event) {
-        event.preventDefault();
-        this.props.deleteOpeningHour(event.target.value);
+    deleteOpeningDay(id) {
+        try {
+            deleteOpeningDayData(id);
+            this.setOpeningDay();
+        } catch (error) {
+            console.log(error);
+        }
     }
+
 
 
     changeFilter(string) {
@@ -138,7 +143,7 @@ class OpeningDayList extends React.Component {
                                         <Link to={`/opationTypeUpdate/${openingDay.id}`}>Update</Link>
                                     </td>
                                     <td>
-                                        <button onClick={() => this.props.deleteOpeningHour(openingDay.id)}>Delete</button>
+                                        <button onClick={() => this.deleteOpeningDay(openingDay.id)}>Delete</button>
                                     </td>
                                 </tr>
                             );

@@ -3,8 +3,7 @@ import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
-import LinkButton from '../../component/LinkButton';
-import { loadUsersData } from '../../component/API';
+import { loadUsersData, deleteDonorData } from '../../component/API';
 
 
 class DonorList extends React.Component {
@@ -71,6 +70,15 @@ class DonorList extends React.Component {
         this.setState({donorsToDisplay: afterFiltering});
     }
 
+    deleteDonor(id) {
+        try {
+            deleteDonorData(id);
+            this.getDonors();
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     render() {
         return (
             <div>
@@ -100,7 +108,7 @@ class DonorList extends React.Component {
                         callback={(filter) => this.changeFilter(filter)} ></DropList>
                     <p>Input :</p>
                     <SearchBar callback={(userChoice) => this.changeValuesToDisplay(userChoice)} />
-                    <Link to={`/addDonors`} className='addButtonContainer'>
+                    <Link to={`/addDonor`} className='addButtonContainer'>
                         <button className="addBackButton">Add Donor</button>
                     </Link>
                 </div>
@@ -115,7 +123,7 @@ class DonorList extends React.Component {
                             <th>Birth date</th>
                             <th>Donations</th>
                             <th>Update</th>
-                            <th>Deelte</th>
+                            <th>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -130,7 +138,7 @@ class DonorList extends React.Component {
                                     <td>{donor.birthday.substr(0,10) }</td>
                                     <td>todo</td>
                                     <td><Link to={`/donorUpdate/${donor.id}`}>Update</Link> </td>
-                                    <td><button className="deleteButton" onClick={() => this.deleteDonationCenter(donor.id)}>Delete</button></td>
+                                    <td><button className="deleteButton" onClick={() => this.deleteDonor(donor.id)}>Delete</button></td>
                                 </tr>
                             )
                         })}

@@ -10,6 +10,6 @@ router.get('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, Use
 router.post('/login', UserConroller.loginUser);
 router.post('/register', UserConroller.registerUser);
 router.patch('/patch', UserConroller.patchUser);
-router.delete('/delete/:id', UserConroller.deleteUser);
+router.delete('/:id', UserConroller.deleteUser);
 
 module.exports = router;

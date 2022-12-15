@@ -3,7 +3,7 @@ import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
-import { loadDonationCenterData } from '../../component/API/index';
+import { loadDonationCenterData, deleteDonationCenterData } from '../../component/API/index';
 
 
 class DonationCenterList extends React.Component {
@@ -42,9 +42,13 @@ class DonationCenterList extends React.Component {
         this.setState({ filter: filter });
     }
 
-    deleteDonationCenter(event) {
-        event.preventDefault();
-        this.props.deleteDonationCenter(event.target.value);
+    deleteDonationCenter(id) {
+        try {
+            deleteDonationCenterData(id);
+            this.setDonationCenters();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     changeFilter(filter) {
