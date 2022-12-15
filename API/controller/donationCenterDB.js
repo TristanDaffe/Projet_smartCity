@@ -167,7 +167,8 @@ module.exports.deleteDonationCenter = async (req, res) => {
             }   
             else {
                 const {rows: donation} = await DonationCenterModel.getDonationForCenter(id, client);
-                if(donation !== undefined){
+
+                if(donation.length > 0){
                     res.status(400).send('Donation center has donations');
                 }
                 else {
