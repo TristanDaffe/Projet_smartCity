@@ -15,7 +15,7 @@ module.exports.getLongestInterval = async (client) => {
 module.exports.getDonationOfUserFromDate = async (userId, date, client) => {
     return await client.query(`SELECT donation.id, donation.date, donation.hour, donation.user_id, donation.donation_center_id, donation.donation_type_id, ua.last_name, ua.first_name, type.name FROM donation 
         INNER JOIN user_account ua on ua.id = donation.user_id
-        INNER JOIN donation_type type on type.id = donation.donation_type_idWHERE user_id = $1 and date >= $2 order by date desc`, 
+        INNER JOIN donation_type type on type.id = donation.donation_type_id WHERE user_id = $1 and date >= $2 order by date desc`, 
         [userId, date]);
 }
 

@@ -19,6 +19,10 @@ module.exports.getDonationCenter = async (req, res) => {
                 res.status(404).send('Donation center not found');
             }   
             else {
+                for(let center of donationCenters) {
+                    const {rows: donationTypeAvailables} = await DonationCenterModel.getDonationTypeAvailableForCenter(id, client);
+                    center.donationTypeAvailable = donationTypeAvailables;
+                }                
                 res.json(donationCenter);
             }
         }
@@ -81,7 +85,6 @@ module.exports.createDonationCenter = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -159,12 +162,24 @@ module.exports.deleteDonationCenter = async (req, res) => {
                 res.status(404).send('Donation center not found');
             }   
             else {
-                await DonationCenterModel.deleteDonationCenter(id, client);
-                res.sendStatus(200);
+                const {rows: donation} = await DonationCenterModel.getDonationForCenter(id, client);
+                if(donation !== undefined){
+                    res.status(400).send('Donation center has donations');
+                }
+                else {
+                    try {
+                        await DonationCenterModel.deleteDonationCenter(id, client);
+                        res.sendStatus(200);
+                    }
+                    catch (error) {
+                        res.status(500).send('Error deleting donation center');
+                    }
+                }
             }
         }
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
     finally {

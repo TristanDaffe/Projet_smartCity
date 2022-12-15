@@ -132,6 +132,44 @@ module.exports.createDonation = async (req, res) => {
     }
 }
 
+module.exports.getLastDonationOfEveryTypeOfUser = async (req, res) => {
+    const client = await pool.connect();
+    const idT = req.params.id;
+    const id = parseInt(idT);
+
+    try {
+        // récupérer les dons de l'utilisateur
+        const maxIntervals = await DonationModel.getLongestInterval(client);
+        let maxInterval = maxIntervals.rows[0].time_between.months;
+        let minDate = new Date();
+        if(maxInterval.months)
+            maxInterval += 4 * maxInterval.months;
+
+        minDate.setDate(minDate.getDay() - (maxInterval * 7));
+
+        const {rows: donations} = await DonationModel.getDonationOfUserFromDate(id, minDate, client);
+        if( donations.length === 0) {
+            res.status(404).send('No donation found');
+        }
+        else{
+            // filtre pour avoir le dernier don de chaque type de don fais
+            let lastDonationOfEveryType = [];
+            donations.map(donation => {
+                if(!lastDonationOfEveryType.some(d => d.donation_type_id === donation.donation_type_id))
+                lastDonationOfEveryType.push(donation);
+            });
+            res.json(lastDonationOfEveryType);
+        }
+    }
+    catch (error) {
+        console.log(error)
+        res.sendStatus(500);
+    }
+    finally {
+        client.release();
+    }
+}
+
 module.exports.updateDonation = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
