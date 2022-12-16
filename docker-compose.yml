@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+
+  BDpostgres:
+    image: postgres
+    container_name: BDsmartCityCompose
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: admin
+      POSTGRES_DB: smartcity
+
+  api:
+    stdin_open: true
+    container_name: api
+    tty: true
+    build: ./API
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./API:/app
+    env_file:
+      - ./API/.env
+    depends_on:
+      - BDpostgres
+
+  back-office:
+    stdin_open: true
+    container_name: back-office
+    tty: true
+    build: ./Back-Office
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./Back-Office:/app
+    environment:
+      - WATCHPACK_POLLING=true
