@@ -27,3 +27,7 @@ module.exports.getAllOpeningDays = async (client) => {
 module.exports.getOpeningDaysForCenter = async (id, client) => {
     return await client.query("SELECT * FROM opening_day WHERE id IN (SELECT day_id FROM open_day WHERE center_id = $1)", [id]);
 }
+
+module.exports.OpeningDayUse = async (id, client) => {
+    return await client.query("SELECT * FROM open_day WHERE day_id = $1 LIMIT 1", [id]);
+}
