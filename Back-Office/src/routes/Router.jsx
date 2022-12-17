@@ -15,6 +15,7 @@ import UpdateDonation from "../pages/DonationSettings/DonationUpdate.jsx";
 import DonationCenterList from "../pages/DonationCenterSettings/DonationCenterList.jsx";
 import AddDonationCenter from "../pages/DonationCenterSettings/DonationCenterAdd.jsx";
 import UpdateDonationCenter from "../pages/DonationCenterSettings/DonationCenterUpdate.jsx";
+import DonationCenterOpeningDays from "../pages/DonationCenterSettings/DonationCenterOpeningDayList.jsx";
 
 import OpeningDayList from "../pages/OpeningDaySettings/OpeningDayList";
 import AddOpeningDay from "../pages/OpeningDaySettings/OpeningDayAdd";
@@ -23,6 +24,7 @@ import UpdateOpeningDay from "../pages/OpeningDaySettings/OpeningDayUpdate";
 import DonorList from "../pages/DonorSettings/DonorList";
 import AddDonor from "../pages/DonorSettings/DonorAdd";
 import UpdateDonor from "../pages/DonorSettings/DonorUpdate";
+import DonorDonations from "../pages/DonorSettings/DonorDonationsList";
 
 import LoginPannel from "../pages/LoginPannel";
 
@@ -94,6 +96,16 @@ export default function Router() {
                         </PrivateRoute>
                     }
                 />
+
+                <Route
+                    path="donationCenterOpeningDays/:id"
+                    element={
+                        <PrivateRoute>
+                            <DonationCenterOpeningDays />
+                        </PrivateRoute>
+                    }
+                />
+
                 {/* Opening Days */}
                 <Route
                     path="/openingDayList"
@@ -144,6 +156,15 @@ export default function Router() {
                         </PrivateRoute>
                     }
                 />
+                <Route
+                    path="/donorDonations/:id"
+                    element={
+                        <PrivateRoute>
+                            <DonorDonations />
+                        </PrivateRoute>
+                    }
+                />
+
                 <Route path="*" element={<Navigate to="/welcome" />} />
             </Routes>
         </BrowserRouter>

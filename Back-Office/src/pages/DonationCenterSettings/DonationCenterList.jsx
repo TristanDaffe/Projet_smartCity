@@ -58,7 +58,6 @@ class DonationCenterList extends React.Component {
         const promesse = deleteDonationCenterData(this.state.donationCenterToDeleteId);
         this.setState({ modal: false });
         promesse.then(() => {
-            this.setState({ modal: false });
             this.setDonationCenters();
         }).catch((error) => {
             this.setState({ modal2: true });
@@ -75,7 +74,7 @@ class DonationCenterList extends React.Component {
     changeValuesToDisplay(string) {
         const donationCentersToDisplay = this.state.donationCenters;
         const afterFiltering = donationCentersToDisplay.filter(donCent => {
-            console.log(this.state.filter);
+
             if (this.state.filter === "id") {
                 return donCent.id.toString().includes(string);
             }
@@ -106,7 +105,6 @@ class DonationCenterList extends React.Component {
                 return this.centerHasBloodDonation(donCent);
             }
             else if (this.state.filter === "plasma") {
-                console.log("this.centerHasPlasmaDonation(donCent)");
                 console.log(this.centerHasPlasmaDonation(donCent));
                 return this.centerHasPlasmaDonation(donCent);
             }
@@ -115,7 +113,7 @@ class DonationCenterList extends React.Component {
             }
             else {
                 return false;
-            } 
+            }
         });
         this.setState({ donationCentersToDisplay: afterFiltering });
     }
@@ -210,7 +208,9 @@ class DonationCenterList extends React.Component {
                                 <td>{this.centerHasBloodDonation(donationCenter) ? "✅" : "❌"}</td>
                                 <td>{this.centerHasPlasmaDonation(donationCenter) ? "✅" : "❌"}</td>
                                 <td>{this.centerHasPlateletsDonation(donationCenter) ? "✅" : "❌"}</td>
-                                <td>todo</td>
+                                <td><Link to={`/donationCenterOpeningDays/${donationCenter.id}`}>
+                                    Go to
+                                </Link></td>
                                 <td><Link to={`/editDonationCenter/${donationCenter.id}`}>
                                     Update
                                 </Link></td>
@@ -226,10 +226,10 @@ class DonationCenterList extends React.Component {
                         modal={this.state.modal}
                         header={this.state.header}
                         body={this.state.body}
-                        button={<button onClick={(event) => this.deleteDonationCenter()} className="btn-modal">
+                        button={<button onClick={() => this.deleteDonationCenter()} className="btn-modal">
                             Confirm
                         </button>}
-                        closeButton={<button onClick={(event) => this.setState({ modal: false })} className="btn-modal">
+                        closeButton={<button onClick={() => this.setState({ modal: false })} className="btn-modal">
                             Close
                         </button>}
                     >
