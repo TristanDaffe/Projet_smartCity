@@ -1,7 +1,6 @@
 import React from 'react';
 import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
 import { loadUsersData, deleteDonorData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
@@ -18,9 +17,13 @@ class DonorList extends React.Component {
             userChoice: '',
             loading: true,
             error: false,
+            donorToDeleteId: null,
             modal: false,
             header: "",
             body: "",
+            modal2: false,
+            header2: "",
+            body2: "",
     }
     }
 
@@ -55,32 +58,46 @@ class DonorList extends React.Component {
             if (this.state.filter === "id") {
                 return donor.id.toString().includes(string);
             }
-            if (this.state.filter === "name") {
+            else if (this.state.filter === "name") {
                 return donor.first_name.includes(string);
             }
-            if (this.state.filter === "lastname") {
+            else if (this.state.filter === "lastname") {
                 return donor.last_name.includes(string);
             }
-            if (this.state.filter === "email") {
+            else if (this.state.filter === "email") {
                 return donor.email_address.includes(string);
             }
-            if (this.state.filter === "bloodtype") {
+            else if (this.state.filter === "bloodtype") {
                 return `${donor.type}${donor.rhesus}`.includes(string);
             }
-            if (this.state.filter === "birthdate") {
+            else if (this.state.filter === "birthdate") {
                 return donor.birthday.substr(0,10).includes(string);
+            }
+            else {
+                return false;
             }
         });
         this.setState({donorsToDisplay: afterFiltering});
     }
 
+    handleClick = (newDonorToDeleteid) => {
+        this.setState({ donorToDeleteId: newDonorToDeleteid });
+        this.setState({ modal: true });
+        this.setState({ header: "Confirmation" });
+        this.setState({ body: "Are you sure you want to delete this donor?" });
+    }
+
     deleteDonor(id) {
-        try {
-            deleteDonorData(id);
-            this.getDonors();
-        } catch (error) {
-            console.log(error);
-        }
+        const promesse = deleteDonorData(this.state.donorToDelete);
+        this.setState({ modal: false });
+        promesse.then((response) => {
+            this.setState({ modal: false });
+            this.setDonorD();
+        }).catch((error) => {
+            this.setState({ modal2: true });
+            this.setState({ header2: "Error" });
+            this.setState({ body2: error.response.data });
+        });
     }
 
     render() {
@@ -167,24 +184,5 @@ class DonorList extends React.Component {
         );
     }
 }
-
-// const mapStateToProps = (state) => {
-//     return {
-//         donationCenters: state.donationCenters.listeDonationCenters
-//     }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         addDonationCenter: (donationCenterObjet) => {
-//             dispatch({ type: "addDonationCenter", payload: { newDonationCenter: donationCenterObjet } });
-//         },
-//         deleteDonationCenter: (id) => {
-//             dispatch({ type: "deleteDonationCenter", payload: { id: id } });
-//         }
-//     }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(DonationCenterList);
 
 export default DonorList;

@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import "./Modal.css";
+import React from "react";
+import "../css/Modal.css";
 
 class ErrorModal extends React.Component {
   constructor(props) {
@@ -18,8 +18,6 @@ class ErrorModal extends React.Component {
     this.setState({ modal: false });
     window.location.reload();
     };
-
-
 
   render() {
     return (

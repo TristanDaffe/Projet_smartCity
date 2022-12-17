@@ -46,12 +46,8 @@ class DonationCenterList extends React.Component {
         });
     }
 
-    changeFilter(filter) {
-        this.setState({ filter: filter });
-    }
-
-    handleClick = (newDonnationCenterToDeleteid) => {
-        this.setState({ donationCenterToDeleteId: newDonnationCenterToDeleteid });
+    handleClick = (newDonationCenterToDeleteid) => {
+        this.setState({ donationCenterToDeleteId: newDonationCenterToDeleteid });
         this.setState({ modal: true });
         this.setState({ header: "Confirmation" });
         this.setState({ body: "Are you sure you want to delete this donation center?" });
@@ -59,22 +55,17 @@ class DonationCenterList extends React.Component {
 
 
     deleteDonationCenter() {
-        try {
+        const promesse = deleteDonationCenterData(this.state.donationCenterToDeleteId);
+        this.setState({ modal: false });
+        promesse.then(() => {
             this.setState({ modal: false });
-            deleteDonationCenterData(this.state.donationCenterToDeleteId);
-            const errorMsg = localStorage.getItem("error");
-            if (errorMsg !== null) {
-                this.setState({ modal2: true });
-                this.setState({ header2: "Error" });
-                this.setState({ body2: errorMsg });
-                localStorage.removeItem("error");
-            }
-        } catch (error) {
-            console.log(error);
-        }
-        finally {
             this.setDonationCenters();
-        }
+        }).catch((error) => {
+            this.setState({ modal2: true });
+            this.setState({ header2: "Error" });
+            this.setState({ body2: error.response.data });
+        });
+
     }
 
     changeFilter(filter) {
@@ -84,7 +75,7 @@ class DonationCenterList extends React.Component {
     changeValuesToDisplay(string) {
         const donationCentersToDisplay = this.state.donationCenters;
         const afterFiltering = donationCentersToDisplay.filter(donCent => {
-
+            console.log(this.state.filter);
             if (this.state.filter === "id") {
                 return donCent.id.toString().includes(string);
             }
@@ -111,16 +102,20 @@ class DonationCenterList extends React.Component {
             else if (this.state.filter === "fax") {
                 return donCent.fax.includes(string);
             }
-
-            // else if (this.state.filter === "blood") {
-            //     return donCent.blood.includes(string);
-            // }
-            // else if (this.state.filter === "plasma") {
-            //     return donCent.plasma.includes(string);
-            // }
-            // else if (this.state.filter === "platelets") {
-            //     return donCent.platelets.includes(string);
-            // }
+            else if (this.state.filter === "blood") {
+                return this.centerHasBloodDonation(donCent);
+            }
+            else if (this.state.filter === "plasma") {
+                console.log("this.centerHasPlasmaDonation(donCent)");
+                console.log(this.centerHasPlasmaDonation(donCent));
+                return this.centerHasPlasmaDonation(donCent);
+            }
+            else if (this.state.filter === "platelets") {
+                return this.centerHasPlateletsDonation(donCent);
+            }
+            else {
+                return false;
+            } 
         });
         this.setState({ donationCentersToDisplay: afterFiltering });
     }
@@ -176,7 +171,6 @@ class DonationCenterList extends React.Component {
                                 { value: "blood", label: "Blood", key: "blood" },
                                 { value: "plasma", label: "Plasma", key: "plasma" },
                                 { value: "platelets", label: "Platelets", key: "platelets" },
-                                { value: "openingDays", label: "Opening days", key: "openingDays" },
                             ]
                         }
                         callback={(filter) => this.changeFilter(filter)} ></DropList>
@@ -213,9 +207,9 @@ class DonationCenterList extends React.Component {
                                 <td>{donationCenter.phone_number ? donationCenter.phone_number : "/"}</td>
                                 <td>{donationCenter.email_address ? donationCenter.email_address : "/"}</td>
                                 <td>{donationCenter.fax}</td>
-                                <td>{this.centerHasBloodDonation(donationCenter) ? "X" : "/"}</td>
-                                <td>{this.centerHasPlasmaDonation(donationCenter) ? "X" : "/"}</td>
-                                <td>{this.centerHasPlateletsDonation(donationCenter) ? "X" : "/"}</td>
+                                <td>{this.centerHasBloodDonation(donationCenter) ? "✅" : "❌"}</td>
+                                <td>{this.centerHasPlasmaDonation(donationCenter) ? "✅" : "❌"}</td>
+                                <td>{this.centerHasPlateletsDonation(donationCenter) ? "✅" : "❌"}</td>
                                 <td>todo</td>
                                 <td><Link to={`/editDonationCenter/${donationCenter.id}`}>
                                     Update
@@ -240,7 +234,6 @@ class DonationCenterList extends React.Component {
                         </button>}
                     >
                     </CustomModal>
-
                 )}
 
                 {this.state.modal2 && (
@@ -253,7 +246,6 @@ class DonationCenterList extends React.Component {
                         </button>}
                     >
                     </CustomModal>
-
                 )}
 
             </div>

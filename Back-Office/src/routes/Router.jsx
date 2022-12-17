@@ -3,7 +3,9 @@ import {
     BrowserRouter,
     Routes,
     Route,
+    Navigate
 } from "react-router-dom";
+
 import WelcomePannel from "../pages/WelcomePannel";
 
 import DonationList from "../pages/DonationSettings/DonationList.jsx";
@@ -24,15 +26,127 @@ import UpdateDonor from "../pages/DonorSettings/DonorUpdate";
 
 import LoginPannel from "../pages/LoginPannel";
 
-import { getToken } from "../context/LoginContext";
-
-import RoutesChecker from "../component/RoutesChecker";
+import PrivateRoute from "../component/PrivateRoute";
 
 export default function Router() {
 
     return (
         <BrowserRouter>
-            <RoutesChecker/>
+                       <Routes>
+                {/* Login */}
+                <Route path="/Home" element={<LoginPannel />} />
+                {/* Welcome Pannel */}
+                <Route
+                    path="/welcome"
+                    element={
+                        <PrivateRoute>
+                            <WelcomePannel />
+                        </PrivateRoute>
+                    }
+                />
+                {/* Donations */}
+                <Route
+                    path="/donationList"
+                    element={
+                        <PrivateRoute>
+                            <DonationList />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/addDonation"
+                    element={
+                        <PrivateRoute>
+                            <AddDonation />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/donationUpdate/:id"
+                    element={
+                        <PrivateRoute>
+                            <UpdateDonation />
+                        </PrivateRoute>
+                    }
+                />
+                {/* Donation Centers */}
+                <Route
+                    path="/donationCenterList"
+                    element={
+                        <PrivateRoute>
+                            <DonationCenterList />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/addDonationCenter"
+                    element={
+                        <PrivateRoute>
+                            <AddDonationCenter />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="donationCenterUpdate/:id"
+                    element={
+                        <PrivateRoute>
+                            <UpdateDonationCenter />
+                        </PrivateRoute>
+                    }
+                />
+                {/* Opening Days */}
+                <Route
+                    path="/openingDayList"
+                    element={
+                        <PrivateRoute>
+                            <OpeningDayList />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="addOpeningDay"
+                    element={
+                        <PrivateRoute>
+                            <AddOpeningDay />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/openingDayUpdate/:id"
+                    element={
+                        <PrivateRoute>
+                            <UpdateOpeningDay />
+                        </PrivateRoute>
+                    }
+                />
+                {/* Donors */}
+                <Route
+                    path="/donorList"
+                    element={
+                        <PrivateRoute>
+                            <DonorList />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="addDonor"
+                    element={
+                        <PrivateRoute>
+                            <AddDonor />
+                        </PrivateRoute>
+                    }
+                />
+                <Route
+                    path="/donorUpdate/:id"
+                    element={
+                        <PrivateRoute>
+                            <UpdateDonor />
+                        </PrivateRoute>
+                    }
+                />
+                <Route path="*" element={<Navigate to="/welcome" />} />
+            </Routes>
         </BrowserRouter>
     );
 }
+

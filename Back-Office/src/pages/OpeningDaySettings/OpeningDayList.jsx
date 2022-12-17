@@ -3,7 +3,6 @@ import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
-import ConfirmationPopup from '../../component/ConfirmationPopup';
 import { loadOpeningDayData, deleteOpeningDayData } from '../../component/API';
 
 
@@ -81,6 +80,9 @@ class OpeningDayList extends React.Component {
             }
             else if (this.state.filter === "closing_time") {
                 return op.closing_time.includes(string);
+            }
+            else {
+                return false;
             }
 
         });

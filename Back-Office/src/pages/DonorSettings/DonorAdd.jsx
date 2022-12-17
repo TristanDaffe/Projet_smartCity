@@ -59,14 +59,7 @@ class DonorAdd extends React.Component {
 
     handleClose = () => {
         this.setState({ modal: false });
-        console.log("After close");
-        console.log(this.state.modal);
     }
-
-
-
-
-
     render() {
         return (
 
@@ -158,7 +151,7 @@ class DonorAdd extends React.Component {
                         modal={this.state.modal}
                         header={this.state.header}
                         body={this.state.body}
-                        button={<button onClick={(event) => this.handleClose()} className="btn-modal">
+                        button={<button onClick={() => this.handleClose()} className="btn-modal">
                             Close
                         </button>}
 
