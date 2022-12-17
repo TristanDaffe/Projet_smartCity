@@ -1,16 +1,34 @@
 import React from 'react';
 import { View, Text, Pressable, StyleSheet , Image, TextInput } from 'react-native';
 
-export default function SearchBar() 
+export default function SearchBar(props) 
 {
-    const [text, onChangeText] = React.useState("Useless Text");
-    const [number, onChangeNumber] = React.useState(null);  
+    const [data, setData] = React.useState(null);  
+    const [filteredData, setFilteredData] = React.useState(null); 
+
+    setData(props)
+    const searchFilter = (text) => {
+      if(text)
+      {
+            const newdata = data.filter(item => {
+            const itemData = item.center ? item.center.toUpperCase() : ''.toUpperCase();
+            const textData = text.toUpperCase();
+            return itemData.indexOf(textData);
+        })
+        setFilteredData(newdata);
+      }
+      else
+      {
+        setFilteredData(data)
+      }
+    }
+
     return (
         <View style={styles.searchBarre}>
         <Image source={require('../images/magnifyingGlassSearch.png')} style= {styles.imgSearchBarre}/>
           <TextInput style={styles.textSearchBarre}
-            onChangeText={onChangeNumber}
-            value={number}
+            onChangeText={(text) => searchFilter(text)}
+            value={filteredData}
             placeholder= "search"
           />
         </View>
