@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {setToken, getToken} from '../../context/LoginContext';
+import DonationCenterList from '../../pages/DonationCenterSettings/DonationCenterList';
 
 const URL_API = `http://192.168.1.32:3001`;
 
@@ -12,7 +13,6 @@ const getAllDonations = async () => {
             }
         })
         .then(response => {
-            // console.log(response.data);
             return response.data;
         })
         .catch(error => {
@@ -34,7 +34,7 @@ const login = async (login, password) => {
         }
     })
     .catch(error => {
-        console.log(error);
+        throw error;
     }
     );
 }
@@ -108,6 +108,7 @@ const deleteDonation = async (id) => {
         .catch(error => {
             console.log("delete donation request failed");
             console.log(error);
+            throw error;
         });
 }
 
@@ -122,12 +123,10 @@ const deleteDonationCenter = async (id) => {
             }
         })
         .then(response => {
-            console.log(response.data);
             return response.data;
         })
         .catch(error => {
-            console.log("delete donation center request failed");
-            localStorage.setItem('error', error.response.data);
+            throw error;
         });
 }
 
@@ -146,6 +145,7 @@ const deleteOpeningDay = async (id) => {
         .catch(error => {
             console.log("delete opening day request failed");
             console.log(error);
+            throw error;
         });
 }
 
@@ -164,6 +164,7 @@ const deleteDonor = async (id) => {
         .catch(error => {
             console.log("delete donor request failed");
             console.log(error);
+            throw error;
         });
 }
 
@@ -180,6 +181,7 @@ const addDonor = async (donor) => {
             return response.data;
         })
         .catch(error => {
+            DonationCenterList.setState({errorMsg: error.response.data});
             localStorage.setItem('error', error.response.data);
         });
 }

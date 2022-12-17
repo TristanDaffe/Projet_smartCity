@@ -28,9 +28,12 @@ class WelcomePannel extends React.Component {
 
   render() {
     return (
+      
       <div>
+        
         <div className="header">
           <div className="backButtonContainer">
+            
             <button 
               className="addBackButton"
               onClick={this.logout}
@@ -82,7 +85,7 @@ class WelcomePannel extends React.Component {
             img="https://media.istockphoto.com/photos/young-medical-students-interview-patient-during-hospital-rounds-picture-id813533532"
             alt="Donors"
           />
-        </div>
+        </div>   
       </div>
     );
   }

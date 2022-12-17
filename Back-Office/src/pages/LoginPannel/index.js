@@ -1,8 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { setToken, getToken, removeToken } from "../../context/LoginContext";
+import { getToken } from "../../context/LoginContext";
 import {login} from '../../component/API/http';
 import { Navigate } from 'react-router-dom';
+import CustomModal from "../../component/CustomModal";
 
 function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
@@ -14,18 +15,24 @@ class LoginPannel extends React.Component {
     this.state = {
       login: "",
       password: "",
-      redirect: false
+      redirect: false,
+      token : "",
+      modal : false, 
     };
   }
 
-
   handleSubmit = (event) => {
     event.preventDefault();
-    login(this.state.login, this.state.password);
-    console.log("token : ");
-    console.log(getToken());
-    this.setState({ redirect: true });
+    login(this.state.login, this.state.password).then(() => {
+        this.setState({ token: getToken() });
+        this.setState({ redirect: true });
+    }).catch((error) => {
+        this.setState({ modal: true });
+        this.setState({ header: "Error" });
+        this.setState({ body: error.response.data });
+    });
   };
+
 
   render() {
     return (
@@ -38,35 +45,52 @@ class LoginPannel extends React.Component {
             alt="settings"
           />
         </div>
-        <div className="addUpdateContainer">
+        <form onSubmit={this.handleSubmit} className="addUpdateContainer">
           <div className="firstItem">
-            <label>Login:</label>
+            <label htmlFor="login">Login</label>
             <input
               type="text"
-              onChange={(event) =>
-                this.setState({ login: event.target.value.toString() })
-              }
+              className="addUpdateInput"
+              id="login"
+              placeholder="Enter login"
+              onChange={(event) => this.setState({ login: event.target.value })}
             />
-          </div>
-          <div className="item">
-            <label>Password:</label>
+            </div>
+            <div className="item">
+            <label htmlFor="password">Password</label>
             <input
               type="password"
-              onChange={(event) =>
-                this.setState({ password: event.target.value.toString() })
-              }
+              className="addUpdateInput"
+              id="password"
+              placeholder="Enter password"
+              onChange={(event) => this.setState({ password: event.target.value })}
             />
-          </div>
-          <div className="item">
-            <button className="addUpdateButton" onClick={this.handleSubmit}>
-              Login
+            </div>
+            <div className="lastItem">
+            <button type="submit" className="addUpdateInput">
+              Submit
             </button>
+            </div>
+
             {this.state.redirect ? <Navigate to="/welcome" /> : null}
-          </div>
-        </div>
+
+          
+        </form>
+        {this.state.modal && (
+                    <CustomModal
+                        modal={this.state.modal}
+                        header={this.state.header}
+                        body={this.state.body}
+                        button={<button onClick={() => this.setState({modal : false})} className="btn-modal">
+                            Close
+                        </button>}
+                    >
+                    </CustomModal>
+                )}
       </div>
     );
   }
 }
 
 export default withParams(LoginPannel);
+

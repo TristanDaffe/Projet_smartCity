@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
 import { loadDonationData, deleteDonationData } from '../../component/API';
+import CustomModal from '../../component/CustomModal';
 
 // mettre defaultValue dans le time
 
@@ -25,6 +26,13 @@ class DonationList extends React.Component {
             inputDonationCenter: "",
             loading: true,
             error: false,
+            donationToDeleteId: null,
+            modal: false,
+            header: "",
+            body: "",
+            modal2: false,
+            header2: "",
+            body2: "",
         }
     }
 
@@ -54,14 +62,32 @@ class DonationList extends React.Component {
             } catch (error) {
                 this.setState({loading: false, error: true});
             }
-            console.log(this.state.donations);
         });
 
     }
+        
+    handleClick(newDonationToDeleteId) {
+        this.setState({
+            donationToDeleteId: newDonationToDeleteId,
+            modal: true,
+            header: "Suppression d'une donation",
+            body: "Voulez-vous vraiment supprimer cette donation ?",
+        });
+    }
 
-    deleteDonation(id) {
-        deleteDonationData(id);
-        this.setDonations();
+    deleteDonation() {
+        const promesse = deleteDonationData(this.state.donationToDeleteId);
+        promesse.then((response) => {
+            this.setState({ modal: false });
+            this.setDonations();
+
+    }).catch((error) => {
+        this.setState({ modal2: true });
+        this.setState({ header2: "Error" });
+        this.setState({ body2: error.response.data });
+    });
+        
+    
     }
 
     changeValuesToDisplay(string) {
@@ -89,7 +115,9 @@ class DonationList extends React.Component {
             else if (this.state.filter === "donationCenter") {
                 return don.donation_center_name.includes(string);
             }
-
+            else {
+                return false;
+            }
         });
         this.setState({ donationsToDisplay: afterFiltering });
     }
@@ -164,13 +192,39 @@ class DonationList extends React.Component {
                                         <Link to={`/donationUpdate/${don.id}`}>Update</Link>
                                     </td>
                                     <td>
-                                        <button onClick={() => this.deleteDonation(don.id)}>Delete</button>
+                                        <button onClick={(event) => this.handleClick(don.id)}>Delete</button>
                                     </td>
                                 </tr>
                             );
                         })}
                     </tbody>
                 </table>
+                {this.state.modal && (
+                    <CustomModal
+                        modal={this.state.modal}
+                        header={this.state.header}
+                        body={this.state.body}
+                        button={<button onClick={(event) => this.deleteDonation()} className="btn-modal">
+                            Confirm
+                        </button>}
+                        closeButton={<button onClick={(event) => this.setState({ modal: false })} className="btn-modal">
+                            Close
+                        </button>}
+                    >
+                    </CustomModal>
+                )}
+
+                {this.state.modal2 && (
+                    <CustomModal
+                        modal={this.state.modal2}
+                        header={this.state.header2}
+                        body={this.state.body2}
+                        button={<button onClick={(event) => this.setState({ modal2: false })} className="btn-modal">
+                            Close
+                        </button>}
+                    >
+                    </CustomModal>
+                )}
             </div>
         );
     }
