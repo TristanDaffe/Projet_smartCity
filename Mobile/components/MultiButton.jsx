@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { FlatList,StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-const DATA = [
+const data = [
   {
-    id: "1",
+    id: "0",
     title: "Blood",
   },
   {
-    id: "2",
+    id: "1",
     title: "Plasma",
   },
   {
-    id: "3",
+    id: "2",
     title: "Plate",
   },
 ];
@@ -48,11 +48,13 @@ export default function MultiButton () {
     <View>
       <Text style={styles.type} >Type</Text>
       <FlatList
-        data={DATA}
+        data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         extraData={selectedId}
       />
+        {selectedId != null ?  console.log(data[selectedId].title) : "" }
+
     </View>
   );
 };

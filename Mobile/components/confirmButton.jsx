@@ -6,7 +6,7 @@ export default function confirmButton(props) {
         <Root>
             <View>
                 <Button
-                    title="Confirm"
+                    title= {props.name}
                     color="#e10b0b"
                     onPress={() =>
                         Popup.show({
