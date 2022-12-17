@@ -9,7 +9,7 @@ router.get('/all', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, Use
 router.get('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.getUser);
 router.post('/login', UserConroller.loginUser);
 router.post('/register', UserConroller.registerUser);
-router.patch('/patch', UserConroller.patchUser);
-router.delete('/:id', UserConroller.deleteUser);
+router.patch('/patch', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.patchUser);
+router.delete('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.deleteUser);
 
 module.exports = router;
