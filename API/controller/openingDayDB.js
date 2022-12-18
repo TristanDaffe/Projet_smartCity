@@ -125,7 +125,7 @@ module.exports.deleteOpeningDay = async (req, res) => {
             if(openingDay === undefined)
                 res.status(404).send('Opening day not found');
             else {
-                if(OpeningDay.OpeningDayIsUse(id)){
+                if(OpeningDayModel.OpeningDayIsUse(id, client)){
                     res.status(400).send('Opening day is use');
                 }
                 else {
