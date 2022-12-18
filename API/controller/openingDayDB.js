@@ -68,6 +68,12 @@ module.exports.createOpeningDay = async (req, res) => {
         if(errorCode > 299 || errorCode < 200) {
             res.status(errorCode).send(message);
         }
+        else if(openingTime === undefined || closingTime === undefined) {
+            res.status(400).send('Opening time or closing time is not defined');
+        }
+        else if(openingTime >= closingTime) {
+            res.status(400).send('Opening time must be before closing time');
+        }
         else {
             await OpeningDayModel.createOpeningDay(dayLabel, openingTime, closingTime, client);
             res.sendStatus(201);
