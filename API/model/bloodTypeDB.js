@@ -21,3 +21,7 @@ module.exports.updateBloodType = async (id, type, rhesus, client) => {
 module.exports.deleteBloodType = async (id, client) => {
     return await client.query("DELETE FROM blood_type WHERE id = $1", [id]);
 }
+
+module.exports.getUsersWithBloodType = async (id, client) => {
+    return await client.query("SELECT * FROM user_account WHERE blood_type = $1", [id]);
+}

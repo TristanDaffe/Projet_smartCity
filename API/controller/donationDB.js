@@ -178,6 +178,7 @@ module.exports.updateDonation = async (req, res) => {
         res.sendStatus(200);
     }
     catch (error) {
+        console.log(error)
         res.sendStatus(500);
     }
     finally {
@@ -195,8 +196,14 @@ module.exports.deleteDonation = async (req, res) => {
             res.status(400).send('Id is not a number');
         }
         else {
-            await DonationModel.deleteDonation(id, client);
-            res.sendStatus(200);
+            const {rows: donation} = await DonationModel.getDonation(id, client);
+            if(donation.length === 0) {
+                res.status(404).send('Donation not found');
+            }
+            else {
+                await DonationModel.deleteDonation(id, client);
+                res.sendStatus(200);
+            }
         }
     }
     catch (error) {

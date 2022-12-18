@@ -40,7 +40,7 @@ const getDonationsFromDonor = async (id) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
-      },
+      }, 
     })
     .then((response) => {
       return response.data;
