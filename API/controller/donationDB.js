@@ -37,12 +37,13 @@ module.exports.getDonationsOfUser = async (req, res) => {
 
     try {
         if(isNaN(id)) {
-            res.stauts(400).send('Id is not a number');
+            res.status(400).send('Id is not a number');
         }
         else {
             const {rows: donations} = await DonationModel.getDonationsOfUser(id, client);
             
             if(donations === undefined) {
+                
                 res.status(404).send('Donation not found');
             }   
             else {
@@ -52,6 +53,7 @@ module.exports.getDonationsOfUser = async (req, res) => {
     }
     catch (error) {
         res.sendStatus(500);
+        
     }
     finally {
         client.release();

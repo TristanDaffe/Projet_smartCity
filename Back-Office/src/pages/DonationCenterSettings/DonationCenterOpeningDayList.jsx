@@ -1,17 +1,20 @@
 import React from 'react';
 import SearchBar from '../../component/SearchBar';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 import DropList from '../../component/DropList';
-import { loadOpeningDayData, deleteOpeningDayData } from '../../component/API';
+import { loadOpeningDayFromDonationCenterData, deleteOpeningDayData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
 
+function withParams(Component) {
+    return (props) => { return <Component {...props} params={useParams()} /> };
+}
 
-class OpeningDayList extends React.Component {
+class DonationCenterOpeningDayList extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            donationCenterId : parseInt(this.props.params.id),
             openingDay: [],
             openingDayToDisplay: [],
             filter: "id",
@@ -44,13 +47,19 @@ class OpeningDayList extends React.Component {
     setOpeningDay() {
         this.setState({ loading: true, error: false }, async () => {
             try {
-                const data = await loadOpeningDayData();
+                let idDonationCenter = this.state.donationCenterId;
+                const data = await loadOpeningDayFromDonationCenterData(idDonationCenter);
                 this.setState({ loading: false, error: false });
                 const state = {
                     openingDay: data,
                     openingDayToDisplay: data,
                 };
                 this.setState(state);
+                if (data.length === 0) {
+                    this.setState({ modal2: true });
+                    this.setState({ header2: "Error" });
+                    this.setState({ body2: "There is no opening day for this donation center" });
+                }
             } catch (error) {
                 this.setState({ loading: false, error: true });
             }
@@ -116,7 +125,7 @@ class OpeningDayList extends React.Component {
         return (
             <div>
                 <div className="header">
-                    <Link to={`/welcome`} className='backButtonContainer' >
+                    <Link to={`/donation`} className='backButtonContainer' >
                         <button className="addBackButton">Back</button>
                     </Link>
                     <h1>Opening Hours Settings</h1>
@@ -139,9 +148,6 @@ class OpeningDayList extends React.Component {
                         callback={(filter) => this.changeFilter(filter)} ></DropList>
                     <p>Input :</p>
                     <SearchBar callback={(userChoice) => this.changeValuesToDisplay(userChoice)} />
-                    <Link to={`/addOpeningDay`} className='addButtonContainer'>
-                        <button className="addBackButton">Add opening day</button>
-                    </Link>
                 </div>
                 <table>
                     <thead>
@@ -205,20 +211,4 @@ class OpeningDayList extends React.Component {
     }
 }
 
-
-
-const mapStateToProps = (state) => {
-    return {
-        openingDay: state.openingDay
-    }
-}
-
-const mapDispatchToProps = (dispatch) => {
-    return {
-        deleteDonation: (id) => {
-            dispatch({ type: 'deleteOpeningHour', payload: { id: id } })
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(OpeningDayList);
+export default withParams(DonationCenterOpeningDayList);
