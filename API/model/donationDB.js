@@ -59,9 +59,9 @@ module.exports.createDonation = async (date, hour, donationTypeId, userId, donat
     [date, hour, donationTypeId, userId, donationCenterId]);
 }
 
-module.exports.updateDonation = async (date, donationTypeId, userId, donationCenterId, client) => {
-    return await client.query("UPDATE donation SET date = $1, donation_type_id = $2, user_id = $3, donation_center_id = $4 WHERE id = $5",
-        [date, donationTypeId, userId, donationCenterId, id]);
+module.exports.updateDonation = async (id, hour, date, donationTypeId, userId, donationCenterId, client) => {
+    return await client.query("UPDATE donation SET date = $1, hour= $2, donation_type_id = $3, user_id = $4, donation_center_id = $5 WHERE id = $6",
+        [date, hour, donationTypeId, userId, donationCenterId, id]);
 }
 
 module.exports.deleteDonation = async (id, client) => {

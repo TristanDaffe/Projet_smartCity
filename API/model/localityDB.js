@@ -2,6 +2,10 @@ module.exports.getLocality = async (id, client) => {
     return await client.query("SELECT * FROM locality WHERE id = $1", [id]);
 }
 
+module.exports.getLocalityFromName = async (name, postalCode, client) => {
+    return await client.query("SELECT * FROM locality WHERE name = $1 AND postal_code = $2", [name, postalCode]);
+}
+
 module.exports.getAllLocalities = async (client) => {
     return await client.query("SELECT * FROM locality");
 }

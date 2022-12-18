@@ -2,7 +2,7 @@ import axios from "axios";
 import { setToken, getToken } from "../../context/LoginContext";
 import DonationCenterList from "../../pages/DonationCenterSettings/DonationCenterList";
 
-const URL_API = `http://192.168.1.32:3001`;
+const URL_API = `http://192.168.1.56:3001`;
 
 const login = async (login, password) => {
   await axios
@@ -40,7 +40,7 @@ const getDonationsFromDonor = async (id) => {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
-      },
+      }, 
     })
     .then((response) => {
       return response.data;

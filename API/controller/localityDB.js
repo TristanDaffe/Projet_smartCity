@@ -42,11 +42,19 @@ module.exports.createLocality = async (req, res) => {
             res.status(400).send("Postal code is undefined");
         }
         else {
-            await LocalityModel.createLocality(name, postalCode, client);
-            res.sendStatus(201);
+            const {rows: localities} = await LocalityModel.getLocalityFromName(name, postalCode, client);
+            const locality = localities[0];
+            if(locality !== undefined) {
+                res.status(400).send("Locality already exists");
+            }
+            else{
+                await LocalityModel.createLocality(name, postalCode, client);
+                res.sendStatus(201);
+            }
         }
     }
     catch (error) {
+        console.log(error)
         res.sendStatus(500);
     }
     finally {

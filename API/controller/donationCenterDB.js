@@ -134,12 +134,19 @@ module.exports.updateDonationCenter = async (req, res) => {
                 res.status(404).send('Donation center not found');
             }   
             else {
-                await DonationCenterModel.updateDonationCenter(id, name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, client);
-                res.sendStatus(200);
+                const {rows: center} = await DonationCenterModel.getDonationCenter(id, client);
+                if(center[0] === undefined) {
+                    res.status(404).send('Donation center not found');
+                }
+                else {
+                    await DonationCenterModel.updateDonationCenter(id, name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, client);
+                    res.sendStatus(200);
+                }
             }
         }
     }
     catch (error) {
+        console.log(error)
         res.sendStatus(500);
     }
     finally {
