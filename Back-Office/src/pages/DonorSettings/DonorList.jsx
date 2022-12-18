@@ -41,8 +41,16 @@ class DonorList extends React.Component {
                 donorsToDisplay: data,
             };
             this.setState(state);
+            if (data.length === 0) {
+                this.setState({ modal2: true });
+                this.setState({ header2: "No donor" });
+                this.setState({ body2: "No donor found" });
+            }
         } catch (error) {
-            this.setState({loading: false, error: true});
+            console.log(error);
+            this.setState({ modal2: true });
+            this.setState({ header2: "Error" });
+            this.setState({ body2: error.message });
         }
     });
 

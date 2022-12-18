@@ -27,10 +27,10 @@ class DonationCenterList extends React.Component {
     }
 
     componentDidMount() {
-        this.setDonationCenters();
+        this.getDonationCenters();
     }
 
-    setDonationCenters() {
+    getDonationCenters() {
         this.setState({ loading: true, error: false }, async () => {
             try {
                 const data = await loadDonationCenterData();
@@ -40,8 +40,18 @@ class DonationCenterList extends React.Component {
                     donationCentersToDisplay: data,
                 };
                 this.setState(state);
+                if (data.length === 0) {
+                    this.setState({ modal2: true });
+                    this.setState({ header2: "No donation center" });
+                    this.setState({ body2: "There is no donation center" });
+                }
+
             } catch (error) {
-                this.setState({ loading: false, error: true });
+                console.log(error);
+                this.setState({ modal2: true });
+                this.setState({ header2: "Error" });
+                this.setState({ body2: error.message });
+        
             }
         });
     }
@@ -58,7 +68,7 @@ class DonationCenterList extends React.Component {
         const promesse = deleteDonationCenterData(this.state.donationCenterToDeleteId);
         this.setState({ modal: false });
         promesse.then(() => {
-            this.setDonationCenters();
+            this.getDonationCenters();
         }).catch((error) => {
             this.setState({ modal2: true });
             this.setState({ header2: "Error" });

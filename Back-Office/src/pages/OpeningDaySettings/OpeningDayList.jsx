@@ -3,7 +3,7 @@ import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
-import { loadOpeningDayData, deleteOpeningDayData } from '../../component/API';
+import { loadOpeningDaysData, deleteOpeningDayData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
 
 
@@ -36,7 +36,6 @@ class OpeningDayList extends React.Component {
         }
     }
 
-
     componentDidMount() {
         this.setOpeningDay();
     }
@@ -44,15 +43,22 @@ class OpeningDayList extends React.Component {
     setOpeningDay() {
         this.setState({ loading: true, error: false }, async () => {
             try {
-                const data = await loadOpeningDayData();
+                const data = await loadOpeningDaysData();
                 this.setState({ loading: false, error: false });
                 const state = {
                     openingDay: data,
                     openingDayToDisplay: data,
                 };
                 this.setState(state);
+                if (data.length === 0) {
+                    this.setState({ modal2: true });
+                    this.setState({ header2: "No opening day" });
+                    this.setState({ body2: "No opening day found" });
+                }
             } catch (error) {
-                this.setState({ loading: false, error: true });
+                this.setState({ modal2: true });
+                this.setState({ header2: "Error" });
+                this.setState({ body2: error.message });
             }
         });
     }
@@ -97,10 +103,10 @@ class OpeningDayList extends React.Component {
                 return op.day_label.includes(string);
             }
             else if (this.state.filter === "opening_time") {
-                return op.opening_time.includes(string);
+                return op.opening_time.toString().substr(0,5).includes(string);
             }
             else if (this.state.filter === "closing_time") {
-                return op.closing_time.includes(string);
+                return op.closing_time.toString().substr(0,5).includes(string);
             }
             else {
                 return false;
@@ -119,7 +125,7 @@ class OpeningDayList extends React.Component {
                     <Link to={`/welcome`} className='backButtonContainer' >
                         <button className="addBackButton">Back</button>
                     </Link>
-                    <h1>Opening Hours Settings</h1>
+                    <h1>Opening Days Settings</h1>
                     <img
                         className='imgCroixRouge'
                         src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png"
@@ -160,10 +166,10 @@ class OpeningDayList extends React.Component {
                                 <tr key={index}>
                                     <td>{openingDay.id}</td>
                                     <td>{openingDay.day_label}</td>
-                                    <td>{openingDay.opening_time}</td>
-                                    <td>{openingDay.closing_time}</td>
+                                    <td>{openingDay.opening_time.toString().substr(0,5)}</td>
+                                    <td>{openingDay.closing_time.toString().substr(0,5)}</td>
                                     <td>
-                                        <Link to={`/opationTypeUpdate/${openingDay.id}`}>Update</Link>
+                                        <Link to={`/openingDayUpdate/${openingDay.id}`}>Update</Link>
                                     </td>
                                     <td>
                                         <button onClick={() => this.handleClick(openingDay.id)}>Delete</button>

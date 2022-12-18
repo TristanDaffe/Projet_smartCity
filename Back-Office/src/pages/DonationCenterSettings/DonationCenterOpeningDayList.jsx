@@ -41,10 +41,10 @@ class DonationCenterOpeningDayList extends React.Component {
 
 
     componentDidMount() {
-        this.setOpeningDay();
+        this.setOpeningDays();
     }
 
-    setOpeningDay() {
+    setOpeningDays() {
         this.setState({ loading: true, error: false }, async () => {
             try {
                 let idDonationCenter = this.state.donationCenterId;
@@ -57,11 +57,13 @@ class DonationCenterOpeningDayList extends React.Component {
                 this.setState(state);
                 if (data.length === 0) {
                     this.setState({ modal2: true });
-                    this.setState({ header2: "Error" });
+                    this.setState({ header2: "No opening day" });
                     this.setState({ body2: "There is no opening day for this donation center" });
                 }
             } catch (error) {
-                this.setState({ loading: false, error: true });
+                this.setState({ modal2: true });
+                this.setState({ header2: "Error" });
+                this.setState({ body2: error.response.data });
             }
         });
     }
@@ -76,7 +78,7 @@ class DonationCenterOpeningDayList extends React.Component {
     deleteOpeningDay() {
         const promesse = deleteOpeningDayData(this.state.openingDayToDeleteId);
         promesse.then(() => {
-            this.setOpeningDay();
+            this.setOpeningDays();
         }).catch((error) => {
             console.log("error dans la view");
             console.log(error);
@@ -125,7 +127,7 @@ class DonationCenterOpeningDayList extends React.Component {
         return (
             <div>
                 <div className="header">
-                    <Link to={`/donation`} className='backButtonContainer' >
+                    <Link to={`/donationCenterList`} className='backButtonContainer' >
                         <button className="addBackButton">Back</button>
                     </Link>
                     <h1>Opening Hours Settings</h1>

@@ -98,6 +98,22 @@ const getOpeningDaysFromDonationCenter = async (id) => {
         });
 };
 
+const getOpeningDay = async (id) => {
+  return await axios
+    .get(`${URL_API}/openingday/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+        
 
 const getAllUsers = async () => {
   return await axios
@@ -196,6 +212,47 @@ const addDonor = async (donor) => {
     });
 };
 
+const addOpeningDay = async (openingDay) => {
+    return await axios
+        .post(`${URL_API}/openingday`, openingDay, {
+            dayLabel: openingDay.dayLabel,
+            openingTime: openingDay.openingTime,
+            closingTime: openingDay.closingTime,
+            headers: {"Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`,
+            }
+            })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+            throw error;
+        });
+};
+
+const updateOpeningDay = async (openingDay) => {
+    return await axios
+        .patch(`${URL_API}/openingday`, openingDay, {
+            id : openingDay.id,
+            dayLabel: openingDay.dayLabel,
+            openingTime: openingDay.openingTime,
+            closingTime: openingDay.closingTime,
+            headers: {"Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`,
+            }
+            })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+          throw error;
+        });
+};
+
+
+
+
+
 export {
   getAllDonations,
   getDonationsFromDonor,
@@ -203,10 +260,13 @@ export {
   getAllDonationCenters,
   getAllOpeningDays,
   getOpeningDaysFromDonationCenter,
+  getOpeningDay,
   getAllUsers,
   deleteDonation,
   deleteDonationCenter,
   deleteOpeningDay,
   deleteDonor,
   addDonor,
+  addOpeningDay,
+  updateOpeningDay,
 };

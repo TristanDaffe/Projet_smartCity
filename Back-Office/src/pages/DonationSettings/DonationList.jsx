@@ -59,6 +59,11 @@ class DonationList extends React.Component {
                     donationsToDisplay: data,
                 };
                 this.setState(state);
+                if (data.length === 0) {
+                    this.setState({header2: "Error"});
+                    this.setState({body2: "No donation found"});
+                    this.setState({modal2: true});
+                }
             } catch (error) {
                 this.setState({loading: false, error: true});
             }

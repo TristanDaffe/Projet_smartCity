@@ -24,21 +24,6 @@ class DonationCenterAdd extends React.Component {
         }
     }
 
-    showModal = () => {
-        this.setState({ show: true });
-    };
-
-    hideModal = () => {
-        this.setState({ show: false });
-    };
-
-    toggleModal = () => {
-        this.setState({ modal: !this.state.modal });
-      };
-
-
-
-
     render() {
 
 

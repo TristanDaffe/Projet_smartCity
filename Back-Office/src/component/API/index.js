@@ -4,12 +4,15 @@ import {
   getAllDonationCenters,
   getAllOpeningDays,
   getOpeningDaysFromDonationCenter,
+  getOpeningDay,
   getAllUsers,
   deleteDonation,
   deleteDonationCenter,
   deleteOpeningDay,
   deleteDonor,
   addDonor,
+  addOpeningDay,
+  updateOpeningDay,
 } from "./http";
 
 const loadDonationData = async () => {
@@ -39,7 +42,7 @@ const loadDonationFromDonorData = async (id) => {
   }
 };
 
-const loadOpeningDayData = async () => {
+const loadOpeningDaysData = async () => {
   try {
     const data = await getAllOpeningDays();
     return data;
@@ -56,6 +59,16 @@ const loadOpeningDayFromDonationCenterData = async (id) => {
     throw error;
   }
 };
+
+const loadOpeningDayData = async (id) => {
+  try {
+    const data = await getOpeningDay(id);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 const loadUsersData = async () => {
   try {
@@ -111,11 +124,32 @@ const addDonorData = async (donor) => {
   }
 };
 
+const addOpeningDayData = async (openingDay) => {
+  try {
+    const data = await addOpeningDay(openingDay);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateOpeningDayData = async (openingDay) => {
+  try {
+    const data = await updateOpeningDay(openingDay);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
 export {
   loadDonationData,
   loadDonationFromDonorData,
   loadDonationCenterData,
   loadOpeningDayData,
+  loadOpeningDaysData,
   loadOpeningDayFromDonationCenterData,
   loadUsersData,
   deleteDonationData,
@@ -123,4 +157,6 @@ export {
   deleteOpeningDayData,
   deleteDonorData,
   addDonorData,
+  addOpeningDayData,
+  updateOpeningDayData,
 };
