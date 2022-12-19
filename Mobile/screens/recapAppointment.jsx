@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button} from 'react-native';
 
-import TopBarDrawer from '../components/topBar/topBarDrawer';
+import TopBar from '../components/topBar/topBarArrow';
 import ConfirmationButton from '../components/confirmButton';
 
 export default function RecapAppointment ( {navigation} )  {   
     return (
         <View>
-        <TopBarDrawer onclick={navigation.toggleDrawer}/>
+        <TopBar onclick={navigation.goBack}/>
         <Text style={styles.title}>Appointment</Text>
         <Text style={styles.category}>Donation Type :</Text>
         <Text style={styles.response}>Plasma</Text>

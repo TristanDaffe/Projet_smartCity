@@ -21,7 +21,7 @@ import { FlatList } from "react-native-gesture-handler";
     </TouchableOpacity>
   );
 
-  const table = ({data})=>
+  const table = ({data,returnCenter})=>
   {
     const [selectedId, setSelectedId] = useState(null);
     const item =({item})=>
@@ -33,7 +33,10 @@ import { FlatList } from "react-native-gesture-handler";
             <View>
                 <Item
                     item={item}
-                    onPress={() => setSelectedId(item.id)}
+                    onPress={() => {
+                        setSelectedId(item.id)
+                        selectedId != null ? returnCenter(data[selectedId-1]) : ""
+                    }}
                     backgroundColor={{ backgroundColor }}
                     textColor={{ color }}
                 >
@@ -65,13 +68,13 @@ import { FlatList } from "react-native-gesture-handler";
             </View>}
                 >
                 </FlatList>
-                {selectedId != null ?  console.log(data[selectedId]) : "" }
+                 {/* {selectedId != null ?  console.log(data[selectedId-1]) : "" } */}
               </SafeAreaView>
 
     )
   }
   export default table
-  
+
 const styles = StyleSheet.create({
   item: {
       borderWidth: 1,

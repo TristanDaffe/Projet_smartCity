@@ -1,16 +1,10 @@
 import React, { useState } from "react";
-import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button, TextInput , Image} from 'react-native';
+import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button, TextInput , Image } from 'react-native';
 
-import TopBarDrawer from '../components/topBar/topBarDrawer';
+import TopBar from '../components/topBar/topBarArrow';
 import CenterTable from '../components/CenterTable';
-import { DonationCenterContext } from '../context/donationCenterContext';
-import axios from "axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import {BASE_URL} from "../config";
-import { Alert } from "react-native";
 
 const tab =[
-  {id:0,center: "Don de sang à Marche-en-Famenne",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
   {id:1,center: "Don de sang à Marche-en-Famenne",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
   {id:2,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
   {id:3,center: "Don de sang à Wavre",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
@@ -20,18 +14,31 @@ const tab =[
   {id:7,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
   {id:8,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
   {id:9,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
+  {id:10,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
   {id:11,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
   {id:12,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
   {id:13,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
   {id:14,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:15,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:16,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
+  {id:15,center: "Don de sang à Louvain",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
 ];
 
-
-export default function Center ( {navigation} )  { 
+export default function Center ( {route,navigation})  { 
   const [data, setData] = React.useState(null);  // Quand il y aura accès à l'api
   const [filteredData, setFilteredData] = React.useState(tab);
+  const [newCenter, setNewCenter] = React.useState(null);  
+
+  const {type,center} = route.params;
+
+  const returnCenter = ({id,center,address,url,phoneNumber}) => {
+      setNewCenter(() => ({
+      id : id,
+      center : center,
+      address : address,
+      url : url,
+      phoneNumber : phoneNumber
+    }
+      ));
+  }
 
   const searchFilter = (text) => {
     if(text)
@@ -52,28 +59,29 @@ export default function Center ( {navigation} )  {
   
     return (
       <SafeAreaView>
-        <TopBarDrawer onclick={navigation.toggleDrawer}/>
-        <View style={styles.lineCenter}>
-          <Text style={styles.title}>Center</Text>
-          <View style={styles.searchBarre}>
-          <Image source={require('../images/magnifyingGlassSearch.png')} style= {styles.imgSearchBarre}/>
-          <TextInput style={styles.textSearchBarre}
-              onChangeText={(text) => searchFilter(text)}
-              value={filteredData}
-              placeholder= "search(center)"
-            />
+        <TopBar onclick={navigation.goBack}/>
+          <View style={styles.lineCenter}>
+            <Text style={styles.title}>Center</Text>
+            <View style={styles.searchBarre}>
+            <Image source={require('../images/magnifyingGlassSearch.png')} style= {styles.imgSearchBarre}/>
+            <TextInput style={styles.textSearchBarre}
+                onChangeText={(text) => searchFilter(text)}
+                value={filteredData}
+                placeholder= "search(center)"
+              />
+            </View>
+            {console.log(newCenter)}
           </View>
-        </View>
-        <View style={styles.table}>
-        <CenterTable data = {filteredData}></CenterTable>
-        </View>
-        <View style={styles.button}>
-        <Button 
-          title='Next' 
-          color='red'
-          style={styles.button} 
-          onPress={() => navigation.navigate('Calendar')}></Button>
-        </View> 
+          <View style={styles.table}>
+              <CenterTable data = {filteredData} returnCenter = {returnCenter}></CenterTable>
+          </View>
+          <View style={styles.button}>
+              <Button 
+                title='Next' 
+                color='red'
+                style={styles.button} 
+                onPress={() => navigation.navigate('Calendar')}></Button>
+              </View> 
       </SafeAreaView>
     );
     
@@ -92,14 +100,13 @@ const styles = StyleSheet.create({
       marginRight : 90,
     },
     table: {
-        marginLeft: 5,
         alignSelf: 'center',
+        height: '60%',
       },
     button: {
         width: "90%",
         marginTop: 30,
         marginLeft: 20,
-        height: 300,
       },
     lineCenter: {
       flexDirection: 'row',
