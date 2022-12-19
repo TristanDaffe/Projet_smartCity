@@ -2,7 +2,7 @@ import axios from "axios";
 import { setToken, getToken } from "../../context/LoginContext";
 import DonationCenterList from "../../pages/DonationCenterSettings/DonationCenterList";
 
-const URL_API = `http://172.1.0.64:3001`;
+const URL_API = `http://192.168.1.32:3001`;
 
 const login = async (login, password) => {
   await axios

@@ -10,10 +10,11 @@ class DonationCenterAdd extends React.Component {
 
     constructor(props) {
         super(props);
+        const {selectedOptions} = this.props;
         this.state = {
             loading: false,
             error: false,
-            localitiesOptions: [],
+                localitiesOptions: null,
             name: "",
             address: "",
             phoneNumber: "",
@@ -54,10 +55,6 @@ class DonationCenterAdd extends React.Component {
         });
     }
 
-
-
-
-
     render() {
 
 
@@ -67,7 +64,7 @@ class DonationCenterAdd extends React.Component {
                 <Link to={`/donationCenterList`} className='backButtonContainer' >
                         <button className="addBackButton">Back</button>
                     </Link>
-                    <h1>DOnation center Settings</h1>
+                    <h1>Donation center Settings</h1>
                     <img
                         className='imgCroixRouge'
                         src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png"
@@ -136,16 +133,44 @@ class DonationCenterAdd extends React.Component {
                         </select>
                     </div>
                     <div className='item'>
-                        <label >password:</label>
+                        <label >Blood:</label>
                         <input className='addUpdateInput'
-                            type="text"
-                            onChange={(event) => {
-                                this.setState({ password: event.target.value });
-                            }} />
-                    </div>
+                            onChange={() => {}}
+                            checked= {this.state.blood}
+                            type="radio"
+                            onClick={(event) => {
+                                this.state.blood ? this.setState({ blood: false }) : this.setState({ blood: true });
+                                console.log(this.state.blood);
+                            }} 
+                            />         
+                    </div>  
+                    <div className='item'>
+                        <label >Plasma:</label>
+                        <input className='addUpdateInput'
+                            onChange={() => {}}
+                            checked= {this.state.plasma}
+                            type="radio"
+                            onClick={(event) => {
+                                this.state.plasma ? this.setState({ plasma: false }) : this.setState({ plasma: true });
+                            }} 
+                            />         
+                    </div>  
+                    <div className='item'>
+                        <label >Platelets:</label>
+                        <input className='addUpdateInput'
+                            onChange={() => {}}
+                            checked= {this.state.platelets}
+                            type="radio"
+                            onClick={(event) => {
+                                this.state.platelets ? this.setState({ platelets: false }) : this.setState({ platelets: true });
+                                console.log(this.state.platelets);
+                            }} 
+
+                            />         
+                    </div>  
+
                     <div className='lastItem'>
-                        <button onClick={(event) => this.addDonor(event)}>Add</button>
-                        {/* {this.state.redirect && <Navigate to={"/donorList"} />} */}
+                        <button onClick={(event)=> this.test}>Add</button>
                     </div>
                 </form>
 
