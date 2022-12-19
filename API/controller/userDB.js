@@ -216,12 +216,13 @@ module.exports.patchUser = async (req, res) => {
             }
             else {
             const password = await getHash(passwordClear);
-            const loginExist = await UserModele.loginExist(login, client);
-                if(loginExist)
+            const {rows: users} = await UserModele.getUser(id, client);
+            const user = users[0];
+                if(user !== undefined && user.id !== id) { 
                     res.status(409).send("Login already exist");
+                }
                 else {
-                    const emailExist = await UserModele.emailExist(emailAddress, client);
-                    if(emailExist)
+                    if(user !== undefined && user.email_address !== emailAddress)
                         res.status(409).send("Email already exist");
                     else {
                         let result;
