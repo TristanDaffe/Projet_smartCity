@@ -2,7 +2,7 @@ import axios from "axios";
 import { setToken, getToken } from "../../context/LoginContext";
 import DonationCenterList from "../../pages/DonationCenterSettings/DonationCenterList";
 
-const URL_API = `http://192.168.1.56:3001`;
+const URL_API = `http://192.168.1.58:3001`;
 
 const login = async (login, password) => {
   await axios
@@ -198,6 +198,14 @@ const deleteDonor = async (id) => {
 const addDonor = async (donor) => {
   return await axios
     .post(`${URL_API}/user/register`, donor, {
+      lastName: donor.lastName,
+      firstName: donor.firstName,
+      emailAddress: donor.emailAddress,
+      birthDate: donor.birthDate,
+      bloodType: donor.bloodType,
+      rhesus: donor.rhesus,
+      login: donor.login,
+      password: donor.password,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -207,8 +215,7 @@ const addDonor = async (donor) => {
       return response.data;
     })
     .catch((error) => {
-      DonationCenterList.setState({ errorMsg: error.response.data });
-      localStorage.setItem("error", error.response.data);
+      throw error;
     });
 };
 

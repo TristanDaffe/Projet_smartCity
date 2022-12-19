@@ -11,55 +11,68 @@ class DonorAdd extends React.Component {
 
     constructor(props) {
         super(props);
+        const lastName = "";
+        const firstName = "";
+        const emailAddress = "";
+        const birthdate = new Date().toISOString().slice(0, 10);
+        const bloodType = "";
+        const login = "";
+        const password = "";
         this.state = {
-            donor: {
-                login: "",
-                firstName: "",
-                lastName: "",
-                birthDate: new Date().toISOString().slice(0, 10),
-                email: "",
-                bloodType: "",
-                password: "",
-                redirect: false,
-            },
-
             modal: false,
             header: "",
             body: "",
+            modal2: false,
+            header2: "",
+            body2: "",
+            error: false,
+            redirect: false,
         }
     }
 
-    addDonor(event) {
+    handleClick(event) {
         event.preventDefault();
-        const newDonor = {
-            login: this.state.login,
-            firstName: this.state.firstName,
+        this.setState({
+            modal: true,
+            header: "Confirmation",
+            body: "Are you sure you want to add this donor ?",
+        });
+    }
+
+    addDonor() {
+        const donor = {
             lastName: this.state.lastName,
-            birthDate: this.state.birthDate,
-            email: this.state.email,
-
-            bloodType: this.state.bloodType,
+            firstName: this.state.firstName,
+            emailAddress: this.state.emailAddress,
+            birthdate: this.state.birthdate,
+            bloodType: this.state.bloodType.substring(0, 1),
+            rhesus: this.state.bloodType.substring(1, 1),
+            login: this.state.login,
             password: this.state.password,
-        }
-        try {
-            addDonorData(newDonor);
-            const errorMsg = localStorage.getItem("error");;
-            if (errorMsg != null) {
-                this.setState({ modal: true });
-                this.setState({ header: "Error" });
-                this.setState({ body: errorMsg });
-                localStorage.removeItem("error");
-            }
-        } catch (error) {
-
-        }
-
-        // this.setState({ redirect: true });
-    }
-
-    handleClose = () => {
+        };
+        console.log(donor);
         this.setState({ modal: false });
+        const promiss = addDonorData(donor);
+        console.log(promiss);
+        promiss.then((response) => {
+            this.setState({ error: false });
+            this.setState({ modal2: true });
+            this.setState({ header2: "Success" });
+            this.setState({ body2: "Donor successfully added !" });
+        }).catch((error) => {
+            this.setState({ error: true });
+            this.setState({ modal2: true });
+            this.setState({ header2: "Error" });
+            try {
+                this.setState({ body2: error.response.data });
+            } catch (error) {
+                this.setState({ body2: "An error occured while adding the donor" });
+            }
+        });
     }
+
+
+
     render() {
         return (
 
@@ -80,7 +93,7 @@ class DonorAdd extends React.Component {
                         <label >Login:</label>
                         <input className='addUpdateInput'
                             type="text"
-                            onChange={(event) => this.setState({ login: event.target.value.toString() })}
+                            onChange={(event) => this.login = event.target.value}
                         />
                     </div>
                     <div className='item'>
@@ -88,7 +101,7 @@ class DonorAdd extends React.Component {
                         <input className='addUpdateInput'
                             type="text"
                             onChange={(event) => {
-                                this.setState({ firstName: event.target.value });
+                                this.firstName = event.target.value
                             }} />
                     </div>
                     <div className='item'>
@@ -96,7 +109,7 @@ class DonorAdd extends React.Component {
                         <input className='addUpdateInput'
                             type="text"
                             onChange={(event) => {
-                                this.setState({ lastName: event.target.value });
+                                this.lastName = event.target.value
                             }} />
                     </div>
                     <div className='item'>
@@ -104,7 +117,7 @@ class DonorAdd extends React.Component {
                         <input className='addUpdateInput'
                             type="date"
                             onChange={(event) => {
-                                this.setState({ birthDate: event.target.value });
+                                this.setState({ birthdate: event.target.value });
                             }} />
                     </div>
                     <div className='item'>
@@ -142,7 +155,7 @@ class DonorAdd extends React.Component {
                             }} />
                     </div>
                     <div className='lastItem'>
-                        <button onClick={(event) => this.addDonor(event)}>Add</button>
+                        <button onClick={(event) => this.handleClick(event)}>Add</button>
                         {/* {this.state.redirect && <Navigate to={"/donorList"} />} */}
                     </div>
                 </form>
@@ -151,15 +164,30 @@ class DonorAdd extends React.Component {
                         modal={this.state.modal}
                         header={this.state.header}
                         body={this.state.body}
-                        button={<button onClick={() => this.handleClose()} className="btn-modal">
+                        button={<button onClick={() => this.addDonor()} className="btn-modal">
+                            Confirm
+                        </button>}
+                        closeButton={<button onClick={() => this.setState({ modal: false })} className="btn-modal">
                             Close
                         </button>}
-
-
-
                     >
                     </CustomModal>
+                )}
+                {this.state.modal2 && (
+                    <CustomModal
+                        modal={this.state.modal2}
+                        header={this.state.header2}
+                        body={this.state.body2}
+                        button={<button onClick={() => this.setState({ modal2: false })} className="btn-modal">
+                            Close
+                        </button>}
+                        onClose={() => this.setState({ redirect: true })}
+                    >
+                    </CustomModal>
+                )}
 
+                {this.state.redirect && !this.state.error && (
+                    <Navigate to={createPath('/donorList')} />
                 )}
             </div>
         );
