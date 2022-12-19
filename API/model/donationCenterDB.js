@@ -17,8 +17,20 @@ module.exports.getAllDonationCenters = async( client) => {
     ORDER BY donation_center.id`);
 }
 
-module.exports.createDonationCenter = async( name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, client) => {
-    return await client.query("INSERT INTO donation_center (name, phone_number, email_address, fax, street_name, street_number, locality) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", [name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId]);
+module.exports.createDonationCenter = async( name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, availableDonation, client) => {
+    await client.query('BEGIN TRANSACTION')
+    try{
+        const {rows: center} = await client.query("INSERT INTO donation_center (name, phone_number, email_address, fax, street_name, street_number, locality) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", [name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId]);
+        console.log(center[0].id)
+        for(const type of availableDonation){
+            await client.query("INSERT INTO donation_available (center_id, donation_type_id) VALUES ($1, $2)", [center[0].id, type]);
+        }
+        await client.query("COMMIT");
+    }
+    catch(e){
+        await client.query('ROLLBACK');
+        throw e
+    }
 }
 
 module.exports.updateDonationCenter = async( id, name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, client) => {
