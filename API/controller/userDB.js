@@ -199,7 +199,6 @@ module.exports.patchUser = async (req, res) => {
     errors[2] = validateEmail(emailAddress);
     errors[3] = validateDate(birthdate);
     errors[4] = validateString(login, "Login"); 
-    errors[5] = validateString(passwordClear, "Password");
 
     try {
         let i = 0;
@@ -225,7 +224,11 @@ module.exports.patchUser = async (req, res) => {
                     if(emailExist)
                         res.status(409).send("Email already exist");
                     else {
-                        const result = await UserModele.updateUser(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, password, client);
+                        let result;
+                        if(passwordClear === undefined)
+                            result = await UserModele.updateUserWithoutPassword(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, client);
+                        else
+                            result = await UserModele.updateUser(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, password, client);
                         const {userType, value} = result;
                         await manageAuth(userType, value, res, client);
                     }
