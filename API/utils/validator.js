@@ -45,6 +45,22 @@ module.exports.validateDate = (date) =>{
             errorCode = 412;
             message = "Date format is unvalid (yyyy/mm/dd)";
         }
+        else{
+            const dateFormat = new Date(date);
+            const today = new Date();
+            if(dateFormat > today){
+                errorCode = 412;
+                message = "Date is in the futur";
+            }
+            else {
+                const dateNaissMin = new Date();
+                dateNaissMin.setDate(dateFormat.getDate() - 18 * 365);
+                if(dateNaissMin < dateFormat){
+                    errorCode = 412;
+                    message = "User is too young";
+                }
+            }
+        }
     }
 
     return {errorCode, message};
