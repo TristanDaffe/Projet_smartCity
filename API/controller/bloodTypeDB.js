@@ -80,7 +80,7 @@ module.exports.createBloodType = async (req, res) => {
 
     try {
         if(type === undefined || rhesus === undefined) {
-            res.sendStatus(400);
+            res.status(400).send('Type or rhesus is undefined');
         }
         else {
             // vérifier si le type de sang existe déjà
