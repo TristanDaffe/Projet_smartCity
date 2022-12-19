@@ -76,7 +76,6 @@ module.exports.loginUser = async (req, res) => {
         }
     } 
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     } 
     finally {
@@ -145,7 +144,6 @@ module.exports.registerUser = async (req, res) => {
         }
         if(i < errors.length) {
             res.status(errors[i].errorCode).send(errors[i].message);
-            client.release();
         }
         else {
             const password = await getHash(passwordClear);
@@ -173,6 +171,7 @@ module.exports.registerUser = async (req, res) => {
         }
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -192,7 +191,7 @@ module.exports.patchUser = async (req, res) => {
             birthdate,
             bloodTypeId,
             login, 
-            password } = body;
+            password: passwordClear } = body;
 
     let errors = [];
     errors[0] = validateString(lastName, "LastName");
@@ -200,7 +199,7 @@ module.exports.patchUser = async (req, res) => {
     errors[2] = validateEmail(emailAddress);
     errors[3] = validateDate(birthdate);
     errors[4] = validateString(login, "Login"); 
-    errors[5] = validateString(password, "Password");
+    errors[5] = validateString(passwordClear, "Password");
 
     try {
         let i = 0;
@@ -211,13 +210,31 @@ module.exports.patchUser = async (req, res) => {
             res.status(errors[i].errorCode).send(errors[i].message);
         }
         else {
-            const result = await UserModele.updateUser(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, password, client);
-            const {userType, value} = result;
-            
-            await manageAuth(userType, value, res, client);
+            const {rows: users} = await UserModele.getUser(id, client);
+            const user = users[0];
+            if(user === undefined) {
+                res.status(404).send("User not found");
+            }
+            else {
+            const password = await getHash(passwordClear);
+            const loginExist = await UserModele.loginExist(login, client);
+                if(loginExist)
+                    res.status(409).send("Login already exist");
+                else {
+                    const emailExist = await UserModele.emailExist(emailAddress, client);
+                    if(emailExist)
+                        res.status(409).send("Email already exist");
+                    else {
+                        const result = await UserModele.updateUser(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, password, client);
+                        const {userType, value} = result;
+                        await manageAuth(userType, value, res, client);
+                    }
+                }
+            }
         }
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
     finally {
