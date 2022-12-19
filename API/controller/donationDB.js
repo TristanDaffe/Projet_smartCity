@@ -89,7 +89,7 @@ module.exports.createDonation = async (req, res) => {
     } = body;
     const dateFormatDB = new Date(date);
     
-    try {
+    try { 
         const {rows: donationAvailableForTheCenter} =  await DonationCenterModel.getDonationTypeAvailableForCenter(donationCenterId, client);
         let j = 0;
         while( j < donationAvailableForTheCenter.length && donationAvailableForTheCenter[j].id !== donationTypeId)
