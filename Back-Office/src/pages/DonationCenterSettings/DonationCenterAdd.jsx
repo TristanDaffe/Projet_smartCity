@@ -4,13 +4,16 @@ import React from 'react';
 import CustomModal from '../../component/CustomModal';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import { addDonationCenterData, loadLocalitiesData } from '../../component/API';
 
 class DonationCenterAdd extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            loading: false,
+            error: false,
+            localitiesOptions: [],
             name: "",
             address: "",
             phoneNumber: "",
@@ -26,6 +29,34 @@ class DonationCenterAdd extends React.Component {
             
         }
     }
+
+    componentDidMount() {
+        this.getLocalitiesOptions();
+    }
+
+    getLocalitiesOptions() {
+        this.setState({ loading: true, error: false }, async () => {
+            try {
+                const data = await loadLocalitiesData();
+                this.setState({ loading: false, error: false });
+                const state = {
+                    localitiesOptions: data.map((locality) => {
+                        return (
+                            <option key={locality.id} value={locality.id}>{locality.name}</option>
+                        );
+                    })
+                };
+                this.setState(state);
+            } catch (error) {
+                this.setState({ loading: false, error: true });
+                console.log(error);
+            }
+        });
+    }
+
+
+
+
 
     render() {
 
@@ -98,15 +129,10 @@ class DonationCenterAdd extends React.Component {
                             onChange={(event) => {
                                 this.setState({ localityId: event.target.value });
                             }} >
-                            <option value="none" disabled hidden>Choose a blood type</option>
-                            <option value="A+">A+</option>
-                            <option value="A-">A-</option>
-                            <option value="B+">B+</option>
-                            <option value="B-">B-</option>
-                            <option value="AB+">AB+</option>
-                            <option value="AB-">AB-</option>
-                            <option value="O+">O+</option>
-                            <option value="O-">O-</option>
+                            <option value="none" disabled hidden>   
+                                Select a locality
+                            </option>
+                            {this.state.localitiesOptions}
                         </select>
                     </div>
                     <div className='item'>

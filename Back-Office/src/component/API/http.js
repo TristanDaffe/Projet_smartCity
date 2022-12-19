@@ -147,6 +147,23 @@ const getUser = async (id) => {
     });
 };
 
+const getLocalities = async () => {
+  return await axios
+    .get(`${URL_API}/locality/all`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+
 const deleteDonation = async (id) => {
   return await axios
     .delete(`${URL_API}/donation/${id}`, {
@@ -327,6 +344,7 @@ export {
   getOpeningDaysFromDonationCenter,
   getOpeningDay,
   getAllUsers,
+  getLocalities,
   getUser,
   deleteDonation,
   deleteDonationCenter,

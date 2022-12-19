@@ -6,6 +6,7 @@ import {
   getOpeningDaysFromDonationCenter,
   getOpeningDay,
   getAllUsers,
+  getLocalities,
   deleteDonation,
   deleteDonationCenter,
   deleteOpeningDay,
@@ -100,6 +101,15 @@ const deleteDonationData = async (id) => {
   }
 };
 
+const loadLocalitiesData = async () => {
+  try {
+    const data = await getLocalities();
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const deleteDonationCenterData = async (id) => {
   try {
     const data = await deleteDonationCenter(id);
@@ -185,6 +195,7 @@ export {
   loadOpeningDayFromDonationCenterData,
   loadUsersData,
   loadUserData,
+  loadLocalitiesData,
   deleteDonationData,
   deleteDonationCenterData,
   deleteOpeningDayData,
