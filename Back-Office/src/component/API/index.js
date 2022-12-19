@@ -12,7 +12,10 @@ import {
   deleteDonor,
   addDonor,
   addOpeningDay,
+  addDonationCenter,
   updateOpeningDay,
+  updateDonor,
+  getUser,
 } from "./http";
 
 const loadDonationData = async () => {
@@ -79,6 +82,15 @@ const loadUsersData = async () => {
   }
 };
 
+const loadUserData = async (id) => {
+  try {
+    const data = await getUser(id);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 const deleteDonationData = async (id) => {
   try {
     const data = await deleteDonation(id);
@@ -133,6 +145,16 @@ const addOpeningDayData = async (openingDay) => {
   }
 };
 
+const addDonationCenterData = async (donationCenter) => {
+  try {
+    const data = await addDonationCenter(donationCenter);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 const updateOpeningDayData = async (openingDay) => {
   try {
     const data = await updateOpeningDay(openingDay);
@@ -141,6 +163,16 @@ const updateOpeningDayData = async (openingDay) => {
     throw error;
   }
 };
+
+const updateDonorData = async (donor) => {
+  try {
+    const data = await updateDonor(donor);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 
 
@@ -152,11 +184,14 @@ export {
   loadOpeningDaysData,
   loadOpeningDayFromDonationCenterData,
   loadUsersData,
+  loadUserData,
   deleteDonationData,
   deleteDonationCenterData,
   deleteOpeningDayData,
   deleteDonorData,
   addDonorData,
   addOpeningDayData,
+  addDonationCenterData,
   updateOpeningDayData,
+  updateDonorData,
 };

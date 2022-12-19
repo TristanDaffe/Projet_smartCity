@@ -13,9 +13,12 @@ class DonationCenterAdd extends React.Component {
         this.state = {
             name: "",
             address: "",
-            phone: "",
-            email: "",
+            phoneNumber: "",
+            emailAddress: "",
             fax: "",
+            streetName: "",
+            numberInStreet: 0,
+            localityId: 0,
             blood: false,
             platelets: false,
             plasma: false,
@@ -33,43 +36,27 @@ class DonationCenterAdd extends React.Component {
                 <Link to={`/donationCenterList`} className='backButtonContainer' >
                         <button className="addBackButton">Back</button>
                     </Link>
-                    <h1>Donor Settings</h1>
+                    <h1>DOnation center Settings</h1>
                     <img
                         className='imgCroixRouge'
                         src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png"
                         alt="settings" />
                 </div>
-                <h2>Add donor</h2>
+                <h2>Add donation center</h2>
                 <form className='addUpdateContainer'>
                     <div className='firstItem'>
-                        <label >Login:</label>
+                        <label >Name:</label>
                         <input className='addUpdateInput'
                             type="text"
-                            onChange={(event) => this.setState({ login: event.target.value.toString() })}
+                            onChange={(event) => this.setState({ name: event.target.value.toString() })}
                         />
                     </div>
                     <div className='item'>
-                        <label >First name:</label>
+                        <label >Phone number:</label>
                         <input className='addUpdateInput'
                             type="text"
                             onChange={(event) => {
-                                this.setState({ firstName: event.target.value });
-                            }} />
-                    </div>
-                    <div className='item'>
-                        <label >Last name:</label>
-                        <input className='addUpdateInput'
-                            type="text"
-                            onChange={(event) => {
-                                this.setState({ lastName: event.target.value });
-                            }} />
-                    </div>
-                    <div className='item'>
-                        <label >Birth date:</label>
-                        <input className='addUpdateInput'
-                            type="date"
-                            onChange={(event) => {
-                                this.setState({ birthDate: event.target.value });
+                                this.setState({ phoneNumber: event.target.value });
                             }} />
                     </div>
                     <div className='item'>
@@ -77,15 +64,39 @@ class DonationCenterAdd extends React.Component {
                         <input className='addUpdateInput'
                             type="text"
                             onChange={(event) => {
-                                this.setState({ email: event.target.value });
+                                this.setState({ emailAddress: event.target.value });
                             }} />
                     </div>
                     <div className='item'>
-                        <label >Blood type:</label>
+                        <label >Fax:</label>
+                        <input className='addUpdateInput'
+                            type="text"
+                            onChange={(event) => {
+                                this.setState({ fax: event.target.value });
+                            }} />
+                    </div>
+                    <div className='item'>
+                        <label >Street name:</label>
+                        <input className='addUpdateInput'
+                            type="text"
+                            onChange={(event) => {
+                                this.setState({ streetName: event.target.value });
+                            }} />
+                    </div>
+                    <div className='item'>
+                        <label >Number in street:</label>
+                        <input className='addUpdateInput'
+                            type="number"
+                            onChange={(event) => {
+                                this.setState({ numberInStreet: event.target.value });
+                            }} />
+                    </div>
+                    <div className='item'>
+                        <label >Locality:</label>
                         <select className='addUpdateInput'
                             defaultValue="none"
                             onChange={(event) => {
-                                this.setState({ bloodType: event.target.value });
+                                this.setState({ localityId: event.target.value });
                             }} >
                             <option value="none" disabled hidden>Choose a blood type</option>
                             <option value="A+">A+</option>
@@ -110,16 +121,7 @@ class DonationCenterAdd extends React.Component {
                         <button onClick={(event) => this.addDonor(event)}>Add</button>
                         {/* {this.state.redirect && <Navigate to={"/donorList"} />} */}
                     </div>
-                    
-
                 </form>
-                {/* <ErrorModal
-                        show = {false}
-                        handleClose={this.hideModal}
-                        header={this.state.header}
-                        footer={this.state.footer}
-                        desc={this.state.desc}
-                    /> */}
 
                     
 
@@ -128,18 +130,5 @@ class DonationCenterAdd extends React.Component {
     }
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//         donationCenters: state.donationCenters
-//     }
-// }
-
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         addDonationCenter: (donationCenter) => dispatch({ type: 'ADD_DONATION_CENTER', donationCenter })
-//     }
-// }
-
-// export default connect(mapStateToProps, mapDispatchToProps)(DonationCenterAdd);
 
 export default DonationCenterAdd;

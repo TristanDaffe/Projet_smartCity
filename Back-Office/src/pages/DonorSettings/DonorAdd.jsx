@@ -1,8 +1,7 @@
 
 
 import React from 'react';
-import { connect } from 'react-redux';
-import { createPath, Navigate, useParams } from 'react-router-dom';
+import { createPath, Navigate } from 'react-router-dom';
 import { addDonorData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
 import { Link } from 'react-router-dom';
@@ -11,22 +10,22 @@ class DonorAdd extends React.Component {
 
     constructor(props) {
         super(props);
-        const lastName = "";
-        const firstName = "";
-        const emailAddress = "";
-        const birthdate = new Date().toISOString().slice(0, 10);
-        const bloodType = "";
-        const login = "";
-        const password = "";
         this.state = {
             modal: false,
-            header: "",
-            body: "",
+            header: '',
+            body: '',
             modal2: false,
-            header2: "",
-            body2: "",
+            header2: '',
+            body2: '',
             error: false,
             redirect: false,
+            lastName: '',
+            firstName: '',
+            emailAddress: '',
+            birthdate: '',
+            bloodType: '',
+            login: '',
+            password: '',
         }
     }
 
@@ -40,21 +39,20 @@ class DonorAdd extends React.Component {
     }
 
     addDonor() {
+        const birthdate = `${this.state.birthdate.toString().substring(0, 4)}/${this.state.birthdate.toString().substring(5,7)}/${this.state.birthdate.toString().substring(8,10)}`;
         const donor = {
             lastName: this.state.lastName,
             firstName: this.state.firstName,
             emailAddress: this.state.emailAddress,
-            birthdate: this.state.birthdate,
+            birthdate: birthdate,
             bloodType: this.state.bloodType.substring(0, 1),
-            rhesus: this.state.bloodType.substring(1, 1),
+            rhesus: this.state.bloodType.substring(1,2),
             login: this.state.login,
             password: this.state.password,
         };
-        console.log(donor);
         this.setState({ modal: false });
         const promiss = addDonorData(donor);
-        console.log(promiss);
-        promiss.then((response) => {
+        promiss.then(() => {
             this.setState({ error: false });
             this.setState({ modal2: true });
             this.setState({ header2: "Success" });
@@ -75,7 +73,6 @@ class DonorAdd extends React.Component {
 
     render() {
         return (
-
             <div className='addUpdateForm'>
                 <div className="header">
                 <Link to={`/donorList`} className='backButtonContainer' >
@@ -93,7 +90,7 @@ class DonorAdd extends React.Component {
                         <label >Login:</label>
                         <input className='addUpdateInput'
                             type="text"
-                            onChange={(event) => this.login = event.target.value}
+                            onChange={(event) => this.setState({ login: event.target.value })}
                         />
                     </div>
                     <div className='item'>
@@ -101,7 +98,7 @@ class DonorAdd extends React.Component {
                         <input className='addUpdateInput'
                             type="text"
                             onChange={(event) => {
-                                this.firstName = event.target.value
+                                this.setState({ firstName: event.target.value });
                             }} />
                     </div>
                     <div className='item'>
@@ -109,7 +106,7 @@ class DonorAdd extends React.Component {
                         <input className='addUpdateInput'
                             type="text"
                             onChange={(event) => {
-                                this.lastName = event.target.value
+                                this.setState({ lastName: event.target.value });
                             }} />
                     </div>
                     <div className='item'>
@@ -125,7 +122,7 @@ class DonorAdd extends React.Component {
                         <input className='addUpdateInput'
                             type="text"
                             onChange={(event) => {
-                                this.setState({ email: event.target.value });
+                                this.setState({ emailAddress: event.target.value });
                             }} />
                     </div>
                     <div className='item'>
@@ -149,7 +146,7 @@ class DonorAdd extends React.Component {
                     <div className='item'>
                         <label >password:</label>
                         <input className='addUpdateInput'
-                            type="text"
+                            type="password"
                             onChange={(event) => {
                                 this.setState({ password: event.target.value });
                             }} />
