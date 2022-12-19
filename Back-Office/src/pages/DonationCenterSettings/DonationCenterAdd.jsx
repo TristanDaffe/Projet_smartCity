@@ -10,13 +10,9 @@ class DonationCenterAdd extends React.Component {
 
     constructor(props) {
         super(props);
-        const {selectedOptions} = this.props;
         this.state = {
             loading: false,
-            error: false,
-                localitiesOptions: null,
             name: "",
-            address: "",
             phoneNumber: "",
             emailAddress: "",
             fax: "",
@@ -27,7 +23,13 @@ class DonationCenterAdd extends React.Component {
             platelets: false,
             plasma: false,
             redirect: false,
-            
+            modal: false,
+            header: '',
+            body: '',
+            modal2: false,
+            header2: '',
+            body2: '',
+            error: false,
         }
     }
 
@@ -49,15 +51,73 @@ class DonationCenterAdd extends React.Component {
                 };
                 this.setState(state);
             } catch (error) {
-                this.setState({ loading: false, error: true });
-                console.log(error);
+                this.setState({
+                    modal2: true,
+                    header2: "Error",
+                    body2: "Error while loading localities. Please try again later.",
+                });
             }
         });
     }
 
+    handleClick(event) {
+        event.preventDefault();
+        this.setState({
+            modal: true,
+            header: "Confirmation",
+            body: "Are you sure you want to add this donation center ?",
+        });
+    }
+
+    addDonationCenter(event) {
+        event.preventDefault();
+        this.setState({ loading: true, error: false }, async () => {
+                const availableDonation = [];
+                if (this.state.blood) {
+                    availableDonation.push(1);
+                }
+                if (this.state.platelets) {
+                    availableDonation.push(2);
+                }
+                if (this.state.plasma) {
+                    availableDonation.push(3);
+                }
+                const newDonationCenter = {
+                    name: this.state.name,
+                    phoneNumber: this.state.phoneNumber,
+                    emailAddress: this.state.emailAddress,
+                    fax: this.state.fax,
+                    streetName: this.state.streetName,
+                    numberInStreet: this.state.numberInStreet,
+                    localityId: this.state.localityId,
+                    availableDonation : availableDonation,
+                };
+                console.log("newDonationCenter");
+                console.log(newDonationCenter);
+                this.setState({ modal: false });
+                const promiss = addDonationCenterData(newDonationCenter);
+                promiss.then((response) => {
+                    this.setState({ error: false });
+                    this.setState({ modal2: true });
+                    this.setState({ header2: "Success" });
+                    this.setState({ body2: "Donation center successfully added !" });
+                }).catch((error) => {
+                    console.log("error");
+                    console.log(error);
+                    this.setState({ error: true });
+                    this.setState({ modal2: true });
+                    this.setState({ header2: "Error" });
+                try {
+                    this.setState({ body2: error.response.data });
+                } catch (error) {
+                    this.setState({ body2: "An error occured while adding the donation center" });
+                }
+                });
+            });
+    }
+
+
     render() {
-
-
         return (
             <div className='addUpdateForm'>
                 <div className="header">
@@ -82,6 +142,7 @@ class DonationCenterAdd extends React.Component {
                     <div className='item'>
                         <label >Phone number:</label>
                         <input className='addUpdateInput'
+                            placeholder='0400/00.00.00'
                             type="text"
                             onChange={(event) => {
                                 this.setState({ phoneNumber: event.target.value });
@@ -98,6 +159,7 @@ class DonationCenterAdd extends React.Component {
                     <div className='item'>
                         <label >Fax:</label>
                         <input className='addUpdateInput'
+                            placeholder='0800 00 000'
                             type="text"
                             onChange={(event) => {
                                 this.setState({ fax: event.target.value });
@@ -140,7 +202,6 @@ class DonationCenterAdd extends React.Component {
                             type="radio"
                             onClick={(event) => {
                                 this.state.blood ? this.setState({ blood: false }) : this.setState({ blood: true });
-                                console.log(this.state.blood);
                             }} 
                             />         
                     </div>  
@@ -163,18 +224,42 @@ class DonationCenterAdd extends React.Component {
                             type="radio"
                             onClick={(event) => {
                                 this.state.platelets ? this.setState({ platelets: false }) : this.setState({ platelets: true });
-                                console.log(this.state.platelets);
                             }} 
 
                             />         
                     </div>  
 
                     <div className='lastItem'>
-                        <button onClick={(event)=> this.test}>Add</button>
+                        <button onClick={(event)=> this.handleClick(event)}>Add</button>
                     </div>
                 </form>
 
-                    
+                {this.state.modal && (
+                    <CustomModal
+                        modal={this.state.modal}
+                        header={this.state.header}
+                        body={this.state.body}
+                        button={<button onClick={(event) => this.addDonationCenter(event)} className="btn-modal">
+                            Confirm
+                        </button>}
+                        closeButton={<button onClick={() => this.setState({ modal: false })} className="btn-modal">
+                            Close
+                        </button>}
+                    >
+                    </CustomModal>
+                )}
+                {this.state.modal2 && (
+                    <CustomModal
+                        modal={this.state.modal2}
+                        header={this.state.header2}
+                        body={this.state.body2}
+                        button={<button onClick={() => this.setState({ modal2: false })} className="btn-modal">
+                            Close
+                        </button>}
+                        onClose={() => this.setState({ redirect: true })}
+                    >
+                    </CustomModal>
+                )}
 
             </div>
         );

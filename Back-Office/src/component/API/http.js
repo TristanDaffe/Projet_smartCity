@@ -66,6 +66,23 @@ const getAllDonationCenters = async () => {
     });
 };
 
+const getDonationCenter = async (id) => {
+  return await axios
+    .get(`${URL_API}/center/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+
 const getAllOpeningDays = async () => {
   return await axios
     .get(`${URL_API}/openingday/all`, {
@@ -280,6 +297,7 @@ const addDonationCenter = async (donationCenter) => {
       streetName: donationCenter.streetName,
       numberInStreet: donationCenter.numberInStreet,
       localityId: donationCenter.localityId,
+      availableDonation: donationCenter.availableDonation,
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -334,12 +352,38 @@ const updateDonor = async (donor) => {
     });
 };
 
+const updateDonationCenter = async (donationCenter) => {
+  return await axios
+    .patch(`${URL_API}/center`, {
+      id: donationCenter.id,
+      name: donationCenter.name,
+      phoneNumber: donationCenter.phoneNumber,
+      emailAddress: donationCenter.emailAddress,
+      fax: donationCenter.fax,
+      streetName: donationCenter.streetName,
+      numberInStreet: donationCenter.numberInStreet,
+      localityId: donationCenter.localityId,
+      // availableDonation: donationCenter.availableDonation,
+    }, {
+      headers: {"Content-Type": "application/json",
+      "Authorization": `Bearer ${getToken()}`,
+      }
+      })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
 
 export {
   getAllDonations,
   getDonationsFromDonor,
   login,
   getAllDonationCenters,
+  getDonationCenter,
   getAllOpeningDays,
   getOpeningDaysFromDonationCenter,
   getOpeningDay,
@@ -355,4 +399,5 @@ export {
   addDonationCenter,
   updateOpeningDay,
   updateDonor,
+  updateDonationCenter,
 };

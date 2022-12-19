@@ -3,7 +3,7 @@ import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
-import { loadDonationCenterData, deleteDonationCenterData } from '../../component/API/index';
+import { loadDonationCentersData, deleteDonationCenterData } from '../../component/API/index';
 import CustomModal from '../../component/CustomModal';
 
 
@@ -33,7 +33,7 @@ class DonationCenterList extends React.Component {
     getDonationCenters() {
         this.setState({ loading: true, error: false }, async () => {
             try {
-                const data = await loadDonationCenterData();
+                const data = await loadDonationCentersData();
                 this.setState({ loading: false, error: false });
                 const state = {
                     donationCenters: data,
@@ -47,7 +47,6 @@ class DonationCenterList extends React.Component {
                 }
 
             } catch (error) {
-                console.log(error);
                 this.setState({ modal2: true });
                 this.setState({ header2: "Error" });
                 this.setState({ body2: error.message });
@@ -115,7 +114,6 @@ class DonationCenterList extends React.Component {
                 return this.centerHasBloodDonation(donCent);
             }
             else if (this.state.filter === "plasma") {
-                console.log(this.centerHasPlasmaDonation(donCent));
                 return this.centerHasPlasmaDonation(donCent);
             }
             else if (this.state.filter === "platelets") {
@@ -221,7 +219,7 @@ class DonationCenterList extends React.Component {
                                 <td><Link to={`/donationCenterOpeningDays/${donationCenter.id}`}>
                                     Go to
                                 </Link></td>
-                                <td><Link to={`/editDonationCenter/${donationCenter.id}`}>
+                                <td><Link to={`/donationCenterUpdate/${donationCenter.id}`}>
                                     Update
                                 </Link></td>
                                 <td><button className="deleteBackButton" value={donationCenter.id} onClick={(event) => this.handleClick(donationCenter.id)}>Delete</button></td>

@@ -24,7 +24,7 @@ class DonorList extends React.Component {
             modal2: false,
             header2: "",
             body2: "",
-        }
+    }
     }
 
     componentDidMount() {

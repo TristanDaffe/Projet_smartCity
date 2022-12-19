@@ -54,7 +54,12 @@ class DonorUpdate extends React.Component {
                 this.setState(state);
                 
             } catch (error) {
-                this.setState({ loading: false, error: true });
+                this.setState({ 
+                    modal2: true,
+                    header2: "Error",
+                    body2: "An error occured while loading the donor",
+                    error: true
+                });
             }
         });
     }
@@ -62,7 +67,6 @@ class DonorUpdate extends React.Component {
     updateDonor() {
         const birthdate = `${this.state.birthdate.toString().substring(0, 4)}/${this.state.birthdate.toString().substring(5,7)}/${this.state.birthdate.toString().substring(8,10)}`;
         this.setState({ loading: true, error: false }, async () => {
-            try {
                 const newDonor = {
                     id: this.state.donorId,
                     last_name: this.state.lastName,
@@ -94,9 +98,7 @@ class DonorUpdate extends React.Component {
                     body2: errorMSG,
                     error : true});
         });
-            } catch (error) {
-                this.setState({ loading: false, error: true });
-            }
+
         });
     }
 
