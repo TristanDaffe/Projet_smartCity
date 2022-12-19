@@ -29,6 +29,6 @@ module.exports.getOpeningDaysForCenter = async (id, client) => {
 }
 
 module.exports.OpeningDayIsUse = async (id, client) => {
-    const isUse =  await client.query("SELECT * FROM open_day WHERE day_id = $1 LIMIT 1", [id]) !== undefined;
-    return isUse;
+    const usage =  await client.query("SELECT * FROM open_day WHERE day_id = $1 LIMIT 1", [id]);
+    return usage.rows[0] !== undefined;
 }

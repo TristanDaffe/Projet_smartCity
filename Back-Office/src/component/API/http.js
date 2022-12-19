@@ -1,196 +1,279 @@
-import axios from 'axios';
-import {setToken, getToken} from '../../context/LoginContext';
-import DonationCenterList from '../../pages/DonationCenterSettings/DonationCenterList';
+import axios from "axios";
+import { setToken, getToken } from "../../context/LoginContext";
+import DonationCenterList from "../../pages/DonationCenterSettings/DonationCenterList";
 
-const URL_API = `http://localhost:3001`;
-
-const getAllDonations = async () => {
-    return await axios
-        .get(`${URL_API}/donation/all`, {
-            headers: {
-                "Content-Type": 'application/json',
-                "Authorization": `Bearer ${getToken()}`
-            }
-        })
-        .then(response => {
-            return response.data;
-        })
-        .catch(error => {
-            console.log(error);
-      });
-}
+const URL_API = `http://192.168.1.58:3001`;
 
 const login = async (login, password) => {
-    await axios.post(`${URL_API}/user/login`, {
-        login : login,
-        password : password
+  await axios
+    .post(`${URL_API}/user/login`, {
+      login: login,
+      password: password,
     })
-    .then(response => {
-        console.log(response.data);
-        if(response.data.isAdmin){
-            setToken(response.data.token);
-        } else {
-            console.log("Vous n'êtes pas admin mais faudra faire bien");
-        }
+    .then((response) => {
+      if (response.data.isAdmin) setToken(response.data.token);
     })
-    .catch(error => {
-        throw error;
-    }
-    );
-}
+    .catch((error) => {
+      throw error;
+    });
+};
+
+const getAllDonations = async () => {
+  return await axios
+    .get(`${URL_API}/donation/all`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+const getDonationsFromDonor = async (id) => {
+  return await axios
+    .get(`${URL_API}/donation/user/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      }, 
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const getAllDonationCenters = async () => {
-    return await axios
-        .get(`${URL_API}/center/all`, {
-            headers: {
-                "Content-Type": 'application/json',
-                "Authorization": `Bearer ${getToken()}`
-            }
-        })
-        .then(response => {
-            console.log(response.data);
-            return response.data;
-        })
-        .catch(error => {
-            console.log("pas marché");
-            console.log(error);
-      });
-}
+  return await axios
+    .get(`${URL_API}/center/all`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const getAllOpeningDays = async () => {
+  return await axios
+    .get(`${URL_API}/openingday/all`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+const getOpeningDaysFromDonationCenter = async (id) => {
     return await axios
-        .get(`${URL_API}/openingday/all`, {
+        .get(`${URL_API}/center/opening/${id}`, {
             headers: {
-                "Content-Type": 'application/json',
+                "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`
             }
         })
-        .then(response => {
-            console.log(response.data);
+        .then((response) => {
             return response.data;
         })
-        .catch(error => {
-            console.log("get all opening days request failed");
-            console.log(error);
+        .catch((error) => {
+            throw error;
         });
-}
+};
+
+const getOpeningDay = async (id) => {
+  return await axios
+    .get(`${URL_API}/openingday/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+        
 
 const getAllUsers = async () => {
-    return await axios
-        .get(`${URL_API}/user/all`, {
-            headers: {
-                "Content-Type": 'application/json',
-                "Authorization": `Bearer ${getToken()}`
-            }
-        })
-        .then(response => {
-            console.log(response.data);
-            return response.data;
-        })
-        .catch(error => {
-            console.log("get all users request failed");
-            console.log(error);
-        });
-}
+  return await axios
+    .get(`${URL_API}/user/all`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const deleteDonation = async (id) => {
-    return await axios
-        .delete(`${URL_API}/donation/${id}`, {
-            headers: {
-                "Content-Type": 'application/json',
-                "Authorization": `Bearer ${getToken()}`
-            }
-        })
-        .then(response => {
-            console.log(response.data);
-            return response.data;
-        })
-        .catch(error => {
-            console.log("delete donation request failed");
-            console.log(error);
-            throw error;
-        });
-}
+  return await axios
+    .delete(`${URL_API}/donation/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const deleteDonationCenter = async (id) => {
-    console.log("delete donation center");
-    console.log(id);
-    return await axios
-        .delete(`${URL_API}/center/${id}`, {
-            headers: {
-                "Content-Type": 'application/json',
-                "Authorization": `Bearer ${getToken()}`
-            }
-        })
-        .then(response => {
-            return response.data;
-        })
-        .catch(error => {
-            throw error;
-        });
-}
+  return await axios
+    .delete(`${URL_API}/center/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const deleteOpeningDay = async (id) => {
-    return await axios
-        .delete(`${URL_API}/openingday/${id}`, {
-            headers: {
-                "Content-Type": 'application/json',
-                "Authorization": `Bearer ${getToken()}`
-            }
-        })
-        .then(response => {
-            console.log(response.data);
-            return response.data;
-        })
-        .catch(error => {
-            console.log("delete opening day request failed");
-            console.log(error);
-            throw error;
-        });
-}
+  return await axios
+    .delete(`${URL_API}/openingday/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const deleteDonor = async (id) => {
-    return await axios
-        .delete(`${URL_API}/user/${id}`, {
-            headers: {
-                "Content-Type": 'application/json',
-                "Authorization": `Bearer ${getToken()}`
-            }
-        })
-        .then(response => {
-            console.log(response.data);
-            return response.data;
-        })
-        .catch(error => {
-            console.log("delete donor request failed");
-            console.log(error);
-            throw error;
-        });
-}
+  return await axios
+    .delete(`${URL_API}/user/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const addDonor = async (donor) => {
+  return await axios
+    .post(`${URL_API}/user/register`, donor, {
+      lastName: donor.lastName,
+      firstName: donor.firstName,
+      emailAddress: donor.emailAddress,
+      birthDate: donor.birthDate,
+      bloodType: donor.bloodType,
+      rhesus: donor.rhesus,
+      login: donor.login,
+      password: donor.password,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+const addOpeningDay = async (openingDay) => {
     return await axios
-        .post(`${URL_API}/user/register`, donor, {
-            headers: {
-                "Content-Type": 'application/json',
-                "Authorization": `Bearer ${getToken()}`
+        .post(`${URL_API}/openingday`, openingDay, {
+            dayLabel: openingDay.dayLabel,
+            openingTime: openingDay.openingTime,
+            closingTime: openingDay.closingTime,
+            headers: {"Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`,
             }
-        })
-        .then(response => {
-            console.log(response.data);
+            })
+        .then((response) => {
             return response.data;
         })
-        .catch(error => {
-            DonationCenterList.setState({errorMsg: error.response.data});
-            localStorage.setItem('error', error.response.data);
+        .catch((error) => {
+            throw error;
         });
-}
+};
+
+const updateOpeningDay = async (openingDay) => {
+    return await axios
+        .patch(`${URL_API}/openingday`, openingDay, {
+            id : openingDay.id,
+            dayLabel: openingDay.dayLabel,
+            openingTime: openingDay.openingTime,
+            closingTime: openingDay.closingTime,
+            headers: {"Content-Type": "application/json",
+            "Authorization": `Bearer ${getToken()}`,
+            }
+            })
+        .then((response) => {
+            return response.data;
+        })
+        .catch((error) => {
+          throw error;
+        });
+};
 
 
 
 
 
-
-export {getAllDonations, login, getAllDonationCenters, getAllOpeningDays, getAllUsers, 
-        deleteDonation, deleteDonationCenter, deleteOpeningDay, deleteDonor,
-        addDonor};
+export {
+  getAllDonations,
+  getDonationsFromDonor,
+  login,
+  getAllDonationCenters,
+  getAllOpeningDays,
+  getOpeningDaysFromDonationCenter,
+  getOpeningDay,
+  getAllUsers,
+  deleteDonation,
+  deleteDonationCenter,
+  deleteOpeningDay,
+  deleteDonor,
+  addDonor,
+  addOpeningDay,
+  updateOpeningDay,
+};

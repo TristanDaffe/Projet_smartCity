@@ -1,7 +1,7 @@
 const pool = require('../model/database');
 const OpeningDayModel = require("../model/openingDayDB");
 
-const { validateDay } = require('../validation/validator');
+const { validateDay } = require('../utils/validator');
 
 module.exports.getOpeningDay = async (req, res) => {
     const client = await pool.connect();
@@ -68,6 +68,12 @@ module.exports.createOpeningDay = async (req, res) => {
         if(errorCode > 299 || errorCode < 200) {
             res.status(errorCode).send(message);
         }
+        else if(openingTime === undefined || closingTime === undefined) {
+            res.status(400).send('Opening time or closing time is not defined');
+        }
+        else if(openingTime >= closingTime) {
+            res.status(400).send('Opening time must be before closing time');
+        }
         else {
             await OpeningDayModel.createOpeningDay(dayLabel, openingTime, closingTime, client);
             res.sendStatus(201);
@@ -93,13 +99,30 @@ module.exports.updateOpeningDay = async (req, res) => {
     } = body;
 
     try {
-        const { errorCode, message } = validateDay(dayLabel);
-        if(errorCode > 299 || errorCode < 200) {
-            res.status(errorCode).send(message);
+        if(isNaN(id)) {
+            res.status(400).send('Id is not a number');
         }
         else {
-            await OpeningDayModel.updateOpeningDay(id, dayLabel, openingTime, closingTime, client);
-            res.sendStatus(200);
+            const { errorCode, message } = validateDay(dayLabel);
+            if(errorCode > 299 || errorCode < 200) {
+                res.status(errorCode).send(message);
+            }
+            else if(openingTime === undefined || closingTime === undefined) {
+                res.status(400).send('Opening time or closing time is not defined');
+            }
+            else if(openingTime >= closingTime) {
+                res.status(400).send('Opening time must be before closing time');
+            }
+            else {
+                const {rows: openingDays} = await OpeningDayModel.getOpeningDay(id, client);
+                const openingDay = openingDays[0];
+                if(openingDay === undefined)
+                    res.status(404).send('Opening day not found');
+                else {
+                    await OpeningDayModel.updateOpeningDay(id, dayLabel, openingTime, closingTime, client);
+                    res.sendStatus(200);
+                }
+            }
         }
     }
     catch(error) {
@@ -125,7 +148,8 @@ module.exports.deleteOpeningDay = async (req, res) => {
             if(openingDay === undefined)
                 res.status(404).send('Opening day not found');
             else {
-                if(OpeningDay.OpeningDayIsUse(id)){
+                const isUse = await OpeningDayModel.OpeningDayIsUse(id, client);
+                if(isUse){
                     res.status(400).send('Opening day is use');
                 }
                 else {

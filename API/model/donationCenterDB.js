@@ -22,7 +22,7 @@ module.exports.createDonationCenter = async( name, phoneNumber, emailAddress, fa
 }
 
 module.exports.updateDonationCenter = async( id, name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, client) => {
-    return await client.query("UPDATE donation_center SET name = $1, phone_number = $2, email_address = $3, fax = $4, street_name = $5, number_in_street = $6, locality_id = $7 WHERE id = $8 RETURNING *", [name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, id]);
+    return await client.query("UPDATE donation_center SET name = $1, phone_number = $2, email_address = $3, fax = $4, street_name = $5, street_number = $6, locality = $7 WHERE id = $8 RETURNING *", [name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, id]);
 }
 
 module.exports.deleteDonationCenter = async( id, client) => {

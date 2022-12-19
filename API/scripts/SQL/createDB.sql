@@ -86,7 +86,7 @@ CREATE TABLE user_account(
     email_address varchar(50) not null unique,
         check(email_address LIKE '%@%.%'),
     login varchar(50) not null unique,
-    password varchar(50) not null,
+    password varchar(150) not null,
     blood_type int not null,
         foreign key (blood_type) references blood_type(id),
     is_admin boolean not null default false
@@ -165,14 +165,14 @@ INSERT INTO locality(name, postal_code) VALUES
 
 /* TODO */
 INSERT INTO user_account(first_name, last_name, birthday, email_address, login, password, blood_type) VALUES
-('John', 'Doe', '1990-01-01', 'john.doe@gmail.com', 'johnDoe90', '1234', 1),
-('Jane', 'Doe', '1991-10-10', 'jane.doe@gmail.com', 'janeDoeLaBoss91', '1234', 2),
-('John', 'Smith', '1992-12-31', 'john.smith@gmail.com', 'johnSmithLeBoss', '1234', 3),
-('Jane', 'Smith', '1993-01-01', 'jane.smith@skynet.be', 'janeSmith93', '1234', 4),
-('Jean', 'Dupuis', '1994-02-02', 'john.dupuis@skynet.be', 'JD94', '1234', 5),
-('François', 'Legrand', '1995-03-03', 'francois.legrand@hotmail.com', 'FL95', '1234', 6),
-('Sarah', 'Lemaitre', '1996-04-04', 'sarah.lemaitre@hotmail.com', 'SL96', '1234', 7),
-('Marie', 'Leroy', '1997-05-05', 'marie.leroy@hotmail.com', 'ML97', '1234', 8);
+('John', 'Doe', '1990-01-01', 'john.doe@gmail.com', 'johnDoe90', '$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.', 1),
+('Jane', 'Doe', '1991-10-10', 'jane.doe@gmail.com', 'janeDoeLaBoss91', '$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.', 2),
+('John', 'Smith', '1992-12-31', 'john.smith@gmail.com', 'johnSmithLeBoss', '$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.', 3),
+('Jane', 'Smith', '1993-01-01', 'jane.smith@skynet.be', 'janeSmith93', '$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.', 4),
+('Jean', 'Dupuis', '1994-02-02', 'john.dupuis@skynet.be', 'JD94', '$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.', 5),
+('François', 'Legrand', '1995-03-03', 'francois.legrand@hotmail.com', 'FL95', '$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.', 6),
+('Sarah', 'Lemaitre', '1996-04-04', 'sarah.lemaitre@hotmail.com', 'SL96', '$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.', 7),
+('Marie', 'Leroy', '1997-05-05', 'marie.leroy@hotmail.com', 'ML97', '$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.', 8);
 
 INSERT INTO user_account(first_name, last_name, birthday, email_address, login, password, blood_type, is_admin) VALUES
 ('admin', 'admin', '1998-06-06', 'admin@admin.local', 'admin', 'admin', 1, 'true');

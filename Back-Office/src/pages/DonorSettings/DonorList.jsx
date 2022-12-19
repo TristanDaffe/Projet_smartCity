@@ -41,8 +41,16 @@ class DonorList extends React.Component {
                 donorsToDisplay: data,
             };
             this.setState(state);
+            if (data.length === 0) {
+                this.setState({ modal2: true });
+                this.setState({ header2: "No donor" });
+                this.setState({ body2: "No donor found" });
+            }
         } catch (error) {
-            this.setState({loading: false, error: true});
+            console.log(error);
+            this.setState({ modal2: true });
+            this.setState({ header2: "Error" });
+            this.setState({ body2: error.message });
         }
     });
 
@@ -81,19 +89,25 @@ class DonorList extends React.Component {
     }
 
     handleClick = (newDonorToDeleteid) => {
+        console.log("newDonorToDeleteid");
+        console.log(newDonorToDeleteid);
         this.setState({ donorToDeleteId: newDonorToDeleteid });
+        console.log("this.state.donorToDeleteId");
+        console.log(this.state.donorToDeleteId);
         this.setState({ modal: true });
         this.setState({ header: "Confirmation" });
         this.setState({ body: "Are you sure you want to delete this donor?" });
     }
 
-    deleteDonor(id) {
-        const promesse = deleteDonorData(this.state.donorToDelete);
+    deleteDonor() {
+        const promesse = deleteDonorData(this.state.donorToDeleteId);
         this.setState({ modal: false });
-        promesse.then((response) => {
+        promesse.then(() => {
             this.setState({ modal: false });
-            this.setDonorD();
+            this.getDonors();
         }).catch((error) => {
+            console.log("error dans la view");
+            console.log(error);
             this.setState({ modal2: true });
             this.setState({ header2: "Error" });
             this.setState({ body2: error.response.data });
@@ -157,9 +171,9 @@ class DonorList extends React.Component {
                                     <td>{donor.email_address}</td>
                                     <td>{`${donor.type}${donor.rhesus}`}</td>
                                     <td>{donor.birthday.substr(0,10) }</td>
-                                    <td>todo</td>
+                                    <td><Link to={`/donorDonations/${donor.id}`}>Go to</Link></td>
                                     <td><Link to={`/donorUpdate/${donor.id}`}>Update</Link> </td>
-                                    <td><button className="deleteButton" onClick={() => this.deleteDonor(donor.id)}>Delete</button></td>
+                                    <td><button className="deleteButton" onClick={() => this.handleClick(donor.id)}>Delete</button></td>
                                 </tr>
                             )
                         })}
@@ -170,13 +184,28 @@ class DonorList extends React.Component {
                         modal={this.state.modal}
                         header={this.state.header}
                         body={this.state.body}
-                        button={<button onClick={() => this.setState({modal : false})} className="btn-modal">
+                        button={<button onClick={() => this.deleteDonor()} className="btn-modal">
+                            Confirm
+                        </button>}
+                        closeButton={<button onClick={() => this.setState({modal : false})} className="btn-modal">
                             Close
                         </button>}
                     >
                     </CustomModal>
-
                 )}
+
+{this.state.modal2 && (
+                    <CustomModal
+                        modal={this.state.modal2}
+                        header={this.state.header2}
+                        body={this.state.body2}
+                        button={<button onClick={(event) => this.setState({ modal2: false })} className="btn-modal">
+                            Close
+                        </button>}
+                    >
+                    </CustomModal>
+                )}
+
             </div>
 
                             

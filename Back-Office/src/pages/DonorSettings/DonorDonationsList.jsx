@@ -1,20 +1,19 @@
 import React from 'react';
 import SearchBar from '../../component/SearchBar';
-import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { Link, useParams } from 'react-router-dom';
 import DropList from '../../component/DropList';
-import { loadDonationData, deleteDonationData } from '../../component/API';
+import { loadDonationFromDonorData, deleteDonationData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
+function withParams(Component) {
+    return (props) => { return <Component {...props} params={useParams()} /> };
+}
 
-// mettre defaultValue dans le time
-
-class DonationList extends React.Component {
+class DonorDonationList extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            // donations: this.props.donations,
-            // donationsToDisplay: this.props.donations,
+            donorId : parseInt(this.props.params.id),
             donations: [],
             donationsToDisplay: [],
             filter: "id",
@@ -46,26 +45,32 @@ class DonationList extends React.Component {
     }
 
     componentDidMount() {
-        this.setDonations();
+        this.getDonations();
     }
 
-    setDonations() {
+    getDonations() {
         this.setState({loading: true, error: false}, async () => {
             try{
-                const data = await loadDonationData();
+                let idDonnor = this.state.donorId;
+                const data = await loadDonationFromDonorData(idDonnor);
                 this.setState({loading: false, error: false});
                 const state = {
                     donations: data,
                     donationsToDisplay: data,
+                    
                 };
                 this.setState(state);
                 if (data.length === 0) {
-                    this.setState({header2: "Error"});
-                    this.setState({body2: "No donation found"});
                     this.setState({modal2: true});
+                    this.setState({header2: "No donation"});
+                    this.setState({body2: "This donor has no donation"});
                 }
             } catch (error) {
                 this.setState({loading: false, error: true});
+                console.log(error);
+                this.setState({ modal2: true });
+                this.setState({ header2: "Error" });
+                this.setState({ body2: error.message });
             }
         });
 
@@ -84,7 +89,7 @@ class DonationList extends React.Component {
         const promesse = deleteDonationData(this.state.donationToDeleteId);
         promesse.then((response) => {
             this.setState({ modal: false });
-            this.setDonations();
+            this.getDonations();
 
     }).catch((error) => {
         this.setState({ modal2: true });
@@ -136,15 +141,16 @@ class DonationList extends React.Component {
         return (
             <div>
                 <div className="header">
-                <Link to={`/welcome`} className='backButtonContainer' >
+                <Link to={`/donorList`} className='backButtonContainer' >
                         <button className="addBackButton">Back</button>
                     </Link>
-                    <h1>Donation Settings</h1>
+                    <h1>Donor Settings</h1>
                     <img
                         className='imgCroixRouge'
                         src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png"
                         alt="settings" />
                 </div>
+                <h2>Donations</h2>
                 <div className="searchBar">
                     <p>Search by :</p>
                     <DropList
@@ -163,9 +169,6 @@ class DonationList extends React.Component {
                         callback={(filter) => this.changeFilter(filter)} ></DropList>
                     <p>Input :</p>
                     <SearchBar callback={(userChoice) => this.changeValuesToDisplay(userChoice)} />
-                    <Link to={`/addDonation`} className='addButtonContainer'>
-                        <button className="addBackButton">Add Donation</button>
-                    </Link>
                 </div>
                 <table>
                     <thead>
@@ -235,21 +238,5 @@ class DonationList extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        donations: state.donations
-    }
-};
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addDonation: (donationObjet) => {
-            dispatch({ type: "addDonation", payload: { newDonation: donationObjet } });
-        },
-        deleteDonation: (id) => {
-            dispatch({ type: "deleteDonation", payload: { id: id } });
-        }
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DonationList);
+export default withParams(DonorDonationList);

@@ -1,7 +1,7 @@
 const pool = require('../model/database');
 const DonationTypeModel = require("../model/donationTypeDB");
 
-const { validateString } = require('../validation/validator');
+const { validateString } = require('../utils/validator');
 
 module.exports.getDonationType = async (req, res) => {
     const client = await pool.connect();
@@ -143,13 +143,21 @@ module.exports.deleteDonationType = async (req, res) => {
             res.status(400).send('Id is not a number');
         }
         else {
-            const type = await DonationTypeModel.getDonationType(id, client);
+            const {rows: types} = await DonationTypeModel.getDonationType(id, client);
+            const type = types[0];
             if(type === undefined) {
                 res.status(404).send('Donation type not found');
             }
             else {
-                await DonationTypeModel.deleteDonationType(id, client);
-                res.sendStatus(200);
+                const {rows: donations} = await DonationTypeModel.getDonationFromDonationType(id, client);
+                const donation = donations[0];
+                if(donation !== undefined) {
+                    res.status(409).send('Donation type is used in donation');
+                }
+                else {
+                    await DonationTypeModel.deleteDonationType(id, client);
+                    res.sendStatus(200);
+                }
             }
         }
     }

@@ -23,3 +23,7 @@ module.exports.updateDonationType = async (id, name, timeOfDonation, client) => 
 module.exports.deleteDonationType = async (id, client) => {
     return await client.query('DELETE FROM donation_type WHERE id = $1', [id]);
 }
+
+module.exports.getDonationFromDonationType = async (id, client) => {
+    return await client.query('SELECT * FROM donation WHERE donation_type_id = $1', [id]);
+}

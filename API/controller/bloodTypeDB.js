@@ -80,7 +80,7 @@ module.exports.createBloodType = async (req, res) => {
 
     try {
         if(type === undefined || rhesus === undefined) {
-            res.sendStatus(400);
+            res.status(400).send('Type or rhesus is undefined');
         }
         else {
             // vérifier si le type de sang existe déjà
@@ -113,12 +113,31 @@ module.exports.updateBloodType = async (req, res) => {
     const { id, type, rhesus } = body;
     
     try {
-        if(isNaN(id) || type === undefined || rhesus === undefined) {
-            res.sendStatus(400);
+        if(isNaN(id)) {
+            res.status(400).send('Id is not a number');
+        }
+        else if(type === undefined) {
+            res.status(400).send('Type is undefined');
+        }
+        else if(rhesus === undefined) {
+            res.status(400).send('Rhesus is undefined');
         }
         else {
-            await BloodTypeModel.updateBloodType(id, type, rhesus, client);
-            res.sendStatus(200);
+            const {rows: bloodTypes} = await BloodTypeModel.getBloodType(id, client);
+            const bloodType = bloodTypes[0];
+            if(bloodType === undefined) {
+                res.status(404).send('Blood type not found');
+            }
+            else {
+                const {rows: sameTypeRhesus} = await BloodTypeModel.getBloodTypeFromName(type, rhesus, client);
+                if(sameTypeRhesus.length > 0) {
+                    res.status(409).send('Blood type already exists');
+                }
+                else {
+                    await BloodTypeModel.updateBloodType(id, type, rhesus, client);
+                    res.sendStatus(200);
+                }
+            }
         }
     }
     catch (error) {
@@ -139,11 +158,25 @@ module.exports.deleteBloodType = async (req, res) => {
             res.status(400).send('Id is not a number');
         }
         else {
-            await BloodTypeModel.deleteBloodType(id, client);
-            res.sendStatus(200);
+            const {rows: bloodTypes} = await BloodTypeModel.getBloodType(id, client);
+            const bloodType = bloodTypes[0];
+            if(bloodType === undefined) {
+                res.status(404).send('Blood type not found');
+            }
+            else {
+                const {rows: users} = await BloodTypeModel.getUsersWithBloodType(id, client);
+                if(users.length > 0) {
+                    res.status(409).send('Blood type is used by users');
+                }
+                else {
+                    await BloodTypeModel.deleteBloodType(id, client);
+                    res.sendStatus(200);
+                }
+            }
         }
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
     finally {

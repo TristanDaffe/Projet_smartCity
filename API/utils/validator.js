@@ -40,10 +40,26 @@ module.exports.validateDate = (date) =>{
         message = "Date is null or undefined";
     }
     else{
-        let regex = new RegExp('[0-3][0-9]/[0-2][0-9]/[0-9]{4}');
+        let regex = new RegExp('[0-9]{4}/[0-2][0-9]/[0-3][0-9]');
         if(!regex.test(date)){
             errorCode = 412;
-            message = "Date format is unvalid (dd/mm/yyyy)";
+            message = "Date format is unvalid (yyyy/mm/dd)";
+        }
+        else{
+            const dateFormat = new Date(date);
+            const today = new Date();
+            if(dateFormat > today){
+                errorCode = 412;
+                message = "Date is in the futur";
+            }
+            else {
+                const dateNaissMin = new Date();
+                dateNaissMin.setDate(dateFormat.getDate() - 18 * 365);
+                if(dateNaissMin < dateFormat){
+                    errorCode = 412;
+                    message = "User is too young";
+                }
+            }
         }
     }
 

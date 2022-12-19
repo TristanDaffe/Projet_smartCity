@@ -1,10 +1,12 @@
+const { compareHash } = require("../utils/hash");
+
 module.exports.loginUser = async (login, password, client) => {
-    const users = await client.query('SELECT * FROM user_account WHERE login = $1 AND password = $2', [login, password]);
+    const users = await client.query('SELECT * FROM user_account WHERE login = $1', [login]);
     const user = users.rows[0];
-    if(user !== undefined && user.is_admin && user.password === password) {
+    if(user !== undefined && user.is_admin && compareHash(password, user.password)) {
         return {userType: "admin", value: user};
     }
-    else if (user !== undefined && user.password === password) {
+    else if (user !== undefined && compareHash(password, user.password)) {
         return {userType: "user", value: user};
     }
     else {
@@ -30,7 +32,7 @@ module.exports.registerUser = async (lastname, firstname, emailAddress, birthDay
     await client.query("INSERT INTO user_account (last_name, first_name, email_address, birthday, blood_type, login, password) VALUES "+
     "($1, $2, $3, $4, $5, $6, $7)", [lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password]);
     
-    return await this.postUser(login, password, client);
+    return await this.loginUser(login, password, client);
 }
 
 module.exports.updateUser = async (id, lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password, client) => {
@@ -41,17 +43,25 @@ module.exports.updateUser = async (id, lastname, firstname, emailAddress, birthD
 }
 
 module.exports.deleteUser = async (id, client) => {
-    await client.query("UPDATE donation SET user_id = NULL WHERE user_id = $1", [id]);
-    await client.query("DELETE FROM user_account WHERE id = $1", [id]);
+    await client.query("BEGIN");
+    try{
+        await client.query("UPDATE donation SET user_id = NULL WHERE user_id = $1", [id]);
+        await client.query("DELETE FROM user_account WHERE id = $1", [id]);
+        await client.query("COMMIT");
+    }
+    catch(e) {
+        await client.query("ROLLBACK");
+        throw e;
+    }
 }
 
 module.exports.loginExist = async (login, client) => {
     const loginDB = await client.query("SELECT login FROM user_account WHERE login = $1", [login]);
-    return loginDB !== undefined;
+    return loginDB.rows[0] !== undefined;
 }
 
 module.exports.emailExist = async (email, client) => {
-    const emailDB = await client.query("SELECT login FROM user_account WHERE emai_address = $1", [email]);
-    return emailDB !== undefined;
+    const emailDB = await client.query("SELECT login FROM user_account WHERE email_address = $1", [email]);
+    return emailDB.rows[0] !== undefined;
 }
 

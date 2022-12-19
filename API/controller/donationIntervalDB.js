@@ -1,5 +1,6 @@
 const pool = require('../model/database');
 const DonationIntervalModel = require("../model/donationIntervalDB");
+const BloodTypeModel = require("../model/bloodTypeDB");
 
 module.exports.getDonationInterval = async (req, res) => {
     const client = await pool.connect();
@@ -50,8 +51,14 @@ module.exports.deleteDonationInterval = async (req, res) => {
     const id = parseInt(idT);
 
     try {
-        await DonationIntervalModel.deleteDonationInterval(id, client);
-        res.sendStatus(201);
+        const {rows: donationIntervals} = await DonationIntervalModel.getDonationInterval(id, client);
+        if(donationIntervals.length === 0) {
+            res.status(404).send('Donation Interval not found');
+        }
+        else {
+            await DonationIntervalModel.deleteDonationInterval(id, client);
+            res.sendStatus(200);
+        }
     }
     catch (error) {
         res.sendStatus(500);
@@ -65,15 +72,24 @@ module.exports.updateDonationInterval = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
     const {
-        id,
         firstDonationTypeId,
         nextDonationTypeId,
-        Interval
+        timeBetween
     } = body;
 
     try {
-        await DonationIntervalModel.updateDonationInterval(id, firstDonationTypeId,nextDonationTypeId, Interval, client);
-        res.sendStatus(201);
+        const {rows: firstDontation} = await BloodTypeModel.getBloodType(firstDonationTypeId, client);
+        const {rows: nextDontation} = await BloodTypeModel.getBloodType(nextDonationTypeId, client);
+        if(firstDontation.length === 0) {
+            res.status(404).send('First donation type not found');
+        }
+        else if(nextDontation.length === 0) {
+            res.status(404).send('Next donation type not found');
+        }
+        else {
+            await DonationIntervalModel.updateDonationInterval(firstDonationTypeId, nextDonationTypeId, timeBetween, client);
+            res.sendStatus(201);
+        }
     }
     catch (error) {
         res.sendStatus(500);
@@ -85,11 +101,10 @@ module.exports.updateDonationInterval = async (req, res) => {
 
 module.exports.createDonationIntervals = async (req, res) => {
     const client = await pool.connect();
-    const body = req.body;
-    const Intervals = body.Intervals;
+    const intervals = req.body;
 
     try {
-        await DonationIntervalModel.createDonationIntervals(Intervals, client);
+        await DonationIntervalModel.createDonationIntervals(intervals, client);
         res.sendStatus(201);
     }
     catch (error) {

@@ -72,9 +72,6 @@ label {
 }
 
 
-
-
-
 .LinkButtonImg {
   z-index: -1;
   width:400px;
@@ -178,7 +175,7 @@ label {
   border-radius: 10px;
   padding-right: 10px;
   background-color: none;
-  z-index: 1;
+  /* z-index: 1; */
   position: relative;
 }
 
