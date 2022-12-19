@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FlatList,StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList,SafeAreaView,StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const data = [
   {
@@ -22,7 +22,7 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
   </TouchableOpacity>
 );
 
-export default function MultiButton () {
+export default function MultiButton ({returnType}) {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
@@ -33,7 +33,10 @@ export default function MultiButton () {
       <View>
         <Item
         item={item}
-        onPress={() => setSelectedId(item.id)}
+        onPress={() => {
+          setSelectedId(item.id)
+          selectedId != null ? returnType(data[selectedId].title) : ""
+        }}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}
       />
@@ -45,17 +48,13 @@ export default function MultiButton () {
   };
 
   return (
-    <View>
-      <Text style={styles.type} >Type</Text>
+    <SafeAreaView>
       <FlatList
         data={data}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        extraData={selectedId}
       />
-        {selectedId != null ?  console.log(data[selectedId].title) : "" }
-
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -67,20 +66,13 @@ const styles = StyleSheet.create({
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 32,
-    width: '50%',
+    width: 175,
     height: 60,
     backgroundColor: 'red',
   },
   title: {
     fontSize: 15,
     alignSelf: 'center',
-  },
-  type: {
-    fontWeight: 'bold',
-    fontSize: 30,
-    marginTop: 50,
-    marginLeft: 20,
-    marginBottom: 20,
   },
   textTop:
   {

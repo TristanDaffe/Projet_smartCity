@@ -1,10 +1,12 @@
 import React, { useState } from "react";
-import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button} from 'react-native';
+import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button , Dimensions} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import dateFns from "date-fns";
-import TopBarDrawer from '../components/topBar/topBarDrawer';
+
+import TopBar from '../components/topBar/topBarArrow';
 import HoursTable from '../components/HoursTable';
 
+const windowHeight = Dimensions.get('window').height;
 
 const format = (date = new Date()) => dateFns.format(date, 'YYYY-MM-DD h');
 export default function CalendarTest ( {navigation} )  
@@ -14,8 +16,8 @@ export default function CalendarTest ( {navigation} )
   var year = new Date().getFullYear();
   const baseDate = new Date();
     return (
-        <View>
-        <TopBarDrawer onclick={navigation.toggleDrawer}/>
+        <View style= {styles.container}>
+        <TopBar onclick={navigation.goBack}/>
         <Text style={styles.title}>Calendar</Text>
         <SafeAreaView>
         <Calendar
@@ -51,6 +53,10 @@ export default function CalendarTest ( {navigation} )
 };
 
 const styles = StyleSheet.create({
+    container:
+    {
+      maxHeight: windowHeight,
+    },
     textName: {
       alignSelf: 'center',
       fontWeight: 'bold',
@@ -73,12 +79,12 @@ const styles = StyleSheet.create({
     table: {
         marginLeft: 5,
         alignSelf: 'center',
+        maxHeight: '20%',
       },
     button: {
         width: "90%",
         marginTop: 30,
         marginLeft: 20,
-        height: 300,
       },
     lineCenter: {
       flexDirection: 'row',

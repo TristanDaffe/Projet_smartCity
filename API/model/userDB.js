@@ -42,6 +42,11 @@ module.exports.updateUser = async (id, lastname, firstname, emailAddress, birthD
     return await this.loginUser(login, password, client);
 }
 
+module.exports.updateUserWithoutPassword = async (id, lastname, firstname, emailAddress, birthDay, bloodTypeId, login, client) => {
+    await client.query("UPDATE user_account SET last_name = $1, first_name = $2, email_address = $3, birthday = $4, blood_type = $5, login = $6 WHERE id = $7",
+    [lastname, firstname, emailAddress, birthDay, bloodTypeId, login, id]);
+}
+
 module.exports.deleteUser = async (id, client) => {
     await client.query("BEGIN");
     try{
