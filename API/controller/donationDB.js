@@ -1,5 +1,6 @@
 const pool = require('../model/database');
 const DonationModel = require("../model/donationDB");
+const DonationCenterModel = require("../model/donationCenterDB")
 
 module.exports.getDonation = async (req, res) => {
     const client = await pool.connect();
@@ -89,6 +90,14 @@ module.exports.createDonation = async (req, res) => {
     const dateFormatDB = new Date(date);
     
     try {
+        const {rows: donationAvailableForTheCenter} =  await DonationCenterModel.getDonationTypeAvailableForCenter(donationCenterId, client);
+        let j = 0;
+        while( j < donationAvailableForTheCenter.length && donationAvailableForTheCenter[j].id !== donationTypeId)
+            j++;
+
+        if(j < donationAvailableForTheCenter || donationAvailableForTheCenter[j].id !== donationCenterId){
+            res.status(400).send("The donation center doesn't have this type of donation available");
+        }
         // récupérer les dons de l'utilisateur
         const maxIntervals = await DonationModel.getLongestInterval(client);
         let maxInterval = maxIntervals.rows[0].time_between.months;
