@@ -30,7 +30,6 @@ module.exports.createDonationIntervals = async (intervals, client) => {
     await client.query('BEGIN');
     try{
         for(const interval of intervals){
-            console.log(interval);
             await client.query('INSERT INTO time_between_donation (first_donation_type_id, next_donation_type_id, time_between) VALUES ($1, $2, $3)',
             [interval.firstDonationId, interval.secondDonationId, interval.timeBetween]); 
         }

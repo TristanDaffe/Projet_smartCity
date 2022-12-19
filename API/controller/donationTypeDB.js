@@ -1,7 +1,7 @@
 const pool = require('../model/database');
 const DonationTypeModel = require("../model/donationTypeDB");
 
-const { validateString } = require('../validation/validator');
+const { validateString } = require('../utils/validator');
 
 module.exports.getDonationType = async (req, res) => {
     const client = await pool.connect();

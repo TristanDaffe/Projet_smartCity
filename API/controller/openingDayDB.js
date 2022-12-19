@@ -1,7 +1,7 @@
 const pool = require('../model/database');
 const OpeningDayModel = require("../model/openingDayDB");
 
-const { validateDay } = require('../validation/validator');
+const { validateDay } = require('../utils/validator');
 
 module.exports.getOpeningDay = async (req, res) => {
     const client = await pool.connect();

@@ -2,12 +2,12 @@ require('dotenv').config();
 const process = require('process');
 const jwt = require('jsonwebtoken');
 
-const { validateString, validateEmail, validateDate } = require('../validation/validator');
+const { validateString, validateEmail, validateDate } = require('../utils/validator');
+const { getHash } = require('../utils/hash');
 
 const pool = require('../model/database');
 const UserModele = require("../model/userDB");
 const BloodTypeModel = require("../model/bloodTypeDB");
-const DonationController = require("../controller/donationDB");
 
 const manageAuth = async (userType, value, res, client) => {
 
@@ -54,6 +54,7 @@ module.exports.loginUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
     const { login, password } = body;
+
 
     let errors = [];
     errors[0] = validateString(login, "Login");
@@ -124,7 +125,7 @@ module.exports.registerUser = async (req, res) => {
             bloodType,
             rhesus,
             login, 
-            password } = body;
+            password: passwordClear } = body;
     
     let errors = [];
     errors[0] = validateString(lastName, "LastName");
@@ -132,7 +133,7 @@ module.exports.registerUser = async (req, res) => {
     errors[2] = validateEmail(emailAddress);
     errors[3] = validateDate(birthdate);
     errors[4] = validateString(login, "Login"); 
-    errors[5] = validateString(password, "Password");
+    errors[5] = validateString(passwordClear, "Password");
     errors[6] = validateString(rhesus, "rhesus");
     errors[7] = validateString(bloodType, "rhesus");
 
@@ -147,7 +148,7 @@ module.exports.registerUser = async (req, res) => {
             client.release();
         }
         else {
-
+            const password = await getHash(passwordClear);
             const loginExist = await UserModele.loginExist(login, client);
             if(loginExist)
                 res.status(409).send("Login already exist");

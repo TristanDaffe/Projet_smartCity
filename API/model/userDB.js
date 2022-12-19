@@ -1,10 +1,13 @@
+const { compareHash } = require("../utils/hash");
+
 module.exports.loginUser = async (login, password, client) => {
-    const users = await client.query('SELECT * FROM user_account WHERE login = $1 AND password = $2', [login, password]);
+    const users = await client.query('SELECT * FROM user_account WHERE login = $1', [login]);
     const user = users.rows[0];
-    if(user !== undefined && user.is_admin && user.password === password) {
+    console.log(user)
+    if(user !== undefined && user.is_admin && compareHash(password, user.password)) {
         return {userType: "admin", value: user};
     }
-    else if (user !== undefined && user.password === password) {
+    else if (user !== undefined && compareHash(password, user.password)) {
         return {userType: "user", value: user};
     }
     else {
