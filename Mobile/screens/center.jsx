@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button, TextInput , Image } from 'react-native';
+import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button, TextInput , Image, Alert } from 'react-native';
 
 import TopBar from '../components/topBar/topBarArrow';
 import CenterTable from '../components/CenterTable';
@@ -22,22 +22,15 @@ const tab =[
   {id:15,center: "Don de sang à Louvain",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
 ];
 
-export default function Center ( {route,navigation})  { 
+export default function Center ( {route,navigation})  {
   const [data, setData] = React.useState(null);  // Quand il y aura accès à l'api
   const [filteredData, setFilteredData] = React.useState(tab);
-  const [newCenter, setNewCenter] = React.useState(null);  
+  const [center, setCenter] = React.useState(null);  
 
-  const {type,center} = route.params;
+  const type = route.params;
 
-  const returnCenter = ({id,center,address,url,phoneNumber}) => {
-      setNewCenter(() => ({
-      id : id,
-      center : center,
-      address : address,
-      url : url,
-      phoneNumber : phoneNumber
-    }
-      ));
+  const returnCenter = (newCenter) => {
+    setCenter(newCenter);
   }
 
   const searchFilter = (text) => {
@@ -70,7 +63,6 @@ export default function Center ( {route,navigation})  {
                 placeholder= "search(center)"
               />
             </View>
-            {console.log(newCenter)}
           </View>
           <View style={styles.table}>
               <CenterTable data = {filteredData} returnCenter = {returnCenter}></CenterTable>
@@ -80,7 +72,17 @@ export default function Center ( {route,navigation})  {
                 title='Next' 
                 color='red'
                 style={styles.button} 
-                onPress={() => navigation.navigate('Calendar')}></Button>
+                onPress={() => {
+                  if(center != null)
+                  {
+                    navigation.navigate('Calendar' , {type: type , center : center})
+                  }
+                  else
+                  {
+                    Alert.alert("Missing value !" , "The center is missing")
+                  }
+                }}>
+                </Button>
               </View> 
       </SafeAreaView>
     );
