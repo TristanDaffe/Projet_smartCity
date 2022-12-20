@@ -1,8 +1,7 @@
 import axios from "axios";
 import { setToken, getToken } from "../../context/LoginContext";
-import DonationCenterList from "../../pages/DonationCenterSettings/DonationCenterList";
 
-const URL_API = `http://192.168.1.32:3001`;
+const URL_API = `http://10.101.204.150:3001`;
 
 const login = async (login, password) => {
   await axios
@@ -33,6 +32,23 @@ const getAllDonations = async () => {
       throw error;
     });
 };
+
+const getDonation = async (id) => {
+  return await axios
+    .get(`${URL_API}/donation/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
 
 const getDonationsFromDonor = async (id) => {
   return await axios
@@ -311,7 +327,26 @@ const addDonationCenter = async (donationCenter) => {
     });
 };
 
-
+const addDonation = async (donation) => {
+  return await axios
+    .post(`${URL_API}/donation`, donation, {
+      date: donation.date,
+      hour: donation.hour,
+      donationTypeId  : donation.donationTypeId,
+      userId: donation.userId,
+      donationCenterId: donation.donationCenterId,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
 const updateOpeningDay = async (openingDay) => {
     return await axios
@@ -377,9 +412,33 @@ const updateDonationCenter = async (donationCenter) => {
     });
 };
 
+const updateDonation = async (donation) => {  
+  return await axios
+    .patch(`${URL_API}/donation`, {
+      id: donation.id,
+      hour: donation.hour,
+      date: donation.date,
+      donationTypeId: donation.donationTypeId,
+      userId: donation.userId,
+      donationCenterId: donation.donationCenterId,
+    }, {
+      headers: {"Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+      }
+      })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+
 
 export {
   getAllDonations,
+  getDonation,
   getDonationsFromDonor,
   login,
   getAllDonationCenters,
@@ -397,7 +456,9 @@ export {
   addDonor,
   addOpeningDay,
   addDonationCenter,
+  addDonation,
   updateOpeningDay,
   updateDonor,
   updateDonationCenter,
+  updateDonation,
 };

@@ -1,9 +1,8 @@
 import React from 'react';
 import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
-import { loadDonationData, deleteDonationData } from '../../component/API';
+import { loadDonationsData, deleteDonationData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
 
 // mettre defaultValue dans le time
@@ -52,7 +51,7 @@ class DonationList extends React.Component {
     setDonations() {
         this.setState({loading: true, error: false}, async () => {
             try{
-                const data = await loadDonationData();
+                const data = await loadDonationsData();
                 this.setState({loading: false, error: false});
                 const state = {
                     donations: data,
@@ -235,21 +234,5 @@ class DonationList extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        donations: state.donations
-    }
-};
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addDonation: (donationObjet) => {
-            dispatch({ type: "addDonation", payload: { newDonation: donationObjet } });
-        },
-        deleteDonation: (id) => {
-            dispatch({ type: "deleteDonation", payload: { id: id } });
-        }
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DonationList);
+export default DonationList;

@@ -51,7 +51,8 @@ module.exports.getAllDonation = async (client) => {
     INNER JOIN user_account ua on ua.id = donation.user_id 
     INNER JOIN donation_type type on type.id = donation.donation_type_id 
     INNER JOIN donation_center dc on dc.id = donation.donation_center_id 
-    INNER JOIN blood_type bt on bt.id = ua.blood_type`);
+    INNER JOIN blood_type bt on bt.id = ua.blood_type
+    order by donation.id asc`);
 }
 
 module.exports.createDonation = async (date, hour, donationTypeId, userId, donationCenterId, client ) => {
