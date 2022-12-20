@@ -17,19 +17,7 @@ export const DonationCenterProvider = ({children}) => {
             .then( res => {
                 setDonationCenter(res.data);
                 AsyncStorage.setItem('donationCenter', JSON.stringify(res.data));
-                console.log("donationCenter");
-                // const bloodsDB = res.data;
-                // if(bloodsDB !== undefined){
-                //     types = [];
-                //     rhesus = [];
-                //     bloodsDB.forEach(blood => {
-                //         if(!types.includes(bloodsDB.type))
-                //             types.push(bloodsDB.type);
-                //         if(!rhesus.includes(bloodsDB.rhesus))
-                //             rhesus.push(bloodsDB.rhesus);
-                //     });
-                //     setBloods({types, rhesus});
-                //}
+                console.log(donationCenter);
             })
             .catch( err => {
                 Alert.alert("Error", err.message);

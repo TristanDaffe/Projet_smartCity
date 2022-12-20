@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet , SafeAreaView,TouchableOpacity} from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
   const data =[
-    {id:0,hours: "8:00-8:30"},
-    {id:1,hours: "8:30-9:00"},
-    {id:2,hours: "9:00-9:30"},
-    {id:3,hours: "10:00-10:30"},
-    {id:4,hours: "10:30-11:00"},
-    {id:5,hours: "11:00-11:30"},
+    {id:1,hours: "8:00-8:30"},
+    {id:2,hours: "8:30-9:00"},
+    {id:3,hours: "9:00-9:30"},
+    {id:4,hours: "10:00-10:30"},
+    {id:5,hours: "10:30-11:00"},
+    {id:6,hours: "11:00-11:30"},
   ];
 
   const Item = ({ item, onPress, backgroundColor, textColor }) => (
@@ -21,9 +21,15 @@ import { FlatList } from "react-native-gesture-handler";
     </TouchableOpacity>
   );
 
-  const table = ()=>
+
+  const table = ({returnHours})=>
   {
     const [selectedId, setSelectedId] = useState(null);
+
+    useEffect(() => {
+      selectedId != null ? returnHours((data[selectedId-1].hours)) : ""
+    });
+
     const item =({item})=>
     {
         const backgroundColor = item.id === selectedId ? "red" : "white";
@@ -33,7 +39,9 @@ import { FlatList } from "react-native-gesture-handler";
             <View>
                 <Item
                     item={item}
-                    onPress={() => setSelectedId(item.id)}
+                    onPress={() => {
+                      setSelectedId(item.id)
+                    }}
                     backgroundColor={{ backgroundColor }}
                     textColor={{ color }}
                 >
@@ -50,7 +58,6 @@ import { FlatList } from "react-native-gesture-handler";
                 keyExtractor ={(item,index) => index.toString()}
                 >
                 </FlatList>
-                {selectedId != null ?  console.log(data[selectedId].hours) : "" }
               </SafeAreaView>
 
     )

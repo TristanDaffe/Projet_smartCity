@@ -4,19 +4,22 @@ import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button} from 'react-n
 import TopBar from '../components/topBar/topBarArrow';
 import ConfirmationButton from '../components/confirmButton';
 
-export default function RecapAppointment ( {navigation} )  {   
+export default function RecapAppointment ( {route,navigation} )  { 
+  
+  const {date,hours,center,type} = route.params;
+
     return (
         <View>
         <TopBar onclick={navigation.goBack}/>
         <Text style={styles.title}>Appointment</Text>
         <Text style={styles.category}>Donation Type :</Text>
-        <Text style={styles.response}>Plasma</Text>
+        <Text style={styles.response}>{type}</Text>
         <Text style={styles.category}>Date :</Text>
-        <Text style={styles.response}>Monday, October 24th</Text>
+        <Text style={styles.response}>{date}</Text>
         <Text style={styles.category}>Time :</Text>
-        <Text style={styles.response}>8.00 - 8.30</Text>
+        <Text style={styles.response}>{hours}</Text>
         <Text style={styles.category}>Center :</Text>
-        <Text style={styles.lastResponse}>Croix-Rouge de Belgique Namur , Rue des Dames Blanches 5000 Namur</Text>
+        <Text style={styles.lastResponse}>{center}</Text>
           <ConfirmationButton name="Make this Appointment"></ConfirmationButton>
         </View>
     );
