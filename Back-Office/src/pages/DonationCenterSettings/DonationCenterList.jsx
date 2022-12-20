@@ -5,13 +5,16 @@ import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
 import { loadDonationCentersData, deleteDonationCenterData } from '../../component/API/index';
 import CustomModal from '../../component/CustomModal';
-
+import Pagination from 'react-paginate'
 
 class DonationCenterList extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            currentPage: 0,
+            itemsPerPage: 10,
+            filter: 'id',
             donationCenters: [],
             donationCentersToDisplay: [],
             loading: true,
@@ -24,6 +27,10 @@ class DonationCenterList extends React.Component {
             header2: "",
             body2: "",
         }
+    }
+
+    handlePageChange = (page) => {
+        this.setState({ currentPage: page.selected });
     }
 
     componentDidMount() {
@@ -50,7 +57,7 @@ class DonationCenterList extends React.Component {
                 this.setState({ modal2: true });
                 this.setState({ header2: "Error" });
                 this.setState({ body2: error.message });
-        
+
             }
         });
     }
@@ -151,7 +158,11 @@ class DonationCenterList extends React.Component {
     }
 
     render() {
+        const { currentPage, itemsPerPage } = this.state;
+        const displayedData = this.state.donationCentersToDisplay.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+        
         return (
+
             <div>
                 <div className="header">
                     <Link to={`/welcome`} className='backButtonContainer' >
@@ -205,7 +216,7 @@ class DonationCenterList extends React.Component {
                     </thead>
 
                     <tbody>
-                        {this.state.donationCentersToDisplay.map((donationCenter, index) => (
+                        {displayedData.map((donationCenter, index) => (
                             <tr key={index}>
                                 <td>{donationCenter.id}</td>
                                 <td>{donationCenter.name}</td>
@@ -228,7 +239,13 @@ class DonationCenterList extends React.Component {
 
                     </tbody>
                 </table>
-
+                <div className="pagination">
+                    <Pagination
+                        pageCount={Math.ceil(this.state.donationCenters.length / itemsPerPage)}
+                        onPageChange={this.handlePageChange}
+                        currentPage={currentPage}
+                    />
+                </div>
                 {this.state.modal && (
                     <CustomModal
                         modal={this.state.modal}

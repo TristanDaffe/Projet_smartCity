@@ -4,6 +4,8 @@ import { Link, useParams } from 'react-router-dom';
 import DropList from '../../component/DropList';
 import { loadDonationFromDonorData, deleteDonationData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
+import Pagination from 'react-paginate'
+
 function withParams(Component) {
     return (props) => { return <Component {...props} params={useParams()} /> };
 }
@@ -13,6 +15,8 @@ class DonorDonationList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentPage: 0,
+            itemsPerPage: 10,
             donorId : parseInt(this.props.params.id),
             donations: [],
             donationsToDisplay: [],
@@ -33,6 +37,10 @@ class DonorDonationList extends React.Component {
             header2: "",
             body2: "",
         }
+    }
+
+    handlePageChange = (page) => {
+        this.setState({ currentPage: page.selected });
     }
 
     componentDidUpdate(prevProps) {
@@ -138,6 +146,9 @@ class DonorDonationList extends React.Component {
     }
 
     render() {
+        const { currentPage, itemsPerPage } = this.state;
+        const displayedData = this.state.donationsToDisplay.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+        
         return (
             <div>
                 <div className="header">
@@ -186,7 +197,7 @@ class DonorDonationList extends React.Component {
                     </thead>
                     <tbody>
                         
-                        {this.state.donationsToDisplay.map((don, index) => {
+                        {displayedData.map((don, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{don.id}</td>
@@ -207,6 +218,13 @@ class DonorDonationList extends React.Component {
                         })}
                     </tbody>
                 </table>
+                <div className="pagination">
+                    <Pagination
+                        pageCount={Math.ceil(this.state.donations.length / itemsPerPage)}
+                        onPageChange={this.handlePageChange}
+                        currentPage={currentPage}
+                    />
+                </div>
                 {this.state.modal && (
                     <CustomModal
                         modal={this.state.modal}

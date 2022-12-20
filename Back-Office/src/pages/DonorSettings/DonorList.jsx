@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import DropList from '../../component/DropList';
 import { loadUsersData, deleteDonorData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
+import Pagination from 'react-paginate'
 
 
 class DonorList extends React.Component {
@@ -11,6 +12,8 @@ class DonorList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentPage: 0,
+            itemsPerPage: 10,
             filter: 'id',
             donors: [],
             donorsToDisplay: [],
@@ -25,6 +28,10 @@ class DonorList extends React.Component {
             header2: "",
             body2: "",
     }
+    }
+
+    handlePageChange = (page) => {
+        this.setState({ currentPage: page.selected });
     }
 
     componentDidMount() {
@@ -115,6 +122,10 @@ class DonorList extends React.Component {
     }
 
     render() {
+        const { currentPage, itemsPerPage } = this.state;
+
+        const displayedData = this.state.donorsToDisplay.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+        
         return (
             <div>
                 <div className="header">
@@ -163,7 +174,7 @@ class DonorList extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.donorsToDisplay.map((donor, index) => {
+                        {displayedData.map((donor, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{donor.id}</td>
@@ -181,6 +192,13 @@ class DonorList extends React.Component {
                         })}
                     </tbody>
                     </table>
+                    <div className="pagination">
+                    <Pagination
+                        pageCount={Math.ceil(this.state.donors.length / itemsPerPage)}
+                        onPageChange={this.handlePageChange}
+                        currentPage={currentPage}
+                    />
+                </div>
                     {this.state.modal && (
                     <CustomModal
                         modal={this.state.modal}

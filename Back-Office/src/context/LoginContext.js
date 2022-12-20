@@ -1,6 +1,3 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-
 function setToken (token) {
   localStorage.setItem("token", token);
 }
