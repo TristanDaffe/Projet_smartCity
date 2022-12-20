@@ -2,17 +2,23 @@ import {
   getAllDonations,
   getDonationsFromDonor,
   getAllDonationCenters,
+  getDonationCenter,
   getAllOpeningDays,
   getOpeningDaysFromDonationCenter,
   getOpeningDay,
   getAllUsers,
+  getLocalities,
   deleteDonation,
   deleteDonationCenter,
   deleteOpeningDay,
   deleteDonor,
   addDonor,
   addOpeningDay,
+  addDonationCenter,
   updateOpeningDay,
+  updateDonor,
+  getUser,
+  updateDonationCenter,
 } from "./http";
 
 const loadDonationData = async () => {
@@ -24,7 +30,7 @@ const loadDonationData = async () => {
   }
 };
 
-const loadDonationCenterData = async () => {
+const loadDonationCentersData = async () => {
   try {
     const data = await getAllDonationCenters();
     return data;
@@ -32,6 +38,17 @@ const loadDonationCenterData = async () => {
     throw error;
   }
 };
+
+const loadDonationCenterData = async (id) => {
+  try {
+    const data = await getDonationCenter(id);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 
 const loadDonationFromDonorData = async (id) => {
   try {
@@ -79,9 +96,29 @@ const loadUsersData = async () => {
   }
 };
 
+const loadUserData = async (id) => {
+  try {
+    const data = await getUser(id);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
 const deleteDonationData = async (id) => {
   try {
     const data = await deleteDonation(id);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const loadLocalitiesData = async () => {
+  try {
+    const data = await getLocalities();
     return data;
   } catch (error) {
     throw error;
@@ -133,6 +170,16 @@ const addOpeningDayData = async (openingDay) => {
   }
 };
 
+const addDonationCenterData = async (donationCenter) => {
+  try {
+    const data = await addDonationCenter(donationCenter);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
 const updateOpeningDayData = async (openingDay) => {
   try {
     const data = await updateOpeningDay(openingDay);
@@ -142,21 +189,47 @@ const updateOpeningDayData = async (openingDay) => {
   }
 };
 
+const updateDonorData = async (donor) => {
+  try {
+    const data = await updateDonor(donor);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+const updateDonationCenterData = async (donationCenter) => {
+  try {
+    const data = await updateDonationCenter(donationCenter);
+    return data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+
+
 
 
 export {
   loadDonationData,
   loadDonationFromDonorData,
+  loadDonationCentersData,
   loadDonationCenterData,
   loadOpeningDayData,
   loadOpeningDaysData,
   loadOpeningDayFromDonationCenterData,
   loadUsersData,
+  loadUserData,
+  loadLocalitiesData,
   deleteDonationData,
   deleteDonationCenterData,
   deleteOpeningDayData,
   deleteDonorData,
   addDonorData,
   addOpeningDayData,
+  addDonationCenterData,
   updateOpeningDayData,
+  updateDonorData,
+  updateDonationCenterData,
 };

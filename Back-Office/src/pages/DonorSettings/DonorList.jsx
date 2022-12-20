@@ -151,6 +151,7 @@ class DonorList extends React.Component {
                     <thead>
                         <tr>
                             <th>Id</th>
+                            <th>Login</th>
                             <th>Name</th>
                             <th>Last name</th>
                             <th>E-mail</th>
@@ -166,6 +167,7 @@ class DonorList extends React.Component {
                             return (
                                 <tr key={index}>
                                     <td>{donor.id}</td>
+                                    <td>{donor.login}</td>
                                     <td>{donor.first_name}</td>
                                     <td>{donor.last_name}</td>
                                     <td>{donor.email_address}</td>

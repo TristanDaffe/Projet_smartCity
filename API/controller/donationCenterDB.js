@@ -62,7 +62,8 @@ module.exports.createDonationCenter = async (req, res) => {
         fax, 
         streetName, 
         numberInStreet, 
-        localityId } = body;
+        localityId,
+        availableDonation } = body;
 
     try {
 
@@ -82,11 +83,12 @@ module.exports.createDonationCenter = async (req, res) => {
             res.status(400).send('Number in street is undefined');
         }
         else {
-            await DonationCenterModel.createDonationCenter(name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, client);
+            await DonationCenterModel.createDonationCenter(name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId, availableDonation, client);
             res.sendStatus(201);
         }
     }
     catch (error) {
+        console.log(error)
         res.sendStatus(500);
     }
     finally {
@@ -146,7 +148,7 @@ module.exports.updateDonationCenter = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error)
+        console.log()
         res.sendStatus(500);
     }
     finally {

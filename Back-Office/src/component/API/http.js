@@ -2,7 +2,7 @@ import axios from "axios";
 import { setToken, getToken } from "../../context/LoginContext";
 import DonationCenterList from "../../pages/DonationCenterSettings/DonationCenterList";
 
-const URL_API = `http://192.168.1.58:3001`;
+const URL_API = `http://192.168.1.32:3001`;
 
 const login = async (login, password) => {
   await axios
@@ -65,6 +65,23 @@ const getAllDonationCenters = async () => {
       throw error;
     });
 };
+
+const getDonationCenter = async (id) => {
+  return await axios
+    .get(`${URL_API}/center/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
 
 const getAllOpeningDays = async () => {
   return await axios
@@ -130,6 +147,39 @@ const getAllUsers = async () => {
       throw error;
     });
 };
+
+const getUser = async (id) => {
+  return await axios
+    .get(`${URL_API}/user/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+const getLocalities = async () => {
+  return await axios
+    .get(`${URL_API}/locality/all`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
 
 const deleteDonation = async (id) => {
   return await axios
@@ -237,13 +287,35 @@ const addOpeningDay = async (openingDay) => {
         });
 };
 
+const addDonationCenter = async (donationCenter) => {
+  return await axios
+    .post(`${URL_API}/center`, donationCenter, {
+      name: donationCenter.name,
+      phoneNumber: donationCenter.phoneNumber,
+      emailAddress: donationCenter.emailAddress,
+      fax: donationCenter.fax,
+      streetName: donationCenter.streetName,
+      numberInStreet: donationCenter.numberInStreet,
+      localityId: donationCenter.localityId,
+      availableDonation: donationCenter.availableDonation,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+
+
 const updateOpeningDay = async (openingDay) => {
     return await axios
         .patch(`${URL_API}/openingday`, openingDay, {
-            id : openingDay.id,
-            dayLabel: openingDay.dayLabel,
-            openingTime: openingDay.openingTime,
-            closingTime: openingDay.closingTime,
             headers: {"Content-Type": "application/json",
             "Authorization": `Bearer ${getToken()}`,
             }
@@ -256,8 +328,54 @@ const updateOpeningDay = async (openingDay) => {
         });
 };
 
+const updateDonor = async (donor) => {
+  return await axios
+    .patch(`${URL_API}/user`, {
+      id: donor.id,
+      lastName: donor.last_name,
+      firstName: donor.first_name,
+      emailAddress: donor.email_address,
+      birthdate: donor.birthday,
+      bloodTypeId: donor.bloodTypeId,
+      login: donor.login,
+      password: donor.password
+    }, {
+      headers: {"Content-Type": "application/json",
+      "Authorization": `Bearer ${getToken()}`,
+      }
+      })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
-
+const updateDonationCenter = async (donationCenter) => {
+  return await axios
+    .patch(`${URL_API}/center`, {
+      id: donationCenter.id,
+      name: donationCenter.name,
+      phoneNumber: donationCenter.phoneNumber,
+      emailAddress: donationCenter.emailAddress,
+      fax: donationCenter.fax,
+      streetName: donationCenter.streetName,
+      numberInStreet: donationCenter.numberInStreet,
+      localityId: donationCenter.localityId,
+      // availableDonation: donationCenter.availableDonation,
+    }, {
+      headers: {"Content-Type": "application/json",
+      "Authorization": `Bearer ${getToken()}`,
+      }
+      })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
 
 
 export {
@@ -265,15 +383,21 @@ export {
   getDonationsFromDonor,
   login,
   getAllDonationCenters,
+  getDonationCenter,
   getAllOpeningDays,
   getOpeningDaysFromDonationCenter,
   getOpeningDay,
   getAllUsers,
+  getLocalities,
+  getUser,
   deleteDonation,
   deleteDonationCenter,
   deleteOpeningDay,
   deleteDonor,
   addDonor,
   addOpeningDay,
+  addDonationCenter,
   updateOpeningDay,
+  updateDonor,
+  updateDonationCenter,
 };

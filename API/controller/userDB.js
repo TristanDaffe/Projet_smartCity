@@ -182,7 +182,6 @@ module.exports.registerUser = async (req, res) => {
 module.exports.patchUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
-
     const { 
             id,
             lastName, 
@@ -192,14 +191,12 @@ module.exports.patchUser = async (req, res) => {
             bloodTypeId,
             login, 
             password: passwordClear } = body;
-
     let errors = [];
     errors[0] = validateString(lastName, "LastName");
     errors[1] = validateString(firstName, "Firstname"); 
     errors[2] = validateEmail(emailAddress);
     errors[3] = validateDate(birthdate);
     errors[4] = validateString(login, "Login"); 
-    errors[5] = validateString(passwordClear, "Password");
 
     try {
         let i = 0;
@@ -217,15 +214,20 @@ module.exports.patchUser = async (req, res) => {
             }
             else {
             const password = await getHash(passwordClear);
-            const loginExist = await UserModele.loginExist(login, client);
-                if(loginExist)
+            const {rows: users} = await UserModele.getUser(id, client);
+            const user = users[0];
+                if(user !== undefined && user.id !== id) { 
                     res.status(409).send("Login already exist");
+                }
                 else {
-                    const emailExist = await UserModele.emailExist(emailAddress, client);
-                    if(emailExist)
+                    if(user !== undefined && user.email_address !== emailAddress)
                         res.status(409).send("Email already exist");
                     else {
-                        const result = await UserModele.updateUser(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, password, client);
+                        let result;
+                        if(passwordClear === undefined)
+                            result = await UserModele.updateUserWithoutPassword(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, client);
+                        else
+                            result = await UserModele.updateUser(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, password, client);
                         const {userType, value} = result;
                         await manageAuth(userType, value, res, client);
                     }
