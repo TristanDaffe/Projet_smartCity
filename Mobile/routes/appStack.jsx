@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import DrawerStack from './drawerStack';
 import Account from '../screens/account';
-import MakeAppointment from '../screens/makeAppointment';
 import Type from '../screens/type';
 import Center from '../screens/center';
 import Calendar from '../screens/calendar';
@@ -23,7 +22,6 @@ export default function AppStack(props){
         }}>
             <Stack.Screen name="DrawerStack" component={DrawerStack} />
             <Stack.Screen name="Account" component={Account} />
-            <Stack.Screen name="MakeAppointment" component={MakeAppointment} />
             <Stack.Screen name="Type" component={Type} />
             <Stack.Screen name="Center" component={Center} />
             <Stack.Screen name="Calendar" component={Calendar} />

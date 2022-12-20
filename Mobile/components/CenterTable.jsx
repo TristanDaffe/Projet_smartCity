@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { Text, View, StyleSheet , SafeAreaView,TouchableOpacity} from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
@@ -24,10 +24,16 @@ import { FlatList } from "react-native-gesture-handler";
   const table = ({data,returnCenter})=>
   {
     const [selectedId, setSelectedId] = useState(null);
+
+    useEffect(() => {
+        selectedId != null ? console.log((data[selectedId-1].center)) : ""
+      });
+
     const item =({item})=>
     {
         const backgroundColor = item.id === selectedId ? "red" : "white";
         const color = item.id === selectedId ? 'white' : 'black';
+        
         return(
 
             <View>
@@ -35,7 +41,6 @@ import { FlatList } from "react-native-gesture-handler";
                     item={item}
                     onPress={() => {
                         setSelectedId(item.id)
-                        selectedId != null ? returnCenter(data[selectedId-1]) : ""
                     }}
                     backgroundColor={{ backgroundColor }}
                     textColor={{ color }}

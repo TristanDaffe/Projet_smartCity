@@ -21,7 +21,6 @@ module.exports.createDonationCenter = async( name, phoneNumber, emailAddress, fa
     await client.query('BEGIN TRANSACTION')
     try{
         const {rows: center} = await client.query("INSERT INTO donation_center (name, phone_number, email_address, fax, street_name, street_number, locality) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", [name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId]);
-        console.log(center[0].id)
         for(const type of availableDonation){
             await client.query("INSERT INTO donation_available (center_id, donation_type_id) VALUES ($1, $2)", [center[0].id, type]);
         }

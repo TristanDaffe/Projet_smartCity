@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button , Dimensions} from 'react-native';
+import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button , Dimensions, Alert} from 'react-native';
 import {Calendar} from 'react-native-calendars';
 import dateFns from "date-fns";
 
@@ -9,12 +9,23 @@ import HoursTable from '../components/HoursTable';
 const windowHeight = Dimensions.get('window').height;
 
 const format = (date = new Date()) => dateFns.format(date, 'YYYY-MM-DD h');
-export default function CalendarTest ( {navigation} )  
+
+export default function CalendarTest ( {route,navigation} )  
 { 
-  var date = new Date().getDate();
+  var day = new Date().getDate();
   var month = new Date().getMonth();
   var year = new Date().getFullYear();
   const baseDate = new Date();
+
+  const [date, setDate] = React.useState(null);  
+  const [hours, setHours] = React.useState(null);  
+
+  const {type,center} = route.params;
+
+  const returnHours = (newHours) => {
+    setHours(newHours);
+  }
+
     return (
         <View style= {styles.container}>
         <TopBar onclick={navigation.goBack}/>
@@ -22,7 +33,7 @@ export default function CalendarTest ( {navigation} )
         <SafeAreaView>
         <Calendar
             onDayPress={day => {
-              console.log('Selected day :', day.dateString);
+              setDate(day.dateString);             
             }}
           minDate={baseDate.toDateString()}
           theme={{
@@ -39,14 +50,30 @@ export default function CalendarTest ( {navigation} )
         </SafeAreaView>
         <Text style={styles.title2}>Hours</Text>
         <View style={styles.table}>
-        <HoursTable></HoursTable>
+        <HoursTable returnHours = {returnHours}></HoursTable>
         </View>
         <View style={styles.button}>
         <Button 
           title='Next' 
           color='red'
           style={styles.button} 
-          onPress={() => navigation.navigate('RecapAppointment')}></Button>
+          onPress={() => {
+            if(date != null && hours != null)
+            {
+              navigation.navigate('RecapAppointment' , {date : date , hours : hours , center : center , type : type})
+            }
+            else
+            {
+              if (hours == null) {
+                Alert.alert("Missing value !" , "The hours is missing")
+              }
+              else
+              {
+                Alert.alert("Missing value !" , "The date is missing")
+              }
+            }
+          }}>
+          </Button>
         </View> 
         </View> 
     );

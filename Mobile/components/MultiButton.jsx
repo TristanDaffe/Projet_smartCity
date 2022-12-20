@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import { FlatList,SafeAreaView,StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 const data = [
   {
-    id: "0",
+    id: "1",
     title: "Blood",
   },
   {
-    id: "1",
+    id: "2",
     title: "Plasma",
   },
   {
-    id: "2",
+    id: "3",
     title: "Plate",
   },
 ];
@@ -22,9 +22,14 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
   </TouchableOpacity>
 );
 
+
 export default function MultiButton ({returnType}) {
   const [selectedId, setSelectedId] = useState(null);
 
+  useEffect(() => {
+    selectedId != null ? returnType(data[selectedId-1].title) : ""
+  });
+  
   const renderItem = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "red" : "grey";
     const color = item.id === selectedId ? 'white' : 'black';
@@ -35,7 +40,6 @@ export default function MultiButton ({returnType}) {
         item={item}
         onPress={() => {
           setSelectedId(item.id)
-          selectedId != null ? returnType(data[selectedId].title) : ""
         }}
         backgroundColor={{ backgroundColor }}
         textColor={{ color }}

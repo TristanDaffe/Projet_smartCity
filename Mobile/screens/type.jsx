@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import {  View, Text, StyleSheet,SafeAreaView , Button} from 'react-native';
+import React, { useState , useCallback , useMemo } from "react";
+import {  View, Text, StyleSheet,SafeAreaView , Button, Alert} from 'react-native';
+import { Root, Popup } from 'react-native-popup-confirm-toast'
 
 import TopBar from '../components/topBar/topBarArrow';
 import MultiButton from '../components/MultiButton';
@@ -8,14 +9,11 @@ import { ScrollView } from "react-native-gesture-handler";
 export default function Type ( {navigation} )  {  
     
     const [type, setType] = React.useState(null);
-    const [appointment, setAppointment] = React.useState({type : "" , center:""});
-
+    
     const returnType = (newType) => {
-      setAppointment(() => ({
-        type: newType
-     }));
+      setType(newType);
     }
-
+    
     return (
       <View>
         <TopBar onclick={navigation.goBack}/>
@@ -29,8 +27,15 @@ export default function Type ( {navigation} )  {
                 title='Next' 
                 color='red'
                 style={styles.button} 
-                onPress={() => navigation.navigate('Center', appointment)
-                  }> 
+                onPress={() =>{
+                  if (type != null) {
+                    navigation.navigate('Center', type)
+                  }
+                  else
+                  {
+                      Alert.alert("Missing value !" , "The blood type is missing")
+                  }
+                }}> 
                 </Button>
               </View> 
           </ScrollView>
