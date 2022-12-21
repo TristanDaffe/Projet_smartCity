@@ -4,13 +4,6 @@ const router = new Router;
 const JWTMiddleWare = require("../middleware/identificationJWT");
 const AuthMiddleWare = require("../middleware/authorization");
 
-router.get('/all', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.getAllUsers);
-
-router.get('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.getUser);
-router.post('/login', UserConroller.loginUser);
-router.post('/register', UserConroller.registerUser);
-router.patch('/', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.patchUser);
-router.delete('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.deleteUser);
 
 module.exports = router;
 
@@ -25,13 +18,16 @@ module.exports = router;
  *     responses:
  *       200:
  *         $ref: "#/components/responses/AllUsers"
+ *       400:
+ *         $ref: '#/components/responses/ErrorJWT'
  *       401:
- *         description: Unauthorized
+ *         $ref: '#/components/responses/MissingJWT'
  *       403:
- *         description: Forbidden
+ *         $ref: '#/components/responses/mustBeManager'
  *       500:
- *         description: Internal Server Error
+ *         description: Erreur serveur
 */
+router.get('/all', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.getAllUsers);
 
 /**
  * @swagger
@@ -50,19 +46,19 @@ module.exports = router;
  *       type: integer
  *  responses:
  *     200:
- *      $ref: "#/components/responses/UserFound"
- *     400:
- *      description: Id is not a number
+ *         $ref: "#/components/responses/UserFound"
  *     404:
- *      description: User not found
+ *         description: User not found
+ *     400:
+ *         $ref: '#/components/responses/ErrorJWT'
  *     401:
- *      description: Unauthorized
+ *         $ref: '#/components/responses/MissingJWT'
  *     403:
- *      description: Forbidden
+ *         $ref: '#/components/responses/mustBeManager'
  *     500:
- *      description: Internal Server Error
- * 
+ *         description: Erreur serveur
 */
+router.get('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.getUser);
 
 /**
  * @swagger
@@ -82,6 +78,7 @@ module.exports = router;
  *     500:
  *         description: Internal Server Error
 */
+router.post('/login', UserConroller.loginUser);
 
 /**
  * @swagger
@@ -90,10 +87,10 @@ module.exports = router;
  *    tags:
  *       - User
  *    requestBody:
- *       $ref: "#/components/requestBodies/Register"
+ *       $ref: "#/components/requestBodies/UserCreate"
  *    responses:
  *      200:
- *       $ref: "#/components/responses/Token"
+ *       $ref: "#/components/responses/User"
  *      412:
  *       description: A field is invalid
  *      409:
@@ -103,6 +100,7 @@ module.exports = router;
  *      500:
  *       description: Internal Server Error
 */
+router.post('/register', UserConroller.registerUser);
 
 /**
  * @swagger
@@ -113,23 +111,26 @@ module.exports = router;
  *  security:
  *       - bearerAuth: []
  *  requestBody:
- *       $ref: "#/components/requestBodies/Update"
+ *       $ref: "#/components/requestBodies/PatchUser"
  *  responses:
  *      200:
- *       $ref: "#/components/responses/Token"
+ *       $ref: "#/components/responses/UserUpdated"
  *      412:
  *       description: A field is invalid
  *      409:
  *       description: Login or email already exists
  *      404:
  *       description: User not found
+ *      400:
+ *          $ref: '#/components/responses/ErrorJWT'
  *      401:
- *       description: Unauthorized
+ *          $ref: '#/components/responses/MissingJWT'
  *      403:
- *       description: Forbidden
+ *          $ref: '#/components/responses/mustBeManager'
  *      500:
- *       description: Internal Server Error
+ *          description: Erreur serveur
 */
+router.patch('/', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.patchUser);
 
 /**
  * @swagger
@@ -148,15 +149,16 @@ module.exports = router;
  *           type: integer
  *  responses:
  *      200:
- *          description: User deleted
- *      400:
- *          description: Id is not a number
+ *          $ref: "#/components/responses/UserDeleted"
  *      404:
  *          description: User not found
+ *      400:
+ *          $ref: '#/components/responses/ErrorJWT'
  *      401:
- *          description: Unauthorized
+ *          $ref: '#/components/responses/MissingJWT'
  *      403:
- *          description: Forbidden
+ *          $ref: '#/components/responses/mustBeManager'
  *      500:
- *          description: Internal Server Error
+ *          description: Erreur serveur
 */
+router.delete('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.deleteUser);

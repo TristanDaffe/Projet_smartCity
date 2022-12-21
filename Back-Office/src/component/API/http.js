@@ -1,11 +1,7 @@
 import axios from "axios";
 import { setToken, getToken } from "../../context/LoginContext";
 
-<<<<<<< HEAD
-const URL_API = `http://10.101.101.20:3001`;
-=======
 const URL_API = `http://localhost:3001`;
->>>>>>> dee27da1806c7779d36d2c4feff376170c6efff1
 
 const login = async (login, password) => {
   await axios

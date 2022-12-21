@@ -20,7 +20,7 @@ module.exports.identification = async (req, res, next) => {
 };
 
 /**
-* @swagger
+*@swagger
 * components:
 *   securitySchemes:
 *       bearerAuth:
