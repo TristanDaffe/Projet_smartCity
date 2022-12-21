@@ -291,3 +291,19 @@ module.exports.getAllUsers = async (req, res) => {
         client.release();
     }
 }
+
+/**
+ * @swagger
+ *  components:
+ *    responses:
+ *      allUser:
+ *        description: All users
+ *        content:
+ *          application/json:
+ *              schema:
+ *                 type: array
+ *                 items:
+ *                   $ref: '#/components/schemas/User'
+ * 
+*/
+

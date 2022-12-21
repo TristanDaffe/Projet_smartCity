@@ -3,7 +3,6 @@ import { Text, View, StyleSheet, Image, Button, Pressable, ScrollView, KeyboardA
 
 import { TextInput } from 'react-native-gesture-handler';
 import Spinner from 'react-native-loading-spinner-overlay';
-import RadioButton from '../components/RadioButton';
 import TopBar from '../components/topBar/topBar';
 
 import { AuthContext } from '../context/authContext';

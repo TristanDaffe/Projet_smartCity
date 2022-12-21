@@ -23,6 +23,7 @@ class LoginPannel extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+<<<<<<< HEAD
     try {
       login(this.state.login, this.state.password)
       .then(() => {
@@ -49,6 +50,18 @@ class LoginPannel extends React.Component {
       };
       this.setState(state);
     }
+=======
+    login(this.state.login, this.state.password).then(() => {
+        this.setState({ token: getToken() });
+        this.setState({ redirect: true });
+        console.log(this.state);
+    }).catch((error) => {
+      console.log(error);
+        this.setState({ modal: true });
+        this.setState({ header: "Error" });
+        this.setState({ body: error.response.data });
+    });
+>>>>>>> dee27da1806c7779d36d2c4feff376170c6efff1
   };
 
 
