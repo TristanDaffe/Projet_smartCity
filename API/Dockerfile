@@ -4,5 +4,4 @@ COPY package.json .
 RUN npm install --silent
 COPY . .
 EXPOSE 3001
-CMD ["npm", "run", "initDB"]
 CMD ["npm", "run", "dev"]

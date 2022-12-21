@@ -301,4 +301,5 @@ module.exports.getAllUsers = async (req, res) => {
  *                 items:
  *                   $ref: '#/components/schemas/User'
  * 
- */
+*/
+
