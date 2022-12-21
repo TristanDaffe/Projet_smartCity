@@ -24,7 +24,7 @@ module.exports = router;
  *       - bearerAuth: []
  *     responses:
  *       200:
- *         ref: "#/components/responses/AllUsers"
+ *         $ref: "#/components/responses/AllUsers"
  *       401:
  *         description: Unauthorized
  *       403:

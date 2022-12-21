@@ -171,7 +171,6 @@ module.exports.registerUser = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -204,7 +203,7 @@ module.exports.patchUser = async (req, res) => {
 
     try {
         let i = 0;
-        while(i < errors.length && errors[i].errorCode > 200 && errors[i].errorCode < 299) {
+        while(i < errors.length && errors[i].errorCode >= 200 && errors[i].errorCode <= 299) {
             i++;
         }
         if(i < errors.length) {
@@ -240,7 +239,6 @@ module.exports.patchUser = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -295,15 +293,24 @@ module.exports.getAllUsers = async (req, res) => {
 /**
  * @swagger
  *  components:
- *    responses:
- *      allUser:
- *        description: All users
- *        content:
- *          application/json:
- *              schema:
- *                 type: array
- *                 items:
- *                   $ref: '#/components/schemas/User'
- * 
+ *  schemas:
+ *    Login:
+ *      type: object
+ *      properties:
+ *       login:
+ *        type: string
+ *       password:
+ *        type: string
+ *      required:
+ *      - login
+ *     - password 
 */
 
+/**
+ * @swagger
+ * components:
+ * schemas:
+ */
+
+// questions 
+// test contenu du body ou juste la présence de body

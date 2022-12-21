@@ -160,7 +160,7 @@ module.exports.deleteOpeningDay = async (req, res) => {
         }
     }
     catch(error) {
-        console.log(error);
+        (error);
         res.sendStatus(500);
     }
     finally {
