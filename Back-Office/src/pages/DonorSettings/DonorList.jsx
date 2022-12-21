@@ -13,7 +13,7 @@ class DonorList extends React.Component {
         super(props);
         this.state = {
             currentPage: 0,
-            itemsPerPage: 10,
+            itemsPerPage: 20,
             filter: 'id',
             donors: [],
             donorsToDisplay: [],

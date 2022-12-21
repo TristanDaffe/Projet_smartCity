@@ -12,7 +12,7 @@ class DonationList extends React.Component {
         super(props);
         this.state = {
             currentPage: 0,
-            itemsPerPage: 10,
+            itemsPerPage: 15,
 
             donations: [],
             donationsToDisplay: [],
