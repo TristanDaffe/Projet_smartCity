@@ -1,6 +1,35 @@
 const pool = require('../model/database');
 const LocalityModel = require("../model/localityDB");
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *   Locality:
+ *    type: object
+ *    properties:
+ *      id:
+ *        type: integer
+ *      postalCode:
+ *        type: integer
+ *      name:
+ *        type: string
+ */
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *   LocalityFound:
+ *    description: Locality type found
+ *    content:
+ *      application/json:    
+ *       schema:
+ *        $ref: '#/components/schemas/Locality'
+ *   IdUndefined:
+ *     description: Id is undefined
+ *   LocalityNotFound:
+ *     description: Locality not found
+ */
 module.exports.getLocality = async (req, res) => {
     const client = await pool.connect();
     const idT = req.params.id;
@@ -30,6 +59,31 @@ module.exports.getLocality = async (req, res) => {
     }
 }
 
+/**
+ *@swagger
+ * components:
+ *  responses:
+ *     LocalityCreated:
+ *      description: Locality created
+ *     LocalityAlreadyExists:
+ *      description: Locality already exists
+ *     LocalityNameUndefined:
+ *      description: Name or postalcode is undefined
+ *  requestBodies:
+ *   Locality:
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        properties:
+ *         name:
+ *          type: string
+ *         postalCode:
+ *          type: integer
+ *        required:
+ *        - postalCode
+ *        - name
+ */
 module.exports.createLocality = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
@@ -60,7 +114,26 @@ module.exports.createLocality = async (req, res) => {
         client.release();
     }
 }
-
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *   LocalityUpdated:
+ *    description: Locality updated
+ *  requestBodies:
+ *   LocalityToUpdate:
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object 
+ *       properties:
+ *        id:
+ *         type: integer
+ *        name:
+ *         type: string
+ *        postalCode:
+ *         type: integer
+ */
 module.exports.updateLocality = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
@@ -88,7 +161,15 @@ module.exports.updateLocality = async (req, res) => {
         client.release();
     }
 }
-
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *    LocalityDeleted:
+ *     description: Locality deleted
+ *    LocalityInUse:
+ *     description: Locality is used by users
+ */
 module.exports.deleteLocality = async (req, res) => {
     const client = await pool.connect();
     const idT = req.params.id;
@@ -110,7 +191,33 @@ module.exports.deleteLocality = async (req, res) => {
         client.release();
     }
 }
-
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *   Localities:
+ *    type: array
+ *    items:
+ *     type: object
+ *     properties:
+ *       id:
+ *         type: integer
+ *       name:
+ *         type: string
+ *       postalCode:
+ *         type: integer
+ */
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *   LocalitiesFound:
+ *    description: Localities found
+ *    content:
+ *      application/json:    
+ *       schema:
+ *        $ref: '#/components/schemas/Localities'
+ */
 module.exports.getAllLocalities = async (req, res) => {
     const client = await pool.connect();
 

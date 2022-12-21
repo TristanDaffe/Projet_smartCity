@@ -50,12 +50,7 @@ const manageAuth = async (userType, value, res, client) => {
     }
 }
 
-/**
- *@swagger
- * components:
- *  shemas:
- *    $ref: '#/components/schemas/User'
-*/
+
 module.exports.loginUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
@@ -89,49 +84,6 @@ module.exports.loginUser = async (req, res) => {
     }
 }
 
-/**
- * @swagger
- * components:
- *  schemas:
- *   User:
- *   type: object
- *   properties:
- *    id:
- *     type: integer
- *    lastName:
- *     type: string
- *    firstName:
- *     type: string
- *    emailAddress:
- *     type: string
- *    birthdate:
- *      type: date
- *    bloodType:
- *     type: object
- *     properties:
- *      id:
- *       type: integer
- *      type:
- *        type: string
- *      rhesus:
- *       type: string
- *    login:
- *      type: string
- *    password:
- *     type: string
- *     description: Password hash 
-*/
-/**
- *@swagger
- * components:
- *  responses:
- *   UserFound:
- *    description: User found
- *    content:
- *     application/json: 
- *      schema:
- *       $ref: '#/components/schemas/User'
-*/
 module.exports.getUser = async (req, res) => {
     const client = await pool.connect();
     const idText = req.params.id;
@@ -162,44 +114,6 @@ module.exports.getUser = async (req, res) => {
     }
 }
 
-/**
- *@swagger
- * components:
- *  responses:
- *   User:
- *    description: User created
- * requestBodies:
- *   UserCreate:
- *    content:
- *     application/json:
- *      schema:
- *       type: object
- *       properties:
- *            id:
- *             type: integer
- *            lastName:
- *             type: string
- *            firstName:
- *             type: string
- *            emailAddress:
- *             type: string
- *            birthdate:
- *              type: date
- *            bloodType:
- *             type: object
- *             properties:
- *              id:
- *               type: integer
- *              type:
- *                type: string
- *              rhesus:
- *               type: string
- *            login:
- *              type: string
- *            password:
- *             type: string
- *             description: Password hash
-*/
 module.exports.registerUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
@@ -265,55 +179,6 @@ module.exports.registerUser = async (req, res) => {
     }
 }
 
-/**
- *@swagger
- * components:
- *  responses:
- *    UserUpdated: 
- *      description: User updated
- *  requestBodies:
- *      PatchUser:
- *        content:
- *         application/json:
- *          schema:
- *           type: object
- *           properties
- *            id:
- *             type: integer
- *            lastName:
- *             type: string
- *            firstName:
- *             type: string
- *            emailAddress:
- *             type: string
- *            birthdate:
- *              type: date
- *            bloodType:
- *             type: object
- *             properties:
- *              id:
- *               type: integer
- *              type:
- *                type: string
- *              rhesus:
- *               type: string
- *            login:
- *              type: string
- *            password:
- *             type: string
- *             description: Password hash
-*/
-/**
- *@swagger
- * components:
- *  responses:
- *   UserUpdated:
- *    description: User updated 
- *    content:
- *      application/json:
- *       schema:
- *        $ref: '#/components/schemas/User'
-*/
 module.exports.patchUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
@@ -382,13 +247,6 @@ module.exports.patchUser = async (req, res) => {
     }
 }
 
-/**
- *@swagger
- * components:
- *  responses:
- *    UserDeleted:
- *     description: User has been delete
-*/
 module.exports.deleteUser = async (req, res) => {
     const client = await pool.connect();
     const idText = req.params.id;
@@ -418,25 +276,7 @@ module.exports.deleteUser = async (req, res) => {
     }
 }
 
-/**
- *@swagger
- * components:
- *  schemas:
- *     AllUsers:
- *      type: Array
- *     items:
- *      $ref: '#/components/schemas/User'
-*/
-/**
- * @swagger
- *  responses:
- *      AllUsers:
- *        description: return all users
- *        content:
- *          application/json:
- *           schema:
- *           $ref: '#/components/schemas/AllUsers'
-*/
+
 module.exports.getAllUsers = async (req, res) => {
     const client = await pool.connect();
 

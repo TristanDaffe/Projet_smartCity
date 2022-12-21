@@ -23,34 +23,6 @@ class LoginPannel extends React.Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-<<<<<<< HEAD
-    try {
-      login(this.state.login, this.state.password)
-      .then(() => {
-        this.setState({ token: getToken(), redirect: true });
-      })
-      .catch((error) => {
-        const state = {
-          modal: true,
-          header: "Error",
-        };
-        
-        if (error.response !== undefined) {
-          state.body = error.response.data;
-        } else {
-          state.body = "Something went wrong, try again later";
-        }
-        this.setState(state);
-      });
-    } catch (error) {
-      const state = {
-        modal: true,
-        header: "Error",
-        body: "Something went wrong, try again later",
-      };
-      this.setState(state);
-    }
-=======
     login(this.state.login, this.state.password).then(() => {
         this.setState({ token: getToken() });
         this.setState({ redirect: true });
@@ -61,7 +33,6 @@ class LoginPannel extends React.Component {
         this.setState({ header: "Error" });
         this.setState({ body: error.response.data });
     });
->>>>>>> dee27da1806c7779d36d2c4feff376170c6efff1
   };
 
 

@@ -1,6 +1,35 @@
 const pool = require('../model/database');
 const BloodTypeModel = require("../model/bloodTypeDB");
 
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *   BloodType:
+ *    type: object
+ *    properties:
+ *      id:
+ *        type: integer
+ *      type:
+ *        type: string
+ *      rhesus:
+ *        type: string
+ */
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *   BloodTypeFound:
+ *    description: Blood type found
+ *    content:
+ *      application/json:    
+ *       schema:
+ *        $ref: '#/components/schemas/BloodType'
+ *   IdUndefined:
+ *     description: Id is undefined
+ *   BloodTypeNotFound:
+ *     description: Blood type not found
+ */
 module.exports.getBloodType = async (req, res) => {
     const client = await pool.connect();
     const idT = req.params.id;
@@ -30,6 +59,32 @@ module.exports.getBloodType = async (req, res) => {
     }
 }
 
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *   BloodTypeFound:
+ *    description: Blood type found
+ *    content:
+ *      application/json:    
+ *       schema:
+ *        $ref: '#/components/schemas/BloodType'
+ *   InputUndefined:
+ *     description: Type or rhesus is undefined
+ *   BloodTypeNotFound:
+ *     description: Blood type not found
+ *  requestBodies:
+ *   BloodTypeName:
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object
+ *       properties:
+ *        type:
+ *         type: string
+ *        rhesus:
+ *         type: string
+ */
 module.exports.getBloodTypeFromName = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
@@ -58,7 +113,33 @@ module.exports.getBloodTypeFromName = async (req, res) => {
         client.release();
     }
 }
-
+/**
+ * @swagger
+ * components:
+ *  schemas:
+ *   BloodTypes:
+ *    type: array
+ *    items:
+ *     type: object
+ *     properties:
+ *       id:
+ *         type: integer
+ *       type:
+ *         type: string
+ *       rhesus:
+ *         type: string
+ */
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *   BloodTypesFound:
+ *    description: Blood types found
+ *    content:
+ *      application/json:    
+ *       schema:
+ *        $ref: '#/components/schemas/BloodTypes'
+ */
 module.exports.getAllBloodType = async (req, res) => {
     const client = await pool.connect();
     try {
@@ -73,6 +154,31 @@ module.exports.getAllBloodType = async (req, res) => {
     }
 }
 
+/**
+ *@swagger
+ * components:
+ *  responses:
+ *     BloodTypeCreated:
+ *      description: Blood type created
+ *     BloodTypeAlreadyExists:
+ *      description: Blood type already exists
+ *     BloodTypeUndefined:
+ *      description: Type or rhesus is undefined
+ *  requestBodies:
+ *   BloodType:
+ *     content:
+ *      application/json:
+ *       schema:
+ *        type: object
+ *        properties:
+ *         type:
+ *          type: string
+ *         rhesus:
+ *          type: string
+ *        required:
+ *        - type
+ *        - rhesus
+ */
 module.exports.createBloodType = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
@@ -84,7 +190,6 @@ module.exports.createBloodType = async (req, res) => {
         }
         else {
             // vérifier si le type de sang existe déjà
-            // déjà en contrainte de base de données ( à voir si utiles pour le code erreur )
 
             const {rows: bloodTypes} = await BloodTypeModel.getBloodTypeFromName(type, rhesus, client);
             const bloodType = bloodTypes[0];
@@ -105,7 +210,26 @@ module.exports.createBloodType = async (req, res) => {
         client.release();
     }
 }
-
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *   BloodTypeUpdated:
+ *    description: Blood type updated
+ *  requestBodies:
+ *   BloodTypeToUpdate:
+ *    content:
+ *     application/json:
+ *      schema:
+ *       type: object 
+ *       properties:
+ *        id:
+ *         type: integer
+ *        type:
+ *         type: string
+ *        rhesus:
+ *         type: string
+ */
 module.exports.updateBloodType = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
@@ -147,7 +271,15 @@ module.exports.updateBloodType = async (req, res) => {
         client.release();
     }
 }
-
+/**
+ * @swagger
+ * components:
+ *  responses:
+ *    BloodTypeDeleted:
+ *     description: Blood type deleted
+ *    BloodTypeInUse:
+ *     description: Blood type is used by users
+ */
 module.exports.deleteBloodType = async (req, res) => {
     const client = await pool.connect();
     const idT = req.params.id;

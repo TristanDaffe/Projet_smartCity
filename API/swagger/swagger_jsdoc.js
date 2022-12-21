@@ -11,9 +11,9 @@ version: '1.0.0',
 },
 // Path to the API docs
 apis: [
-'./controleur/*',
+'./controller/*',
 './middleware/*',
-'./modele/*',
+'./model/*',
 './route/*',
 ],
 };
