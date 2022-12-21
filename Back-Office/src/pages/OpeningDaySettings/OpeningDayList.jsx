@@ -79,8 +79,6 @@ class OpeningDayList extends React.Component {
         promesse.then(() => {
             this.setOpeningDay();
         }).catch((error) => {
-            console.log("error dans la view");
-            console.log(error);
             this.setState({ modal2: true});
             this.setState({ header2: "Error" });
             this.setState({ body2: error.response.data });

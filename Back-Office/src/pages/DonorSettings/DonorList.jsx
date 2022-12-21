@@ -96,11 +96,7 @@ class DonorList extends React.Component {
     }
 
     handleClick = (newDonorToDeleteid) => {
-        console.log("newDonorToDeleteid");
-        console.log(newDonorToDeleteid);
         this.setState({ donorToDeleteId: newDonorToDeleteid });
-        console.log("this.state.donorToDeleteId");
-        console.log(this.state.donorToDeleteId);
         this.setState({ modal: true });
         this.setState({ header: "Confirmation" });
         this.setState({ body: "Are you sure you want to delete this donor?" });
@@ -113,8 +109,6 @@ class DonorList extends React.Component {
             this.setState({ modal: false });
             this.getDonors();
         }).catch((error) => {
-            console.log("error dans la view");
-            console.log(error);
             this.setState({ modal2: true });
             this.setState({ header2: "Error" });
             this.setState({ body2: error.response.data });

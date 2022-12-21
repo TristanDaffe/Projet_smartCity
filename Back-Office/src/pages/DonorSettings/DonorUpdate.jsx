@@ -28,6 +28,7 @@ class DonorUpdate extends React.Component {
             bloodType: '',
             login: '',
             password: '',
+            initialPassword : '',
             bloodTypeId: 0,
         }
     }
@@ -50,6 +51,7 @@ class DonorUpdate extends React.Component {
                     bloodType: data.blood_type,
                     login: data.login,
                     password: data.password,
+                    initialPassword : data.password
                 };
                 this.setState(state);
                 
@@ -75,11 +77,12 @@ class DonorUpdate extends React.Component {
                     birthday: birthdate,
                     bloodTypeId: this.state.bloodType.id,
                     login: this.state.login,
-                    password: this.state.password,
+                    password: "",
                 };
+            this.state.password === this.state.initialPassword ? newDonor.password = null : newDonor.password = this.state.password;
             this.setState({modal : false});
             const promiss = updateDonorData(newDonor);
-            promiss.then((response) => {
+            promiss.then(() => {
                 this.setState({
                     modal2 : true, 
                     header2: "Success", 

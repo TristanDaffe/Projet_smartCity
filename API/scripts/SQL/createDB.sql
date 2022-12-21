@@ -232,7 +232,7 @@ INSERT INTO user_account(first_name, last_name, birthday, email_address, login, 
 ('Jacob', 'Johnson', '1997-11-11', 'jacob.jo@gmail.com', 'jjohnson27', '$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.', 2);
 
 INSERT INTO user_account(first_name, last_name, birthday, email_address, login, password, blood_type, is_admin) VALUES
-('admin', 'admin', '1998-06-06', 'admin@admin.local', 'admin', 'admin', 1, 'true');
+('admin', 'admin', '1998-06-06', 'admin@admin.local', 'admin', '$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.', 1, 'true');
 
 
 -- En fait y'a pas toujours de numéro de fax mais j'en ai mis pour remplir

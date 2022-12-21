@@ -143,9 +143,10 @@ class DonationUpdate extends React.Component {
                     donationCenterId: this.state.donationCentre,
                     userId: this.state.donor,
                 };
+                console.log(updatedDonationCenter);
                 this.setState({modal : false});
                 const promisse = updateDonationData(updatedDonationCenter);
-                promisse.then((response) => {
+                promisse.then(() => {
                     this.setState({
                         modal2: true,
                         header2: "Success",

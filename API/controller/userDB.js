@@ -182,6 +182,8 @@ module.exports.registerUser = async (req, res) => {
 module.exports.patchUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
+    console.log(body);
+
     const { 
             id,
             lastName, 
@@ -191,6 +193,8 @@ module.exports.patchUser = async (req, res) => {
             bloodTypeId,
             login, 
             password: passwordClear } = body;
+
+    console.log(body);
     let errors = [];
     errors[0] = validateString(lastName, "LastName");
     errors[1] = validateString(firstName, "Firstname"); 

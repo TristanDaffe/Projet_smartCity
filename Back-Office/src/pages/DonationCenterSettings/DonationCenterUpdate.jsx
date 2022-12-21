@@ -108,7 +108,6 @@ class DonationCenterUpdate extends React.Component {
                     numberInStreet: this.state.numberInStreet,
                     localityId: this.state.localityId
                 };
-                console.log(updatedDonationCenter);
                 this.setState({modal : false});
                 const promiss =  updateDonationCenterData(updatedDonationCenter);
                 promiss.then(() => {

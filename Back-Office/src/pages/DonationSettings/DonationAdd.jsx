@@ -109,7 +109,6 @@ class DonationAdd extends React.Component {
                     donationCenterId : parseInt(this.state.donationCentre),
                     userId : parseInt(this.state.donor),
                 }
-                console.log(newDonation);
                 this.setState({modal: false});
                 const promiss = addDonationData(newDonation);
                 promiss.then(() => {
