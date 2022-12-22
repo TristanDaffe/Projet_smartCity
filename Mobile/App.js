@@ -10,6 +10,8 @@ import Routes from './routes/routes';
 import {AuthProvider} from './context/authContext';
 import { DonationCenterProvider } from './context/donationCenterContext';
 import { BloodProvider } from './context/bloodContext';
+import {DonationTypeProvider} from './context/donationTypeContext';
+import {DonationUserProvider} from './context/donationUserContext';
 
 export default function App() {
   setStatusBarStyle('light-content');
@@ -20,7 +22,11 @@ export default function App() {
       <AuthProvider>
         <DonationCenterProvider>
           <BloodProvider>
-            <Routes />
+            <DonationTypeProvider>
+              <DonationUserProvider>
+                <Routes />
+              </DonationUserProvider>
+            </DonationTypeProvider>
           </BloodProvider>
         </DonationCenterProvider>
       </AuthProvider>

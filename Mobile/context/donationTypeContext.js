@@ -1,30 +1,31 @@
-import React, {createContext, useContext, useState} from "react";
+import React, {createContext, useState , useContext} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {BASE_URL} from "../config";
 import { Alert } from "react-native";
 import axios from "axios";
 import { AuthContext } from "./authContext";
 
-export const DonationCenterContext = createContext();
+export const DonationTypesContext = createContext();
 
-export const DonationCenterProvider = ({children}) => {
-    const [donationCenters, setDonationCenters] = useState([]);
+export const DonationTypeProvider = ({children}) => {
+    const [donationTypes, setDonationTypes] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const {token} = useContext(AuthContext)
-    
-    const allDonationCenter = () => {
+
+    const getDonationTypes = () => {
         setIsLoading(true);
         axios
-            .get(`${BASE_URL}/center/all`,{
+            .get(`${BASE_URL}/donationtype/all` ,
+            {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
-                  },
+                  },        
             })
             .then( res => {
-                setDonationCenters(res.data);
-                AsyncStorage.setItem('donationCenters', JSON.stringify(res.data));
+                setDonationTypes(res.data);
+                AsyncStorage.setItem('donationTypes', JSON.stringify(res.data));
             })
             .catch( err => {
                 Alert.alert("Error", err.message);
@@ -35,9 +36,9 @@ export const DonationCenterProvider = ({children}) => {
     } 
 
     return (
-        <DonationCenterContext.Provider value={{
-            isLoading,
-            donationCenters,
-            allDonationCenter
-        }}>{children}</DonationCenterContext.Provider>);
+        <DonationTypesContext.Provider value={{
+            donationTypes, 
+            isLoading, 
+            getDonationTypes
+        }}>{children}</DonationTypesContext.Provider>);
 }

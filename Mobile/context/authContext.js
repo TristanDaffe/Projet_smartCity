@@ -103,6 +103,7 @@ FIN PARTIE POUR TEST SANS API
 
         setIsLoading(false);
     }
+    console.log(user)
     return (
         <AuthContext.Provider value={{
             isLoading,

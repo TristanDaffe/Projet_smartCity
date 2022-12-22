@@ -2,24 +2,29 @@ import React from "react";
 import { Text, View, StyleSheet , SafeAreaView} from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
+import { format } from "date-fns";
+
   const table = ({data})=>
   {
     const item =({item})=>
     {
+        var date = new Date(item.date);
+        var formattedDate = format(date, "yyyy-MM-dd");
+
         return(
 
             <View style={styles.containerItem}>
                 <View style={styles.item}>
-                    <Text>{item[3]}</Text>
+                    <Text>{formattedDate}</Text>
                 </View>
                 <View style={styles.item}>
-                    <Text>{item[4]}</Text>
+                    <Text>{item.hour}</Text>
                 </View>
                 <View style={styles.item}>
-                    <Text>{item[2]}</Text>
+                    <Text>{item.name}</Text>
                 </View>
                 <View style={styles.item}>
-                    <Text>{item[1]}</Text>
+                    <Text>{item.donation_center_name}</Text>
                 </View>
             </View>
         )

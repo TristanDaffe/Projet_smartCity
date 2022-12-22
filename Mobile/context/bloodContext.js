@@ -1,15 +1,17 @@
-import React, {createContext, useState} from "react";
+import React, {createContext, useState , useContext} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {BASE_URL} from "../config";
 import { Alert } from "react-native";
 import axios from "axios";
-import {token} from "./authContext";
+import { AuthContext } from "./authContext";
 
 export const BloodContext = createContext();
 
 export const BloodProvider = ({children}) => {
     const [bloods, setBloods] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+
+    const {token} = useContext(AuthContext)
 
     const getBloods = () => {
         setIsLoading(true);
@@ -19,8 +21,7 @@ export const BloodProvider = ({children}) => {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
-                  },
-                  
+                  },        
             })
             .then( res => {
                 setBloods(res.data);

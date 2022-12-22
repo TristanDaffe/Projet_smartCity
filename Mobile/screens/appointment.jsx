@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {  View, Text, StyleSheet, Image, TextInput } from 'react-native';
 
 import TopBarDrawer from '../components/topBar/topBarDrawer';
-import SearchBar from '../components/SearchBar';
 import { AuthContext } from '../context/authContext';
 import AppointmentTable from '../components/AppointmentTableTest';
+import { DonationUserContext } from '../context/donationUserContext';
 
 import { useDispatch , useSelector } from "react-redux";
 
@@ -208,12 +208,17 @@ let appoitmentData = appointments_raw[0].map((appointment) => {
 export default function Appointment ( {navigation} )  {
 
     const {user} = React.useContext(AuthContext);
-    const [filteredData, setFilteredData] = React.useState(appoitmentData);
+    const [filteredData, setFilteredData] = React.useState(allUserDonations);
+    const {getDonationsOfUser ,donationsUser} = React.useContext(DonationUserContext);
+    
+    useEffect(() => {
+      console.log("useEffect appointment")
+      getDonationsOfUser(user.id)
+    }, []);
 
     const dispatch = useDispatch();
-    
 
-    dispatch(setUserDonation(appoitmentData));
+    dispatch(setUserDonation(donationsUser));
 
     const allUserDonations = useSelector(getUserDonations);
   
@@ -221,7 +226,7 @@ export default function Appointment ( {navigation} )  {
       if(text)
       {
             const newdata = allUserDonations.filter(item => {
-            const itemData = item[1].toUpperCase();
+            const itemData = item.name.toUpperCase();
             const textData = text.toUpperCase();
             return itemData.indexOf(textData) > -1;
   
@@ -251,7 +256,6 @@ export default function Appointment ( {navigation} )  {
               placeholder= "search(type)"
             />
           </View>
-          {console.log(allUserDonations)}
         </View>
         <View style={styles.table}>
           <AppointmentTable data ={filteredData}></AppointmentTable>

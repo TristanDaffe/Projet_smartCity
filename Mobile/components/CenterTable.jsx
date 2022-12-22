@@ -6,48 +6,55 @@ import { FlatList } from "react-native-gesture-handler";
     <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
         <View style={styles.containerItem}>
             <View style={styles.case}>
-                <Text>{item.center}</Text>
+                <Text>{item.name}</Text>
             </View>
             <View style={styles.case}>
-                <Text>{item.address}</Text>
+                <Text>{item.street_name},{item.street_number}</Text>
             </View>
             <View style={styles.case}>
-                <Text>{item.url}</Text>
+                <Text>{item.email_address}</Text>
             </View>
             <View style={styles.case}>
-                <Text>{item.phoneNumber}</Text>
+                <Text>{item.phone_number}</Text>
             </View>
         </View>
     </TouchableOpacity>
   );
 
-  const table = ({data,returnCenter})=>
+  const table = ({data,returnCenter,type})=>
   {
     const [selectedId, setSelectedId] = useState(null);
 
     useEffect(() => {
-        selectedId != null ? returnCenter((data[selectedId-1].center)) : ""
+        selectedId != null ? returnCenter((data[selectedId-1])) : ""
       });
 
     const item =({item})=>
     {
-        const backgroundColor = item.id === selectedId ? "red" : "white";
-        const color = item.id === selectedId ? 'white' : 'black';
+        // item.donationTypeAvailable.forEach(typeDonation => {
+        //     if (typeDonation.name == type) {
+                
+                const backgroundColor = item.id === selectedId ? "red" : "white";
+                const color = item.id === selectedId ? 'white' : 'black';
+                
+                return(
         
-        return(
-
-            <View>
-                <Item
-                    item={item}
-                    onPress={() => {
-                        setSelectedId(item.id)
-                    }}
-                    backgroundColor={{ backgroundColor }}
-                    textColor={{ color }}
-                >
-                </Item>
-            </View>
-        )
+                    <View>
+                        <Item
+                            item={item}
+                            onPress={() => {
+                                setSelectedId(item.id)
+                            }}
+                            backgroundColor={{ backgroundColor }}
+                            textColor={{ color }}
+                        >
+                        </Item>
+                    </View>
+                )
+                
+        //     }
+            
+        // });
     }
 
     return (
@@ -65,7 +72,7 @@ import { FlatList } from "react-native-gesture-handler";
                     <Text>Address</Text>
                 </View>
                 <View style={styles.title}>
-                    <Text>Url</Text>
+                    <Text>EmailAddress</Text>
                 </View>
                 <View style={styles.title}>
                     <Text>PhoneNumber</Text>
@@ -73,7 +80,6 @@ import { FlatList } from "react-native-gesture-handler";
             </View>}
                 >
                 </FlatList>
-                 {/* {selectedId != null ?  console.log(data[selectedId-1]) : "" } */}
               </SafeAreaView>
 
     )
@@ -83,7 +89,7 @@ import { FlatList } from "react-native-gesture-handler";
 const styles = StyleSheet.create({
   item: {
       borderWidth: 1,
-      alignItems: 'center',
+      alignSelf: 'center',
   },
   case: 
   {

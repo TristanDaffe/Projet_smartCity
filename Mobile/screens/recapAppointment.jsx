@@ -15,13 +15,13 @@ export default function RecapAppointment ( {route,navigation} )  {
         <TopBar onclick={navigation.goBack}/>
         <Text style={styles.title}>Appointment</Text>
         <Text style={styles.category}>Donation Type :</Text>
-        <Text style={styles.response}>{type}</Text>
+        <Text style={styles.response}>{type.name}</Text>
         <Text style={styles.category}>Date :</Text>
         <Text style={styles.response}>{date}</Text>
         <Text style={styles.category}>Time :</Text>
         <Text style={styles.response}>{hours}</Text>
         <Text style={styles.category}>Center :</Text>
-        <Text style={styles.lastResponse}>{center}</Text>
+        <Text style={styles.lastResponse}>{center.name}</Text>
           <ConfirmationButton name="Make this Appointment" data = {appointment}></ConfirmationButton>
         </View>
     );

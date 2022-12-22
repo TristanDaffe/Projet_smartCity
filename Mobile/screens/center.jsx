@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button, TextInput , Image, Alert } from 'react-native';
 
 import { DonationCenterContext } from '../context/donationCenterContext';
-import { BloodContext } from '../context/bloodContext';
 import TopBar from '../components/topBar/topBarArrow';
 import CenterTable from '../components/CenterTable';
 import { useDispatch , useSelector } from "react-redux";
@@ -10,40 +9,21 @@ import { useDispatch , useSelector } from "react-redux";
 import {setCenters} from "../redux/actions/center";
 import {getCenters} from "../redux/selectors"
 
-const tab =[
-  {id:1,center: "Don de sang à Marche-en-Famenne",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:2,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:3,center: "Don de sang à Wavre",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:4,center: "Don de sang à Zamur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:5,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:6,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:7,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:8,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:9,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:10,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:11,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:12,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:13,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:14,center: "Don de sang à Namur",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-  {id:15,center: "Don de sang à Louvain",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
-];
-
 export default function Center ( {route,navigation})  {
-  const [filteredData, setFilteredData] = React.useState(tab);
   const [center, setCenter] = React.useState(null);
   const {allDonationCenter ,donationCenters} = React.useContext(DonationCenterContext);
-  const {getBloods,bloods} = React.useContext(BloodContext);
+  const [filteredData, setFilteredData] = React.useState(allCenters);
 
   const dispatch = useDispatch();
-  dispatch(setCenters(tab));
-  const allcenters = useSelector(getCenters);
+  const allCenters = useSelector(getCenters);
 
   const type = route.params;
 
-
-  const getAllDonationCenter = async() => {
-    await allDonationCenter()
-  }
+  useEffect(() => {
+    console.log("coucou")
+    allDonationCenter()
+    dispatch(setCenters(donationCenters));
+  }, []);
 
 
   const returnCenter = (newCenter) => {
@@ -53,8 +33,8 @@ export default function Center ( {route,navigation})  {
   const searchFilter = (text) => {
     if(text)
     {
-          const newdata = allcenters.filter(item => {
-          const itemData = item.center.toUpperCase();
+          const newdata = allCenters.filter(item => {
+          const itemData = item.name.toUpperCase();
           const textData = text.toUpperCase();
           return itemData.indexOf(textData) > -1;
 
@@ -63,7 +43,7 @@ export default function Center ( {route,navigation})  {
     }
     else
     {
-      setFilteredData(allcenters)
+      setFilteredData(allCenters)
     }
   }
   
@@ -80,14 +60,11 @@ export default function Center ( {route,navigation})  {
                 placeholder= "search(center)"
               />
             </View>
-            <Button  
-              title='Centers' 
-              color='red' 
-              onPress={() => getAllDonationCenter()}></Button>
           </View>
           <View style={styles.table}>
-              <CenterTable data = {filteredData} returnCenter = {returnCenter}></CenterTable>
+              <CenterTable data = {filteredData} type = {type} returnCenter = {returnCenter}></CenterTable>
           </View>
+          {console.log(center)}
           <View style={styles.button}>
               <Button 
                 title='Next' 

@@ -1,18 +1,30 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import {  View, Text, StyleSheet,SafeAreaView , Button, Alert} from 'react-native';
-
+import { useDispatch , useSelector } from "react-redux";
 import TopBar from '../components/topBar/topBarArrow';
 import MultiButton from '../components/MultiButton';
 import { ScrollView } from "react-native-gesture-handler";
+import { DonationTypesContext } from '../context/donationTypeContext';
+
+import {setDonationTypes} from "../redux/actions/donationTypes";
 
 export default function Type ( {navigation} )  {  
     
     const [type, setType] = React.useState(null);
+    const {getDonationTypes,donationTypes} = React.useContext(DonationTypesContext);
+
+    const dispatch = useDispatch();
     
     const returnType = (newType) => {
       setType(newType);
     }
     
+    useEffect(() => {
+      console.log("useEffect type")
+      getDonationTypes()
+      dispatch(setDonationTypes(donationTypes));
+    }, []);
+
     return (
       <View>
         <TopBar onclick={navigation.goBack}/>
@@ -22,6 +34,7 @@ export default function Type ( {navigation} )  {
               <MultiButton returnType = {returnType}></MultiButton>
               </ScrollView>
               <View style={styles.button}>
+                {console.log(type)}
               <Button 
                 title='Next' 
                 color='red'
