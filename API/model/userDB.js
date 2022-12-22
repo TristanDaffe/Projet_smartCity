@@ -54,7 +54,6 @@ module.exports.updateUser = async (id, lastname, firstname, emailAddress, birthD
     [lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password, id]);
     const {rows:users} = await client.query("SELECT * FROM user_account WHERE login = $1", [login]);
     const user = users[0];
-    console.log(user)
     if (user !== undefined ) {
         return {userType: "user", value: user};
     }
