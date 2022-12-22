@@ -65,7 +65,8 @@ module.exports.updateUser = async (id, lastname, firstname, emailAddress, birthD
 module.exports.updateUserWithoutPassword = async (id, lastname, firstname, emailAddress, birthDay, bloodTypeId, login, client) => {
     await client.query("UPDATE user_account SET last_name = $1, first_name = $2, email_address = $3, birthday = $4, blood_type = $5, login = $6 WHERE id = $7",
     [lastname, firstname, emailAddress, birthDay, bloodTypeId, login, id]);
-    const user = await client.query("SELECT * FROM user_account WHERE login = $1", [login]);
+    const {rows:users} = await client.query("SELECT * FROM user_account WHERE login = $1", [login]);
+    const user = users[0];
     if (user !== undefined ) {
         return {userType: "user", value: user};
     }

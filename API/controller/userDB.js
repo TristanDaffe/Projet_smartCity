@@ -215,7 +215,6 @@ module.exports.patchUser = async (req, res) => {
                 res.status(404).send("User not found");
             }
             else {
-            const password = await getHash(passwordClear);
             const {rows: usersLog} = await UserModele.getUserByLogin(login, client);
             const userLog = usersLog[0];
                 if(userLog !== undefined && userLog.id !== id) { 
@@ -230,8 +229,10 @@ module.exports.patchUser = async (req, res) => {
                         let result;
                         if(passwordClear === undefined)
                             result = await UserModele.updateUserWithoutPassword(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, client);
-                        else
+                        else{
+                            const password = await getHash(passwordClear);
                             result = await UserModele.updateUser(id, lastName, firstName, emailAddress, birthdate, bloodTypeId, login, password, client);
+                        }
                         const {userType, value} = result;
                         await manageAuth(userType, value, res, client);
                     }
