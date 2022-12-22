@@ -21,8 +21,6 @@ export default function Center ( {route,navigation})  {
 
   useEffect(() => {
     console.log("coucou")
-    allDonationCenter()
-    dispatch(setCenters(donationCenters));
   }, []);
 
 

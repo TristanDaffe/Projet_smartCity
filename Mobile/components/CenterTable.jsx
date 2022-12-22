@@ -3,6 +3,7 @@ import { Text, View, StyleSheet , SafeAreaView,TouchableOpacity} from "react-nat
 import { FlatList } from "react-native-gesture-handler";
 
   const Item = ({ item, onPress, backgroundColor, textColor }) => (
+
     <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
         <View style={styles.containerItem}>
             <View style={styles.case}>
@@ -24,6 +25,18 @@ import { FlatList } from "react-native-gesture-handler";
   const table = ({data,returnCenter,type})=>
   {
     const [selectedId, setSelectedId] = useState(null);
+    const [centers, setCenters] = useState([]);
+    
+    // let centers = {};
+    // data.map(center =>{
+    //     let i = 0;
+    //     while (i < center.donationTypeAvailable.length && center.donationTypeAvailable[i].name !== type.name) {
+    //         i++;
+    //     }
+    //     if (i < center.donationTypeAvailable.length) {
+    //         centers.push(center)
+    //     }
+    // })
 
     useEffect(() => {
         selectedId != null ? returnCenter((data[selectedId-1])) : ""
@@ -31,30 +44,25 @@ import { FlatList } from "react-native-gesture-handler";
 
     const item =({item})=>
     {
-        // item.donationTypeAvailable.forEach(typeDonation => {
-        //     if (typeDonation.name == type) {
-                
-                const backgroundColor = item.id === selectedId ? "red" : "white";
-                const color = item.id === selectedId ? 'white' : 'black';
-                
-                return(
+
+        const backgroundColor = item.id === selectedId ? "red" : "white";
+        const color = item.id === selectedId ? 'white' : 'black';
         
-                    <View>
-                        <Item
-                            item={item}
-                            onPress={() => {
-                                setSelectedId(item.id)
-                            }}
-                            backgroundColor={{ backgroundColor }}
-                            textColor={{ color }}
-                        >
-                        </Item>
-                    </View>
-                )
-                
-        //     }
-            
-        // });
+        return(
+
+            <View>
+                <Item
+                    item={item}
+                    onPress={() => {
+                        setSelectedId(item.id)
+                    }}
+                    backgroundColor={{ backgroundColor }}
+                    textColor={{ color }}
+                >
+                </Item>
+            </View>
+        )
+
     }
 
     return (
@@ -104,7 +112,6 @@ const styles = StyleSheet.create({
   },
   containerItem: {
       flexDirection : 'row',
-      width: '100%',
   },
   container:
   {

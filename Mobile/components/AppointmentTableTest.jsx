@@ -8,8 +8,8 @@ import { format } from "date-fns";
   {
     const item =({item})=>
     {
-        var date = new Date(item.date);
-        var formattedDate = format(date, "yyyy-MM-dd");
+        let date = new Date(item.date);
+        let formattedDate = format(date, "yyyy-MM-dd");
 
         return(
 
