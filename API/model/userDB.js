@@ -3,6 +3,7 @@ const { compareHash } = require("../utils/hash");
 module.exports.loginUser = async (login, password, client) => {
     const users = await client.query('SELECT * FROM user_account WHERE login = $1', [login]);
     const user = users.rows[0];
+
     if(user !== undefined && user.is_admin && await compareHash(password, user.password)) {
         return {userType: "admin", value: user};
     }
@@ -16,6 +17,12 @@ module.exports.loginUser = async (login, password, client) => {
 
 module.exports.getUser = async (id, client) => {
     return await client.query("SELECT * FROM user_account WHERE id = $1", [id]);
+}
+module.exports.getUserByLogin = async (login, client) => {
+    return await client.query("SELECT * FROM user_account WHERE login = $1", [login]);
+}
+module.exports.getUserByMail = async (emailAddress, client) => {
+    return await client.query("SELECT * FROM user_account WHERE email_address = $1", [emailAddress]);
 }
 
 module.exports.getAllUsers = async (client) => {
@@ -45,13 +52,27 @@ module.exports.registerUser = async (lastname, firstname, emailAddress, birthDay
 module.exports.updateUser = async (id, lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password, client) => {
     await client.query("UPDATE user_account SET last_name = $1, first_name = $2, email_address = $3, birthday = $4, blood_type = $5, login = $6, password = $7 WHERE id = $8", 
     [lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password, id]);
-    
-    return await this.loginUser(login, password, client);
+    const {rows:users} = await client.query("SELECT * FROM user_account WHERE login = $1", [login]);
+    const user = users[0];
+    console.log(user)
+    if (user !== undefined ) {
+        return {userType: "user", value: user};
+    }
+    else {
+        return {userType: "unknown", value: null};
+    }
 }
 
 module.exports.updateUserWithoutPassword = async (id, lastname, firstname, emailAddress, birthDay, bloodTypeId, login, client) => {
     await client.query("UPDATE user_account SET last_name = $1, first_name = $2, email_address = $3, birthday = $4, blood_type = $5, login = $6 WHERE id = $7",
     [lastname, firstname, emailAddress, birthDay, bloodTypeId, login, id]);
+    const user = await client.query("SELECT * FROM user_account WHERE login = $1", [login]);
+    if (user !== undefined ) {
+        return {userType: "user", value: user};
+    }
+    else {
+        return {userType: "unknown", value: null};
+    }
 }
 
 module.exports.deleteUser = async (id, client) => {
