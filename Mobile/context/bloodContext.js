@@ -3,6 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {BASE_URL} from "../config";
 import { Alert } from "react-native";
 import axios from "axios";
+import {token} from "./authContext";
 
 export const BloodContext = createContext();
 
@@ -13,11 +14,18 @@ export const BloodProvider = ({children}) => {
     const getBloods = () => {
         setIsLoading(true);
         axios
-            .get(`${BASE_URL}/bloodtypes`)
+            .get(`${BASE_URL}/bloodtype/all` ,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                  },
+                  
+            })
             .then( res => {
                 setBloods(res.data);
+                console.log("coucou")
                 AsyncStorage.setItem('bloods', JSON.stringify(res.data));
-                // console.log("bloods");
                 // const bloodsDB = res.data;
                 // if(bloodsDB !== undefined){
                 //     types = [];

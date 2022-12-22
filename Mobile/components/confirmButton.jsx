@@ -1,5 +1,6 @@
 import { Button, View} from "react-native";
 import { Root, Popup } from 'react-native-popup-confirm-toast'
+import {addUserDonation} from "../redux/actions/userDonation";
 
 export default function confirmButton(props) {
     return (
@@ -22,6 +23,7 @@ export default function confirmButton(props) {
                             // ça c'est ce qui se passe quand on appuie sur le bouton "yes"
                             callback: () => {
                                 alert('You have made an appointment!');
+                                addUserDonation(props.data)
                                 Popup.hide();
                             },
                             // ça c'est ce qui se passe quand on clique sur le bouton back

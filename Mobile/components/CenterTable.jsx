@@ -26,7 +26,7 @@ import { FlatList } from "react-native-gesture-handler";
     const [selectedId, setSelectedId] = useState(null);
 
     useEffect(() => {
-        selectedId != null ? console.log((data[selectedId-1].center)) : ""
+        selectedId != null ? returnCenter((data[selectedId-1].center)) : ""
       });
 
     const item =({item})=>

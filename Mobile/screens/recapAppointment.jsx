@@ -7,6 +7,8 @@ import ConfirmationButton from '../components/confirmButton';
 export default function RecapAppointment ( {route,navigation} )  { 
   
   const {date,hours,center,type} = route.params;
+  
+  const appointment = {type : type , hours : hours , center : center , date : date}
 
     return (
         <View>
@@ -20,7 +22,7 @@ export default function RecapAppointment ( {route,navigation} )  {
         <Text style={styles.response}>{hours}</Text>
         <Text style={styles.category}>Center :</Text>
         <Text style={styles.lastResponse}>{center}</Text>
-          <ConfirmationButton name="Make this Appointment"></ConfirmationButton>
+          <ConfirmationButton name="Make this Appointment" data = {appointment}></ConfirmationButton>
         </View>
     );
 };

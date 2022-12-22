@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button, TextInput , Image, Alert } from 'react-native';
 
+import { DonationCenterContext } from '../context/donationCenterContext';
+import { BloodContext } from '../context/bloodContext';
 import TopBar from '../components/topBar/topBarArrow';
 import CenterTable from '../components/CenterTable';
+import { useDispatch , useSelector } from "react-redux";
+
+import {setCenters} from "../redux/actions/center";
+import {getCenters} from "../redux/selectors"
 
 const tab =[
   {id:1,center: "Don de sang à Marche-en-Famenne",address: "Rue je sais pas quoi",url: "https://www.croix-rouge.be",phoneNumber: "0491569536"},
@@ -23,11 +29,22 @@ const tab =[
 ];
 
 export default function Center ( {route,navigation})  {
-  const [data, setData] = React.useState(null);  // Quand il y aura accès à l'api
   const [filteredData, setFilteredData] = React.useState(tab);
-  const [center, setCenter] = React.useState(null);  
+  const [center, setCenter] = React.useState(null);
+  const {allDonationCenter ,donationCenters} = React.useContext(DonationCenterContext);
+  const {getBloods,bloods} = React.useContext(BloodContext);
+
+  const dispatch = useDispatch();
+  dispatch(setCenters(tab));
+  const allcenters = useSelector(getCenters);
 
   const type = route.params;
+
+
+  const getAllDonationCenter = async() => {
+    await allDonationCenter()
+  }
+
 
   const returnCenter = (newCenter) => {
     setCenter(newCenter);
@@ -36,7 +53,7 @@ export default function Center ( {route,navigation})  {
   const searchFilter = (text) => {
     if(text)
     {
-          const newdata = tab.filter(item => {
+          const newdata = allcenters.filter(item => {
           const itemData = item.center.toUpperCase();
           const textData = text.toUpperCase();
           return itemData.indexOf(textData) > -1;
@@ -46,7 +63,7 @@ export default function Center ( {route,navigation})  {
     }
     else
     {
-      setFilteredData(tab)
+      setFilteredData(allcenters)
     }
   }
   
@@ -63,6 +80,10 @@ export default function Center ( {route,navigation})  {
                 placeholder= "search(center)"
               />
             </View>
+            <Button  
+              title='Centers' 
+              color='red' 
+              onPress={() => getAllDonationCenter()}></Button>
           </View>
           <View style={styles.table}>
               <CenterTable data = {filteredData} returnCenter = {returnCenter}></CenterTable>

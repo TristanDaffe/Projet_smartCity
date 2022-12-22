@@ -1,0 +1,4 @@
+export const SET_CENTERS = "SET_CENTERS";
+export const SET_USERDONATIONS = "SET_USERDONATIONS";
+export const ADD_USERDONATION = "ADD_USERDONATION";
+export const ADD_TOKEN = "ADD_TOKEN";
