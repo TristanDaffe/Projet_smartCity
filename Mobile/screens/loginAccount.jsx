@@ -13,6 +13,7 @@ export default function LoginAccountTest({navigation}) {
   const [password, setPassword] = React.useState('');
 
   const {isLoading, login} = React.useContext(AuthContext);
+  const all = React.useContext(AuthContext);
 
   return (
     <View>
@@ -27,6 +28,7 @@ export default function LoginAccountTest({navigation}) {
             onChangeText={text => setloginUser(text)}
           >
           </TextInput>
+          {console.log(all)}
         <Separator/>
         <Text style={styles.title}>Password</Text>
           <TextInput 

@@ -104,7 +104,6 @@ FIN PARTIE POUR TEST SANS API
 
         setIsLoading(false);
     }
-    
     return (
         <AuthContext.Provider value={{
             isLoading,
@@ -115,4 +114,5 @@ FIN PARTIE POUR TEST SANS API
             logout
         }}>{children}</AuthContext.Provider>
     );
+
 };

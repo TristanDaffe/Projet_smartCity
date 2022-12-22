@@ -1,6 +1,5 @@
-import React, { useState , useCallback , useMemo } from "react";
+import React, { useState } from "react";
 import {  View, Text, StyleSheet,SafeAreaView , Button, Alert} from 'react-native';
-import { Root, Popup } from 'react-native-popup-confirm-toast'
 
 import TopBar from '../components/topBar/topBarArrow';
 import MultiButton from '../components/MultiButton';
