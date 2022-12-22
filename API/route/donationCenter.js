@@ -4,7 +4,7 @@ const router = new Router;
 const JWTMiddleWare = require("../middleware/identificationJWT");
 const AuthMiddleWare = require("../middleware/authorization");
 
-router.get('/all', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, CenterController.getAllDonationCenters);
+router.get('/all', JWTMiddleWare.identification, CenterController.getAllDonationCenters);
 router.get('/opening/:id', JWTMiddleWare.identification, CenterController.getOpeningDaysForCenter);
 
 router.get('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, CenterController.getDonationCenter);

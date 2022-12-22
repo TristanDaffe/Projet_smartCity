@@ -182,7 +182,6 @@ module.exports.registerUser = async (req, res) => {
 module.exports.patchUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
-    console.log(body);
 
     const { 
             id,
@@ -194,7 +193,6 @@ module.exports.patchUser = async (req, res) => {
             login, 
             password: passwordClear } = body;
 
-    console.log(body);
     let errors = [];
     errors[0] = validateString(lastName, "LastName");
     errors[1] = validateString(firstName, "Firstname"); 
@@ -218,13 +216,15 @@ module.exports.patchUser = async (req, res) => {
             }
             else {
             const password = await getHash(passwordClear);
-            const {rows: users} = await UserModele.getUser(id, client);
-            const user = users[0];
-                if(user !== undefined && user.id !== id) { 
+            const {rows: usersLog} = await UserModele.getUserByLogin(login, client);
+            const userLog = usersLog[0];
+                if(userLog !== undefined && userLog.id !== id) { 
                     res.status(409).send("Login already exist");
                 }
                 else {
-                    if(user !== undefined && user.email_address !== emailAddress)
+                    const {rows: usersEmail} = await UserModele.getUserByMail(emailAddress, client);
+                    const userMail = usersEmail[0];
+                    if(userMail !== undefined && userMail.id !== id)
                         res.status(409).send("Email already exist");
                     else {
                         let result;
@@ -240,6 +240,7 @@ module.exports.patchUser = async (req, res) => {
         }
     }
     catch (error) {
+        console.log(error)
         res.sendStatus(500);
     }
     finally {

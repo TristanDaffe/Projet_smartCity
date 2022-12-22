@@ -28,7 +28,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"login\": \"admin\",\n    \"password\": \"admin\"\n}",
+							"raw": "{\n    \"login\": \"admin\",\n    \"password\": \"1234\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -97,273 +97,1586 @@
 			"name": "user",
 			"item": [
 				{
-					"name": "get user id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+					"name": "get all",
+					"item": [
+						{
+							"name": "token valid",
+							"event": [
 								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get all user token valid\", function(){",
+											"    pm.response.to.have.status(200);",
+											"    const allUserExcpected = [",
+											"    {",
+											"        \"id\": 1,",
+											"        \"last_name\": \"Doe\",",
+											"        \"first_name\": \"John\",",
+											"        \"email_address\": \"john.doe@gmail.com\",",
+											"        \"birthday\": \"1990-01-01T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"johnDoe90\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 2,",
+											"        \"last_name\": \"Doe\",",
+											"        \"first_name\": \"Jane\",",
+											"        \"email_address\": \"jane.doe@gmail.com\",",
+											"        \"birthday\": \"1991-10-10T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"janeDoeLaBoss91\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 3,",
+											"        \"last_name\": \"Smith\",",
+											"        \"first_name\": \"John\",",
+											"        \"email_address\": \"john.smith@gmail.com\",",
+											"        \"birthday\": \"1992-12-31T00:00:00.000Z\",",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"johnSmithLeBoss\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 4,",
+											"        \"last_name\": \"Smith\",",
+											"        \"first_name\": \"Jane\",",
+											"        \"email_address\": \"jane.smith@skynet.be\",",
+											"        \"birthday\": \"1993-01-01T00:00:00.000Z\",",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"janeSmith93\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 5,",
+											"        \"last_name\": \"Dupuis\",",
+											"        \"first_name\": \"Jean\",",
+											"        \"email_address\": \"john.dupuis@skynet.be\",",
+											"        \"birthday\": \"1994-02-02T00:00:00.000Z\",",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"JD94\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 6,",
+											"        \"last_name\": \"Legrand\",",
+											"        \"first_name\": \"François\",",
+											"        \"email_address\": \"francois.legrand@hotmail.com\",",
+											"        \"birthday\": \"1995-03-03T00:00:00.000Z\",",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"FL95\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 7,",
+											"        \"last_name\": \"Lemaitre\",",
+											"        \"first_name\": \"Sarah\",",
+											"        \"email_address\": \"sarah.lemaitre@hotmail.com\",",
+											"        \"birthday\": \"1996-04-04T00:00:00.000Z\",",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"SL96\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 8,",
+											"        \"last_name\": \"Leroy\",",
+											"        \"first_name\": \"Marie\",",
+											"        \"email_address\": \"marie.leroy@hotmail.com\",",
+											"        \"birthday\": \"1997-05-05T00:00:00.000Z\",",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"ML97\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 9,",
+											"        \"last_name\": \"Jones\",",
+											"        \"first_name\": \"David\",",
+											"        \"email_address\": \"david.jones@gmail.com\",",
+											"        \"birthday\": \"1998-06-06T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"djones98\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 10,",
+											"        \"last_name\": \"Brown\",",
+											"        \"first_name\": \"Emily\",",
+											"        \"email_address\": \"emily.brown@gmail.com\",",
+											"        \"birthday\": \"1999-07-07T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"ebrown99\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 11,",
+											"        \"last_name\": \"Williams\",",
+											"        \"first_name\": \"Michael\",",
+											"        \"email_address\": \"michael.willi@gmail.com\",",
+											"        \"birthday\": \"2000-08-08T00:00:00.000Z\",",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"mwilliams00\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 12,",
+											"        \"last_name\": \"Johnson\",",
+											"        \"first_name\": \"Samantha\",",
+											"        \"email_address\": \"samantha.johnson@gmail.com\",",
+											"        \"birthday\": \"2001-09-09T00:00:00.000Z\",",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"sjohnson01\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 13,",
+											"        \"last_name\": \"Taylor\",",
+											"        \"first_name\": \"Christopher\",",
+											"        \"email_address\": \"christopher.taylor@gmail.com\",",
+											"        \"birthday\": \"2002-10-10T00:00:00.000Z\",",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"ctaylor02\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 14,",
+											"        \"last_name\": \"Moore\",",
+											"        \"first_name\": \"Ashley\",",
+											"        \"email_address\": \"ashley.moore@gmail.com\",",
+											"        \"birthday\": \"1993-11-11T00:00:00.000Z\",",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"amoore03\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 15,",
+											"        \"last_name\": \"Anderson\",",
+											"        \"first_name\": \"Jessica\",",
+											"        \"email_address\": \"jessica.anderson@gmail.com\",",
+											"        \"birthday\": \"2004-12-12T00:00:00.000Z\",",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"janderson04\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 16,",
+											"        \"last_name\": \"Thomas\",",
+											"        \"first_name\": \"James\",",
+											"        \"email_address\": \"james.thomas@gmail.com\",",
+											"        \"birthday\": \"1995-01-01T00:00:00.000Z\",",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"jthomas05\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 17,",
+											"        \"last_name\": \"Smith\",",
+											"        \"first_name\": \"Emily\",",
+											"        \"email_address\": \"emily.smith@gmail.com\",",
+											"        \"birthday\": \"1996-02-02T00:00:00.000Z\",",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"esmith06\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 18,",
+											"        \"last_name\": \"Johnson\",",
+											"        \"first_name\": \"Jacob\",",
+											"        \"email_address\": \"jacob.john@gmail.com\",",
+											"        \"birthday\": \"1997-03-03T00:00:00.000Z\",",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"jjohnson07\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 19,",
+											"        \"last_name\": \"Williams\",",
+											"        \"first_name\": \"Michael\",",
+											"        \"email_address\": \"m.williams@gmail.com\",",
+											"        \"birthday\": \"1998-04-04T00:00:00.000Z\",",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"mwilliams08\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 20,",
+											"        \"last_name\": \"Jones\",",
+											"        \"first_name\": \"Samantha\",",
+											"        \"email_address\": \"samantha.jo@gmail.com\",",
+											"        \"birthday\": \"1999-05-05T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"sjones09\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 21,",
+											"        \"last_name\": \"Smith\",",
+											"        \"first_name\": \"Christopher\",",
+											"        \"email_address\": \"christopher.smith@gmail.com\",",
+											"        \"birthday\": \"1990-06-06T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"csmith10\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 22,",
+											"        \"last_name\": \"Johnson\",",
+											"        \"first_name\": \"Ashley\",",
+											"        \"email_address\": \"ashley.johnson@gmail.com\",",
+											"        \"birthday\": \"1991-07-07T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"ajohnson11\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 23,",
+											"        \"last_name\": \"Williams\",",
+											"        \"first_name\": \"Jessica\",",
+											"        \"email_address\": \"jessica.wilams@gmail.com\",",
+											"        \"birthday\": \"1992-08-08T00:00:00.000Z\",",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"jwilliams12\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 24,",
+											"        \"last_name\": \"Jones\",",
+											"        \"first_name\": \"James\",",
+											"        \"email_address\": \"james.jones@gmail.com\",",
+											"        \"birthday\": \"1993-09-09T00:00:00.000Z\",",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"jjones13\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 25,",
+											"        \"last_name\": \"Smith\",",
+											"        \"first_name\": \"Emily\",",
+											"        \"email_address\": \"emily.sth@gmail.com\",",
+											"        \"birthday\": \"1994-10-10T00:00:00.000Z\",",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"esmith14\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 26,",
+											"        \"last_name\": \"Johnson\",",
+											"        \"first_name\": \"Jacob\",",
+											"        \"email_address\": \"jac.johnson@gmail.com\",",
+											"        \"birthday\": \"1995-11-11T00:00:00.000Z\",",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"jjohnson15\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 27,",
+											"        \"last_name\": \"Williams\",",
+											"        \"first_name\": \"Michael\",",
+											"        \"email_address\": \"michael.wi@gmail.com\",",
+											"        \"birthday\": \"1996-12-12T00:00:00.000Z\",",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"mwilliams16\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 28,",
+											"        \"last_name\": \"Jones\",",
+											"        \"first_name\": \"Samantha\",",
+											"        \"email_address\": \"samant.jones@gmail.com\",",
+											"        \"birthday\": \"1997-01-01T00:00:00.000Z\",",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"sjones17\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 29,",
+											"        \"last_name\": \"Smith\",",
+											"        \"first_name\": \"Christopher\",",
+											"        \"email_address\": \"christopher.smi@gmail.com\",",
+											"        \"birthday\": \"1998-02-02T00:00:00.000Z\",",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"csmith18\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 30,",
+											"        \"last_name\": \"Johnson\",",
+											"        \"first_name\": \"Ashley\",",
+											"        \"email_address\": \"ashley.john@gmail.com\",",
+											"        \"birthday\": \"1999-03-03T00:00:00.000Z\",",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"ajohnson19\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 31,",
+											"        \"last_name\": \"Williams\",",
+											"        \"first_name\": \"Jessica\",",
+											"        \"email_address\": \"jessica.willi@gmail.com\",",
+											"        \"birthday\": \"1990-04-04T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"jwilliams20\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 32,",
+											"        \"last_name\": \"Jones\",",
+											"        \"first_name\": \"James\",",
+											"        \"email_address\": \"james.jo@gmail.com\",",
+											"        \"birthday\": \"1991-05-05T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"jjones21\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 33,",
+											"        \"last_name\": \"Smith\",",
+											"        \"first_name\": \"Emily\",",
+											"        \"email_address\": \"em.smith@gmail.com\",",
+											"        \"birthday\": \"1992-06-06T00:00:00.000Z\",",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"esmith22\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 34,",
+											"        \"last_name\": \"Johnson\",",
+											"        \"first_name\": \"Jacob\",",
+											"        \"email_address\": \"jacob.joson@gmail.com\",",
+											"        \"birthday\": \"1993-07-07T00:00:00.000Z\",",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"jjohnson23\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 35,",
+											"        \"last_name\": \"Williams\",",
+											"        \"first_name\": \"Michael\",",
+											"        \"email_address\": \"michael.wiiams@gmail.com\",",
+											"        \"birthday\": \"1994-08-08T00:00:00.000Z\",",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"mwilliams24\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 36,",
+											"        \"last_name\": \"Smith\",",
+											"        \"first_name\": \"Emily\",",
+											"        \"email_address\": \"emily.sm@gmail.com\",",
+											"        \"birthday\": \"1996-10-10T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"esmith26\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 37,",
+											"        \"last_name\": \"Johnson\",",
+											"        \"first_name\": \"Jacob\",",
+											"        \"email_address\": \"jacob.jo@gmail.com\",",
+											"        \"birthday\": \"1997-11-11T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"-\",",
+											"        \"login\": \"jjohnson27\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": false",
+											"    },",
+											"    {",
+											"        \"id\": 38,",
+											"        \"last_name\": \"admin\",",
+											"        \"first_name\": \"admin\",",
+											"        \"email_address\": \"admin@admin.local\",",
+											"        \"birthday\": \"1998-06-06T00:00:00.000Z\",",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"+\",",
+											"        \"login\": \"admin\",",
+											"        \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"        \"is_admin\": true",
+											"    }",
+											"];",
+											"    const response = pm.response.json();",
+											"    pm.expect(response).to.be.eql(allUserExcpected);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/user/3",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
 							],
-							"port": "{{port}}",
-							"path": [
-								"user",
-								"3"
-							]
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/all",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "token user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get all user unvalid token\", function(){",
+											"    pm.response.to.have.status(403);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/all",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "pas de token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get all user no token\", function(){",
+											"    pm.response.to.have.status(401);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/all",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"all"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "get by id",
+					"item": [
+						{
+							"name": "user existe",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get user admin token\", function(){",
+											"    pm.response.to.have.status(200);",
+											"    const user = {",
+											"    \"id\": 2,",
+											"    \"first_name\": \"Jane\",",
+											"    \"last_name\": \"Doe\",",
+											"    \"birthday\": \"1991-10-10T00:00:00.000Z\",",
+											"    \"email_address\": \"jane.doe@gmail.com\",",
+											"    \"login\": \"janeDoeLaBoss91\",",
+											"    \"password\": \"$2b$10$8M0nRXx0JE1HZCm3tDN5/uOvFDF0bnW6aMM8Aun0X1/tKQSFy4mD.\",",
+											"    \"blood_type\": {",
+											"        \"id\": 2,",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"-\"",
+											"    },",
+											"    \"is_admin\": false",
+											"};",
+											"",
+											"    const response = pm.response.json();",
+											"    pm.expect(response).to.be.eql(user);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/2",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"2"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user n'existe pas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get user with invalid id\", function(){",
+											"    pm.response.to.have.status(404)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/100",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"100"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "token d'un user simple",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get user with user token\", function(){",
+											"    pm.response.to.have.status(403)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/1",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "sans token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Get user with user token\", function(){",
+											"    pm.response.to.have.status(403)",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/1",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				},
 				{
 					"name": "register user",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"emailAddress\": \"postomddddan@test.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"02/02/2002\",\n    \"bloodType\": \"A\",\n    \"rhesus\": \"+\",\n    \"login\": \"poop\",\n    \"password\": \"1234\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"item": [
+						{
+							"name": "register user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"new user valid\", function(){",
+											"    pm.response.to.have.status(200);",
+											"    const expected = {",
+											"    \"isAdmin\": false,",
+											"    \"user\": {",
+											"        \"id\": 39,",
+											"        \"firstName\": \"man\",",
+											"        \"lastName\": \"post\",",
+											"        \"emailAddress\": \"postier@test.com\",",
+											"        \"login\": \"postier\",",
+											"        \"birthDay\": \"2000-02-02T00:00:00.000Z\",",
+											"        \"blood_type\": {",
+											"            \"id\": 1,",
+											"            \"type\": \"A\",",
+											"            \"rhesus\": \"+\"",
+											"        }",
+											"    }",
+											"}",
+											"    const response = pm.response.json();",
+											"    pm.expect(response.user).to.be.eql(expected.user);})"
+										],
+										"type": "text/javascript"
+									}
 								}
-							}
-						},
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/user/register",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
 							],
-							"port": "{{port}}",
-							"path": [
-								"user",
-								"register"
-							]
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"emailAddress\": \"postier@test.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"2000/02/02\",\n    \"bloodType\": \"A\",\n    \"rhesus\": \"+\",\n    \"login\": \"postier\",\n    \"password\": \"1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login existe",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"new user login exist\", function(){",
+											"    pm.response.to.have.status(409);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"emailAddress\": \"poster@test.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"2000/02/02\",\n    \"bloodType\": \"A\",\n    \"rhesus\": \"+\",\n    \"login\": \"johnDoe90\",\n    \"password\": \"1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "date naissance trop jeune (moins de 18 ans)",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"new user login exist\", function(){",
+											"    pm.response.to.have.status(412);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"emailAddress\": \"posteer@test.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"2020/02/02\",\n    \"bloodType\": \"A\",\n    \"rhesus\": \"+\",\n    \"login\": \"postieer\",\n    \"password\": \"1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "email existe",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"new user login exist\", function(){",
+											"    pm.response.to.have.status(409);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"emailAddress\": \"john.doe@gmail.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"2002/02/02\",\n    \"bloodType\": \"A\",\n    \"rhesus\": \"+\",\n    \"login\": \"poster\",\n    \"password\": \"1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "invalid blood type",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"new user unvalid blood type\", function(){",
+											"    pm.response.to.have.status(404);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"emailAddress\": \"postieru@test.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"2002/02/02\",\n    \"bloodType\": \"y\",\n    \"rhesus\": \"+\",\n    \"login\": \"postuer\",\n    \"password\": \"1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "not value in body",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"new user no body\", function(){",
+											"    pm.response.to.have.status(412);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"register"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
 					"name": "delete user",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/user/delete/2",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
+					"item": [
+						{
+							"name": "user existe",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"delete user valid\", function(){",
+											"    pm.response.to.have.status(200);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
 							],
-							"port": "{{port}}",
-							"path": [
-								"user",
-								"delete",
-								"2"
-							]
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/9",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user n'existe pas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"delete user unvalid id\", function(){",
+											"    pm.response.to.have.status(404);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/100",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"100"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "token user classique",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"delete user unvalid token\", function(){",
+											"    pm.response.to.have.status(403);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/1",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "pas de token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"delete user no token\", function(){",
+											"    pm.response.to.have.status(401);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user/1",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "patch user",
-					"request": {
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": 3,\n    \"emailAddress\": \"postman@test.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"02/02/2002\",\n    \"bloodTypeId\": \"1\",\n    \"login\": \"pp\",\n    \"password\": \"1234\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/user/patch",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"user",
-								"patch"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "all user",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+					"name": "update user",
+					"item": [
+						{
+							"name": "user existe",
+							"event": [
 								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"update user valid\", function(){",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.have.body;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/user/all",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
 							],
-							"port": "{{port}}",
-							"path": [
-								"user",
-								"all"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "donation",
-			"item": [
-				{
-					"name": "get all donation",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 4,\n    \"emailAddress\": \"janeer.doe@gmail.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"2002/04/04\",\n    \"bloodTypeId\": \"1\",\n    \"login\": \"pooo\",\n    \"password\": \"1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "login existe deja",
+							"event": [
 								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"update user login already exist\", function(){",
+											"    pm.response.to.have.status(409);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/donation/all",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
 							],
-							"port": "{{port}}",
-							"path": [
-								"donation",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "last donation user everytype",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 2,\n    \"emailAddress\": \"postman@test.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"2002/02/20\",\n    \"bloodTypeId\": \"1\",\n    \"login\": \"johnSmithLeBoss\",\n    \"password\": \"1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "email existe deja",
+							"event": [
 								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"update user email already exist\", function(){",
+											"    pm.response.to.have.status(409);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/donation/user/1/last",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
 							],
-							"port": "{{port}}",
-							"path": [
-								"donation",
-								"user",
-								"1",
-								"last"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create new donation",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 3,\n    \"emailAddress\": \"john.doe@gmail.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"2002/02/02\",\n    \"bloodTypeId\": \"1\",\n    \"login\": \"post\",\n    \"password\": \"1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user existe pas",
+							"event": [
 								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"update user unvalid id\", function(){",
+											"    pm.response.to.have.status(404);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"date\": \"2022-12-02\",\n    \"hour\": \"15:30\",\n    \"userId\": \"1\",\n    \"donationTypeId\": \"2\",\n    \"donationCenterId\": \"1\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/donation/",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
 							],
-							"port": "{{port}}",
-							"path": [
-								"donation",
-								""
-							]
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 300,\n    \"emailAddress\": \"john.doe@gmail.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"2002/02/02\",\n    \"bloodTypeId\": \"1\",\n    \"login\": \"pp\",\n    \"password\": \"1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "token d'un simple user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"update user unvalid token\", function(){",
+											"    pm.response.to.have.status(403);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 300,\n    \"emailAddress\": \"postman@test.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"02/02/2002\",\n    \"bloodTypeId\": \"1\",\n    \"login\": \"pp\",\n    \"password\": \"1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "pas de token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"update user no token\", function(){",
+											"    pm.response.to.have.status(401);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 300,\n    \"emailAddress\": \"postman@test.com\",\n    \"lastName\": \"post\",\n    \"firstName\": \"man\",\n    \"birthdate\": \"02/02/2002\",\n    \"bloodTypeId\": \"1\",\n    \"login\": \"pp\",\n    \"password\": \"1234\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "body vide",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"update user no body\", function(){",
+											"    pm.response.to.have.status(412);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/user",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"user"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				}
 			]
 		},
@@ -371,740 +1684,1330 @@
 			"name": "blood type",
 			"item": [
 				{
+					"name": "by id",
+					"item": [
+						{
+							"name": "id exist",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"get blood type valid\", function(){",
+											"    pm.response.to.have.status(200);",
+											"    const expected = {",
+											"    \"id\": 1,",
+											"    \"type\": \"A\",",
+											"    \"rhesus\": \"+\"",
+											"}",
+											"    const response = pm.response.json();",
+											"    pm.expect(response).to.be.eql(expected);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/1",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "id n'existe pas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"get blood type unvalid id\", function(){",
+											"    pm.response.to.have.status(404);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/100",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"100"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "pas de token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"get blood type unvalid token\", function(){",
+											"    pm.response.to.have.status(401);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/1",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "token user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"get blood type user token\", function(){",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.have.body;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/1",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
 					"name": "all blood type",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+					"item": [
+						{
+							"name": "admin token",
+							"event": [
 								{
-									"key": "token",
-									"value": "{{tokenUser}}",
-									"type": "string"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"get all blood type admin token\", function(){",
+											"    pm.response.to.have.status(200);",
+											"    const expected = [",
+											"    {",
+											"        \"id\": 1,",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"+\"",
+											"    },",
+											"    {",
+											"        \"id\": 2,",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"-\"",
+											"    },",
+											"    {",
+											"        \"id\": 3,",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"+\"",
+											"    },",
+											"    {",
+											"        \"id\": 4,",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"-\"",
+											"    },",
+											"    {",
+											"        \"id\": 5,",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"+\"",
+											"    },",
+											"    {",
+											"        \"id\": 6,",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"-\"",
+											"    },",
+											"    {",
+											"        \"id\": 7,",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"+\"",
+											"    },",
+											"    {",
+											"        \"id\": 8,",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"-\"",
+											"    }",
+											"];",
+											"    const response = pm.response.json();",
+											"    pm.expect(response).to.be.eql(expected);",
+											"})",
+											"    "
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/bloodtype/all",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
 							],
-							"port": "{{port}}",
-							"path": [
-								"bloodtype",
-								"all"
-							]
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/all",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"get all blood type user token\", function(){",
+											"    pm.response.to.have.status(200);",
+											"    const expected = [",
+											"    {",
+											"        \"id\": 1,",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"+\"",
+											"    },",
+											"    {",
+											"        \"id\": 2,",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"-\"",
+											"    },",
+											"    {",
+											"        \"id\": 3,",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"+\"",
+											"    },",
+											"    {",
+											"        \"id\": 4,",
+											"        \"type\": \"B\",",
+											"        \"rhesus\": \"-\"",
+											"    },",
+											"    {",
+											"        \"id\": 5,",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"+\"",
+											"    },",
+											"    {",
+											"        \"id\": 6,",
+											"        \"type\": \"AB\",",
+											"        \"rhesus\": \"-\"",
+											"    },",
+											"    {",
+											"        \"id\": 7,",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"+\"",
+											"    },",
+											"    {",
+											"        \"id\": 8,",
+											"        \"type\": \"O\",",
+											"        \"rhesus\": \"-\"",
+											"    }",
+											"];",
+											"    const response = pm.response.json();",
+											"    pm.expect(response).to.be.eql(expected);})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/all",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "pas de token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"get all blood type user token\", function(){",
+											"    pm.response.to.have.status(401);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/all",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"all"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
 				},
 				{
-					"name": "get bloodtype",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
+					"name": "by name",
+					"item": [
+						{
+							"name": "token user",
+							"event": [
 								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"get blood type by name user token\", function(){",
+											"    pm.response.to.have.status(200);",
+											"    const expected =",
+											"    {",
+											"        \"id\": 1,",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"+\"",
+											"    },",
+											"    const response = pm.response.json();",
+											"    pm.expect(response).to.be.eql(expected);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
 								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/bloodtype/1",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
 							],
-							"port": "{{port}}",
-							"path": [
-								"bloodtype",
-								"1"
-							]
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"a\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/name",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"name"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "blood type n'existe pas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"get blood type by name unvalid name\", function(){",
+											"    pm.response.to.have.status(404);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"z\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/name",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"name"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "token admin",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"get blood type by name admin token\", function(){",
+											"    pm.response.to.have.status(200);",
+											"    const expected =",
+											"    {",
+											"        \"id\": 1,",
+											"        \"type\": \"A\",",
+											"        \"rhesus\": \"+\"",
+											"    },",
+											"    const response = pm.response.json();",
+											"    pm.expect(response).to.be.eql(expected);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"a\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/name",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"name"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "pas de token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"get blood type by name no token\", function(){",
+											"    pm.response.to.have.status(401);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"a\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/name",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"name"
+									]
+								}
+							},
+							"response": []
 						}
-					},
-					"response": []
+					]
+				},
+				{
+					"name": "create blood type",
+					"item": [
+						{
+							"name": "valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"create blood type valid\", function(){",
+											"    pm.response.to.have.status(201);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"z\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "body vide",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"create blood type empty body\", function(){",
+											"    pm.response.to.have.status(400);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "blood type existe déjà",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"create blood type already exist\", function(){",
+											"    pm.response.to.have.status(409);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"a\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "user token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"create blood type user token\", function(){",
+											"    pm.response.to.have.status(403);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"a\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "no token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"create blood type no token\", function(){",
+											"    pm.response.to.have.status(401);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"type\": \"a\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "update blood type",
+					"item": [
+						{
+							"name": "update blood type",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"update blood type valid\", function(){",
+											"    pm.response.to.have.status(200);",
+											"    pm.response.to.have.body;",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 2,\n    \"type\": \"y\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "blood type existe délà",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"update blood type already exist\", function(){",
+											"    pm.response.to.have.status(409);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 2,\n    \"type\": \"a\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "token user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"update blood type user token\", function(){",
+											"    pm.response.to.have.status(403);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 2,\n    \"type\": \"a\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "pas de token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"update blood type no token\", function(){",
+											"    pm.response.to.have.status(403);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"id\": 2,\n    \"type\": \"a\",\n    \"rhesus\": \"+\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "delete blood type",
+					"item": [
+						{
+							"name": "valid",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"delet blood type valid\", function(){",
+											"    pm.response.to.have.status(200);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/9",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "token user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"delet blood type valid\", function(){",
+											"    pm.response.to.have.status(403);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenUser}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/9",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "pas de token",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"delet blood type valid\", function(){",
+											"    pm.response.to.have.status(401);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/9",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"9"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "blood type est utilisé",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"delet blood type valid\", function(){",
+											"    pm.response.to.have.status(409);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/8",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "n'existe pas",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"delet blood type valid\", function(){",
+											"    pm.response.to.have.status(404);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{tokenAdmin}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://{{Base_url}}:{{port}}/bloodtype/100",
+									"protocol": "http",
+									"host": [
+										"{{Base_url}}"
+									],
+									"port": "{{port}}",
+									"path": [
+										"bloodtype",
+										"100"
+									]
+								}
+							},
+							"response": []
+						}
+					]
 				}
 			]
-		},
-		{
-			"name": "locality",
-			"item": [
-				{
-					"name": "all locality",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/locality/all",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"locality",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "add locality",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Paris\",\n    \"postalCode\": \"5656\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/locality",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"locality"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "patch locality",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": 20,\n    \"name\": \"Moustier\",\n    \"postalCode\": \"5656\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/locality",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"locality"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete locality",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/locality/11",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"locality",
-								"11"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "donation center",
-			"item": [
-				{
-					"name": "all donation center",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/center/all",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"center",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "donation center by id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/center/1",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"center",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "opening day of a donation center",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/center/opening/1",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"center",
-								"opening",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update donation center",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"test\",\n    \"phoneNumber\": \"0495/989898\",\n    \"streetName\": \"Le trou\",\n    \"numberInStreet\": 1,\n    \"localityId\": 2\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/center",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"center"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete donation center",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/center/6",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"center",
-								"6"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "opening day",
-			"item": [
-				{
-					"name": "get from id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/openingday/1",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"openingday",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create opening day",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"dayLabel\": \"Monday\",\n    \"openingTime\": \"08:30\",\n    \"closingTime\": \"18:30\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/openingday/",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"openingday",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete opening day",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/openingday/15",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"openingday",
-								"15"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get for a day",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/openingday/day/Monday",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"openingday",
-								"day",
-								"Monday"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get all",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/openingday/all",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"openingday",
-								"all"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update opening",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{tokenAdmin}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"id\": 5,\n    \"dayLabel\": \"Friday\",\n    \"openingTime\": \"08:05:00\",\n    \"closingTime\": \"12:00:00\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/openingday",
-							"protocol": "http",
-							"host": [
-								"{{Base_url}}"
-							],
-							"port": "{{port}}",
-							"path": [
-								"openingday"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "donation type all",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{tokenAdmin}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{Base_url}}:{{port}}/donationtype/all",
-					"protocol": "http",
-					"host": [
-						"{{Base_url}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"donationtype",
-						"all"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "donation type by id",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{tokenAdmin}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{Base_url}}:{{port}}/donationtype/1",
-					"protocol": "http",
-					"host": [
-						"{{Base_url}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"donationtype",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "donation type by id Copy",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{tokenAdmin}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "http://{{Base_url}}:{{port}}/donationtype/1",
-					"protocol": "http",
-					"host": [
-						"{{Base_url}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"donationtype",
-						"1"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "donation type create",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{tokenAdmin}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"White globule\",\n    \"timeOfDonation\": \"01:20:00\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://{{Base_url}}:{{port}}/donationtype",
-					"protocol": "http",
-					"host": [
-						"{{Base_url}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"donationtype"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "update donation type",
-			"request": {
-				"auth": {
-					"type": "bearer",
-					"bearer": [
-						{
-							"key": "token",
-							"value": "{{tokenAdmin}}",
-							"type": "string"
-						}
-					]
-				},
-				"method": "PATCH",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"id\": 4,\n    \"name\": \"Plasma\",\n    \"timeOfDonation\": \"04:20:00\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "http://{{Base_url}}:{{port}}/donationtype",
-					"protocol": "http",
-					"host": [
-						"{{Base_url}}"
-					],
-					"port": "{{port}}",
-					"path": [
-						"donationtype"
-					]
-				}
-			},
-			"response": []
 		}
 	]
 }
