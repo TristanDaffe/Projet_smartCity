@@ -79,7 +79,7 @@ module.exports.getBloodType = async (req, res) => {
  *     application/json:
  *      schema:
  *       type: object
- *       properties:
+ *       properties: 
  *        type:
  *         type: string
  *        rhesus:

@@ -13,7 +13,6 @@ export default function LoginAccountTest({navigation}) {
   const [password, setPassword] = React.useState('');
 
   const {isLoading, login} = React.useContext(AuthContext);
-  const all = React.useContext(AuthContext);
 
   return (
     <View>
