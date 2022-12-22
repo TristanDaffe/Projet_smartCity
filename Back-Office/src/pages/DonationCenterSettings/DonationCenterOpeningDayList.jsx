@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import DropList from '../../component/DropList';
 import { loadOpeningDayFromDonationCenterData, deleteOpeningDayData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
+import Pagination from 'react-paginate'
 
 function withParams(Component) {
     return (props) => { return <Component {...props} params={useParams()} /> };
@@ -14,6 +15,9 @@ class DonationCenterOpeningDayList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            currentPage: 0,
+            itemsPerPage: 10,
+
             donationCenterId : parseInt(this.props.params.id),
             openingDay: [],
             openingDayToDisplay: [],
@@ -30,15 +34,14 @@ class DonationCenterOpeningDayList extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props !== prevProps) {
-            this.setState({
-                openingDay: this.props.openingDay,
-                openingDayToDisplay: this.props.openingDay
-            });
-        }
-    }
-
+    // componentDidUpdate(prevProps) {
+    //     if (this.props !== prevProps) {
+    //         this.setState({
+    //             openingDay: this.props.openingDay,
+    //             openingDayToDisplay: this.props.openingDay
+    //         });
+    //     }
+    // }
 
     componentDidMount() {
         this.setOpeningDays();
@@ -80,8 +83,6 @@ class DonationCenterOpeningDayList extends React.Component {
         promesse.then(() => {
             this.setOpeningDays();
         }).catch((error) => {
-            console.log("error dans la view");
-            console.log(error);
             this.setState({ modal2: true});
             this.setState({ header2: "Error" });
             this.setState({ body2: error.response.data });
@@ -124,18 +125,24 @@ class DonationCenterOpeningDayList extends React.Component {
 
 
     render() {
+        const { currentPage, itemsPerPage } = this.state;
+    
+        // Select the items to display on the current page
+        const displayedData = this.state.openingDayToDisplay.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
         return (
             <div>
                 <div className="header">
                     <Link to={`/donationCenterList`} className='backButtonContainer' >
                         <button className="addBackButton">Back</button>
                     </Link>
-                    <h1>Opening Hours Settings</h1>
+                    <h1>Donation Center Settings</h1>
                     <img
                         className='imgCroixRouge'
                         src="https://i.pinimg.com/originals/64/11/f0/6411f0dd5a67d583c81851b1c355833f.png"
                         alt="settings" />
+                    
                 </div>
+                <h2>Opening Day List</h2>
                 <div className="searchBar">
                     <p>Search by :</p>
                     <DropList
@@ -163,7 +170,7 @@ class DonationCenterOpeningDayList extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.openingDayToDisplay.map((openingDay, index) => {
+                        {displayedData.map((openingDay, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{openingDay.id}</td>
@@ -181,6 +188,14 @@ class DonationCenterOpeningDayList extends React.Component {
                         })}
                     </tbody>
                 </table>
+
+                <div className="pagination">
+                <Pagination
+                    pageCount={Math.ceil(this.state.openingDay.length / itemsPerPage)}
+                    onPageChange={this.handlePageChange}
+                    currentPage={currentPage}
+                    />
+                </div>
 
                 {this.state.modal && (
                     <CustomModal

@@ -1,8 +1,5 @@
-
-
 import React from 'react';
 import CustomModal from '../../component/CustomModal';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { addDonationCenterData, loadLocalitiesData } from '../../component/API';
 
@@ -92,18 +89,14 @@ class DonationCenterAdd extends React.Component {
                     localityId: this.state.localityId,
                     availableDonation : availableDonation,
                 };
-                console.log("newDonationCenter");
-                console.log(newDonationCenter);
                 this.setState({ modal: false });
                 const promiss = addDonationCenterData(newDonationCenter);
-                promiss.then((response) => {
+                promiss.then(() => {
                     this.setState({ error: false });
                     this.setState({ modal2: true });
                     this.setState({ header2: "Success" });
                     this.setState({ body2: "Donation center successfully added !" });
                 }).catch((error) => {
-                    console.log("error");
-                    console.log(error);
                     this.setState({ error: true });
                     this.setState({ modal2: true });
                     this.setState({ header2: "Error" });

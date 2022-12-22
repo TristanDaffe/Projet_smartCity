@@ -89,7 +89,6 @@ module.exports.createDonationCenter = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error)
         res.sendStatus(500);
     }
     finally {
@@ -149,7 +148,6 @@ module.exports.updateDonationCenter = async (req, res) => {
         }
     }
     catch (error) {
-        console.log()
         res.sendStatus(500);
     }
     finally {
@@ -185,7 +183,6 @@ module.exports.deleteDonationCenter = async (req, res) => {
                         res.sendStatus(200);
                     }
                     catch (error) {
-                        console.log(error);
                         res.status(500).send('Error deleting donation center');
                     }
                 }

@@ -187,7 +187,6 @@ module.exports.updateDonation = async (req, res) => {
         res.sendStatus(200);
     }
     catch (error) {
-        console.log(error)
         res.sendStatus(500);
     }
     finally {

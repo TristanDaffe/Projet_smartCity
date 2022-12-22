@@ -1,8 +1,7 @@
 import axios from "axios";
 import { setToken, getToken } from "../../context/LoginContext";
-import DonationCenterList from "../../pages/DonationCenterSettings/DonationCenterList";
 
-const URL_API = `http://192.168.1.32:3001`;
+const URL_API = `http://localhost:3001`;
 
 const login = async (login, password) => {
   await axios
@@ -33,6 +32,23 @@ const getAllDonations = async () => {
       throw error;
     });
 };
+
+const getDonation = async (id) => {
+  return await axios
+    .get(`${URL_API}/donation/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
 
 const getDonationsFromDonor = async (id) => {
   return await axios
@@ -245,13 +261,13 @@ const deleteDonor = async (id) => {
     });
 };
 
-const addDonor = async (donor) => {
+const addDonor = async (donor) => { 
   return await axios
-    .post(`${URL_API}/user/register`, donor, {
+    .post(`${URL_API}/user/register`,  {
       lastName: donor.lastName,
       firstName: donor.firstName,
       emailAddress: donor.emailAddress,
-      birthDate: donor.birthDate,
+      birthdate: donor.birthdate,
       bloodType: donor.bloodType,
       rhesus: donor.rhesus,
       login: donor.login,
@@ -283,6 +299,11 @@ const addOpeningDay = async (openingDay) => {
             return response.data;
         })
         .catch((error) => {
+          if (openingDay.closingTime === '') {
+            error.response.data = 'Please specify a closing time';
+          } else if (openingDay.openingTime === '') {
+            error.response.data = 'Please specify an opening time';
+          } 
             throw error;
         });
 };
@@ -307,11 +328,54 @@ const addDonationCenter = async (donationCenter) => {
       return response.data;
     })
     .catch((error) => {
+      if (donationCenter.fax === '') {
+        error.response.data = "Please enter a valid fax number";
+      } 
+      else if (donationCenter.numberInStreet === ''){
+        error.response.data = "Please enter a valid number in street"
+      }
+      else if (donationCenter.localityId === 0){
+        error.response.data = "Please select a locality"
+      }
+      else if (donationCenter.streetName === ''){
+        error.response.data = "Please enter a valid street name"
+      }
+
       throw error;
     });
 };
 
-
+const addDonation = async (donation) => {
+  return await axios
+    .post(`${URL_API}/donation`, donation, {
+      date: donation.date,
+      hour: donation.hour,
+      donationTypeId  : donation.donationTypeId,
+      userId: donation.userId,
+      donationCenterId: donation.donationCenterId,
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${getToken()}`,
+      },
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      if (donation.hour=== ''){
+        error.response.data = "Please enter a valid hour";
+      } else if (donation.date === ''){
+        error.response.data = "Please enter a valid date";
+      } else if (isNaN(donation.donationTypeId)){
+        error.response.data = "Please enter a valid donation type";
+      } else if (isNaN(donation.userId)){
+        error.response.data = "Please enter a valid user";
+      } else if (isNaN(donation.donationCenterId)){
+        error.response.data = "Please enter a valid donation center";
+      }
+      throw error;
+    });
+};
 
 const updateOpeningDay = async (openingDay) => {
     return await axios
@@ -324,21 +388,32 @@ const updateOpeningDay = async (openingDay) => {
             return response.data;
         })
         .catch((error) => {
+          if (openingDay.closingTime === '') {
+            error.response.data = 'Please specify a closing time';
+          } else if (openingDay.openingTime === '') {
+            error.response.data = 'Please specify an opening time';
+          } 
           throw error;
         });
 };
 
 const updateDonor = async (donor) => {
+  const body = {
+    id : donor.id,
+    lastName: donor.last_name,
+    firstName: donor.first_name,
+    emailAddress: donor.email_address,
+    birthDate: donor.birthday,
+    bloodType: donor.bloodTypeId,
+    login: donor.login,
+  }
+
+  if (donor.password !== null) {
+    body.password = donor.password;
+  }
   return await axios
     .patch(`${URL_API}/user`, {
-      id: donor.id,
-      lastName: donor.last_name,
-      firstName: donor.first_name,
-      emailAddress: donor.email_address,
-      birthdate: donor.birthday,
-      bloodTypeId: donor.bloodTypeId,
-      login: donor.login,
-      password: donor.password
+      body: body,
     }, {
       headers: {"Content-Type": "application/json",
       "Authorization": `Bearer ${getToken()}`,
@@ -348,6 +423,8 @@ const updateDonor = async (donor) => {
       return response.data;
     })
     .catch((error) => {
+      console.log(donor);
+      console.log(body);
       throw error;
     });
 };
@@ -373,13 +450,50 @@ const updateDonationCenter = async (donationCenter) => {
       return response.data;
     })
     .catch((error) => {
+      if (donationCenter.fax === ''){
+        error.response.data = "Please enter a valid fax number"
+      }
+      else if (donationCenter.numberInStreet === ''){
+        error.response.data = "Please enter a valid number in street"
+      }
+      
+      throw error;
+    });
+};
+
+const updateDonation = async (donation) => {  
+  return await axios
+    .patch(`${URL_API}/donation`, {
+      id: donation.id,
+      hour: donation.hour,
+      date: donation.date,
+      donationTypeId: donation.donationTypeId,
+      userId: donation.userId,
+      donationCenterId: donation.donationCenterId,
+    }, {
+      headers: {"Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+      }
+      })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((error) => {
+      if (donation.hour === ''){
+        error.response.data = "Please enter a valid hour"
+      }
+      else if (donation.date === ''){
+        error.response.data = "Please enter a valid date"
+      }
       throw error;
     });
 };
 
 
+
 export {
   getAllDonations,
+  getDonation,
   getDonationsFromDonor,
   login,
   getAllDonationCenters,
@@ -397,7 +511,9 @@ export {
   addDonor,
   addOpeningDay,
   addDonationCenter,
+  addDonation,
   updateOpeningDay,
   updateDonor,
   updateDonationCenter,
+  updateDonation,
 };

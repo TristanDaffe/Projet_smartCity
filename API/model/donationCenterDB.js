@@ -1,17 +1,17 @@
 module.exports.getDonationCenter = async( id, client) => {
-    return await client.query(`SELECT donation_center.id, donation_center.name, donation_center.phone_number, donation_center.email_address, donation_center.fax, donation_center.street_name, donation_center.street_number, locality.name AS locality_name 
+    return await client.query(`SELECT donation_center.id, donation_center.name, donation_center.phone_number, donation_center.email_address, donation_center.fax, donation_center.street_name, donation_center.street_number, locality.name AS locality_name, locality.id AS locality_id
     FROM donation_center 
     INNER JOIN locality ON donation_center.locality = locality.id  
     WHERE donation_center.id = $1`, [id]);
 }
-// faire une autre fonction pour récupérer les types de dons d'un centre de don
+
 module.exports.getDonationCenterDonations = async( id, client) => {
     return await client.query("SELECT donation_type.name FROM donation_center_donation_type INNER JOIN donation_type ON donation_center_donation_type.donation_type_id = donation_type.id WHERE donation_center_donation_type.donation_center_id = $1", [id]);
 }
 
 module.exports.getAllDonationCenters = async( client) => {
     return await client.query(`SELECT donation_center.id, donation_center.name, donation_center.phone_number, donation_center.email_address, donation_center.fax, donation_center.street_name, donation_center.street_number, 
-    locality.name AS locality_name
+    locality.name AS locality_name, locality.id AS locality_id
     FROM donation_center 
     INNER JOIN locality ON donation_center.locality = locality.id
     ORDER BY donation_center.id`);
@@ -21,7 +21,6 @@ module.exports.createDonationCenter = async( name, phoneNumber, emailAddress, fa
     await client.query('BEGIN TRANSACTION')
     try{
         const {rows: center} = await client.query("INSERT INTO donation_center (name, phone_number, email_address, fax, street_name, street_number, locality) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *", [name, phoneNumber, emailAddress, fax, streetName, numberInStreet, localityId]);
-        console.log(center[0].id)
         for(const type of availableDonation){
             await client.query("INSERT INTO donation_available (center_id, donation_type_id) VALUES ($1, $2)", [center[0].id, type]);
         }

@@ -32,10 +32,9 @@ export const AuthProvider = ({children}) => {
             setToken(token);
             AsyncStorage.setItem('user', JSON.stringify(userInfo));
             AsyncStorage.setItem('token', JSON.stringify(token));
-            console.log("register", userInfo, token);
         })
         .catch( err => {
-            // gestion des erreurs (remplacer le console.log)
+            // gestion des erreurs
             Alert.alert("Erreur lors de l'enregistrement", err.message);
         })
         .finally( () =>{
@@ -60,7 +59,7 @@ export const AuthProvider = ({children}) => {
                 AsyncStorage.setItem('token', JSON.stringify(token));
             })
             .catch( err => {
-                // gestion des erreurs (remplacer le console.log)
+                // gestion des erreurs
                 Alert.alert("Error", err.message);
 /*
 PARTIE POUR TEST SANS API

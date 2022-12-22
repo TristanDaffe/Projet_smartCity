@@ -50,6 +50,7 @@ const manageAuth = async (userType, value, res, client) => {
     }
 }
 
+
 module.exports.loginUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
@@ -171,7 +172,6 @@ module.exports.registerUser = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -182,6 +182,8 @@ module.exports.registerUser = async (req, res) => {
 module.exports.patchUser = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
+    console.log(body);
+
     const { 
             id,
             lastName, 
@@ -191,6 +193,8 @@ module.exports.patchUser = async (req, res) => {
             bloodTypeId,
             login, 
             password: passwordClear } = body;
+
+    console.log(body);
     let errors = [];
     errors[0] = validateString(lastName, "LastName");
     errors[1] = validateString(firstName, "Firstname"); 
@@ -200,7 +204,7 @@ module.exports.patchUser = async (req, res) => {
 
     try {
         let i = 0;
-        while(i < errors.length && errors[i].errorCode > 200 && errors[i].errorCode < 299) {
+        while(i < errors.length && errors[i].errorCode >= 200 && errors[i].errorCode <= 299) {
             i++;
         }
         if(i < errors.length) {
@@ -236,7 +240,6 @@ module.exports.patchUser = async (req, res) => {
         }
     }
     catch (error) {
-        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -273,6 +276,7 @@ module.exports.deleteUser = async (req, res) => {
     }
 }
 
+
 module.exports.getAllUsers = async (req, res) => {
     const client = await pool.connect();
 
@@ -287,3 +291,4 @@ module.exports.getAllUsers = async (req, res) => {
         client.release();
     }
 }
+

@@ -1,20 +1,19 @@
 import React from 'react';
 import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
-import { loadDonationData, deleteDonationData } from '../../component/API';
+import { loadDonationsData, deleteDonationData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
-
-// mettre defaultValue dans le time
+import Pagination from 'react-paginate'
 
 class DonationList extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            // donations: this.props.donations,
-            // donationsToDisplay: this.props.donations,
+            currentPage: 0,
+            itemsPerPage: 15,
+
             donations: [],
             donationsToDisplay: [],
             filter: "id",
@@ -36,14 +35,14 @@ class DonationList extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps) {
-        if (this.props !== prevProps) {
-            this.setState({
-                donations: this.props.donations,
-                donationsToDisplay: this.props.donations
-            });
-        }
-    }
+    // componentDidUpdate(prevProps) {
+    //     if (this.props !== prevProps) {
+    //         this.setState({
+    //             donations: this.props.donations,
+    //             donationsToDisplay: this.props.donations
+    //         });
+    //     }
+    // }
 
     componentDidMount() {
         this.setDonations();
@@ -52,7 +51,7 @@ class DonationList extends React.Component {
     setDonations() {
         this.setState({loading: true, error: false}, async () => {
             try{
-                const data = await loadDonationData();
+                const data = await loadDonationsData();
                 this.setState({loading: false, error: false});
                 const state = {
                     donations: data,
@@ -94,6 +93,9 @@ class DonationList extends React.Component {
         
     
     }
+    handlePageChange = (page) => {
+        this.setState({ currentPage: page.selected });
+      }
 
     changeValuesToDisplay(string) {
         const donationsToDisplay = this.state.donations;
@@ -133,6 +135,10 @@ class DonationList extends React.Component {
     }
 
     render() {
+        const { currentPage, itemsPerPage } = this.state;
+    
+        // Select the items to display on the current page
+        const displayedData = this.state.donationsToDisplay.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
         return (
             <div>
                 <div className="header">
@@ -183,7 +189,7 @@ class DonationList extends React.Component {
                     </thead>
                     <tbody>
                         
-                        {this.state.donationsToDisplay.map((don, index) => {
+                        {displayedData.map((don, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{don.id}</td>
@@ -204,6 +210,13 @@ class DonationList extends React.Component {
                         })}
                     </tbody>
                 </table>
+                <div className="pagination">
+                <Pagination
+                    pageCount={Math.ceil(this.state.donations.length / itemsPerPage)}
+                    onPageChange={this.handlePageChange}
+                    currentPage={currentPage}
+                    />
+                </div>
                 {this.state.modal && (
                     <CustomModal
                         modal={this.state.modal}
@@ -235,21 +248,5 @@ class DonationList extends React.Component {
     }
 }
 
-const mapStateToProps = (state) => {
-    return {
-        donations: state.donations
-    }
-};
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        addDonation: (donationObjet) => {
-            dispatch({ type: "addDonation", payload: { newDonation: donationObjet } });
-        },
-        deleteDonation: (id) => {
-            dispatch({ type: "deleteDonation", payload: { id: id } });
-        }
-    }
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(DonationList);
+export default DonationList;

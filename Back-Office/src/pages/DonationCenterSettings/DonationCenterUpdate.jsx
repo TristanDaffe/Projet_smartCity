@@ -1,5 +1,5 @@
 import React from 'react';
-import { createPath, Navigate, Link, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { loadDonationCenterData, updateDonationCenterData, loadLocalitiesData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
 
@@ -82,16 +82,9 @@ class DonationCenterUpdate extends React.Component {
                     fax: data.fax,
                     streetName: data.street_name,
                     numberInStreet: data.street_number,
-                    localityId: data.localityId
+                    localityId: data.locality_id
                 };
-                console.log("data");
-                console.log(data);
-
                 this.setState(state);
-
-                console.log("this.state updated");
-                console.log(this.state);
-   
             } catch (error) {
                 this.setState({
                     modal2: true,
@@ -104,9 +97,9 @@ class DonationCenterUpdate extends React.Component {
 
     updateDonationCenter() {
         this.setState({ loading: true, error: false }, async () => {
-            
-                const updatedDationCenter = {
-                    id: this.state.donactioCenterId,
+            let idDonationCenter = this.props.params.id;
+                const updatedDonationCenter = {
+                    id: idDonationCenter,
                     name: this.state.name,
                     phoneNumber: this.state.phoneNumber,
                     emailAddress: this.state.emailAddress,
@@ -116,8 +109,8 @@ class DonationCenterUpdate extends React.Component {
                     localityId: this.state.localityId
                 };
                 this.setState({modal : false});
-                const promiss =  updateDonationCenterData(updatedDationCenter);
-                promiss.then((data) => {
+                const promiss =  updateDonationCenterData(updatedDonationCenter);
+                promiss.then(() => {
                     this.setState({
                         modal2: true,
                         header2: "Success",
@@ -158,7 +151,7 @@ class DonationCenterUpdate extends React.Component {
                 <h2>Update donation center</h2>
                 <form className='addUpdateContainer'>
                     <div className='firstItem'>
-                        <label >Name:</label>
+                        <label >Name:*</label>
                         <input className='addUpdateInput'
                             defaultValue={this.state.name}
                             type="text"
@@ -177,7 +170,7 @@ class DonationCenterUpdate extends React.Component {
                     <div className='item'>
                         <label >E-mail:</label>
                         <input className='addUpdateInput'
-                            defaultValue={this.state.emailAddress}
+                            alue={this.state.emailAddress}
                             type="text"
                             onChange={(event) => {
                                 this.setState({ emailAddress: event.target.value });
@@ -193,7 +186,7 @@ class DonationCenterUpdate extends React.Component {
                             }} />
                     </div>
                     <div className='item'>
-                        <label >Street name:</label>
+                        <label >Street name:*</label>
                         <input className='addUpdateInput'
                             defaultValue={this.state.streetName}
                             type="text"
@@ -202,7 +195,7 @@ class DonationCenterUpdate extends React.Component {
                             }} />
                     </div>
                     <div className='item'>
-                        <label >Number in street:</label>
+                        <label >Number in street:*</label>
                         <input className='addUpdateInput'
                             value={this.state.numberInStreet}
                             type="number"
@@ -211,19 +204,16 @@ class DonationCenterUpdate extends React.Component {
                             }} />
                     </div>
                     <div className='item'>
-                        <label >Locality:</label>
+                        <label >Locality:*</label>
                         <select className='addUpdateInput'
-                            defaultValue="none"
+                            value={this.state.localityId}
                             onChange={(event) => {
-                                this.setState({ localityId: event.target.value });
+                                this.setState({ localityId: parseInt(event.target.value) });
                             }} >
-                            <option value="none" disabled hidden>   
-                                Select a locality
-                            </option>
                             {this.state.localitiesOptions}
                         </select>
                     </div>
-                    {/* <div className='item'>
+                    <div className='item'>
                         <label >Blood:</label>
                         <input className='addUpdateInput'
                             onChange={() => {}}
@@ -256,7 +246,7 @@ class DonationCenterUpdate extends React.Component {
                             }} 
 
                             />         
-                    </div>   */}
+                    </div>  
 
                     <div className='lastItem'>
                         <button onClick={(event)=> this.handleClick(event)}>Update</button>

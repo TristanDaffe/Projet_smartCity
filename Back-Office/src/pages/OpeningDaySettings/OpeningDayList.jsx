@@ -1,17 +1,18 @@
 import React from 'react';
 import SearchBar from '../../component/SearchBar';
 import { Link } from 'react-router-dom';
-import { connect } from 'react-redux';
 import DropList from '../../component/DropList';
 import { loadOpeningDaysData, deleteOpeningDayData } from '../../component/API';
 import CustomModal from '../../component/CustomModal';
-
+import Pagination from 'react-paginate'
 
 class OpeningDayList extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            currentPage: 0,
+            itemsPerPage: 15,
             openingDay: [],
             openingDayToDisplay: [],
             filter: "id",
@@ -25,6 +26,9 @@ class OpeningDayList extends React.Component {
             header2: "",
             body2: "",
         }
+    }
+    handlePageChange = (page) => {
+        this.setState({ currentPage: page.selected });
     }
 
     componentDidUpdate(prevProps) {
@@ -75,8 +79,6 @@ class OpeningDayList extends React.Component {
         promesse.then(() => {
             this.setOpeningDay();
         }).catch((error) => {
-            console.log("error dans la view");
-            console.log(error);
             this.setState({ modal2: true});
             this.setState({ header2: "Error" });
             this.setState({ body2: error.response.data });
@@ -111,7 +113,6 @@ class OpeningDayList extends React.Component {
             else {
                 return false;
             }
-
         });
 
         this.setState({ openingDayToDisplay: afterFiltering });
@@ -119,6 +120,9 @@ class OpeningDayList extends React.Component {
 
 
     render() {
+        const { currentPage, itemsPerPage } = this.state;
+        const displayedData = this.state.openingDayToDisplay.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);   
+
         return (
             <div>
                 <div className="header">
@@ -161,7 +165,7 @@ class OpeningDayList extends React.Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.openingDayToDisplay.map((openingDay, index) => {
+                        {displayedData.map((openingDay, index) => {
                             return (
                                 <tr key={index}>
                                     <td>{openingDay.id}</td>
@@ -179,6 +183,13 @@ class OpeningDayList extends React.Component {
                         })}
                     </tbody>
                 </table>
+                <div className="pagination">
+                <Pagination
+                       pageCount={Math.ceil(this.state.openingDay.length / itemsPerPage)}
+                       onPageChange={this.handlePageChange}
+                       currentPage={currentPage}
+                   />
+               </div>
 
                 {this.state.modal && (
                     <CustomModal
@@ -213,18 +224,6 @@ class OpeningDayList extends React.Component {
 
 
 
-const mapStateToProps = (state) => {
-    return {
-        openingDay: state.openingDay
-    }
-}
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        deleteDonation: (id) => {
-            dispatch({ type: 'deleteOpeningHour', payload: { id: id } })
-        }
-    }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(OpeningDayList);
+export default OpeningDayList;

@@ -3,16 +3,15 @@ const { compareHash } = require("../utils/hash");
 module.exports.loginUser = async (login, password, client) => {
     const users = await client.query('SELECT * FROM user_account WHERE login = $1', [login]);
     const user = users.rows[0];
-    if(user !== undefined && user.is_admin && compareHash(password, user.password)) {
+    if(user !== undefined && user.is_admin && await compareHash(password, user.password)) {
         return {userType: "admin", value: user};
     }
-    else if (user !== undefined && compareHash(password, user.password)) {
+    else if (user !== undefined && await compareHash(password, user.password)) {
         return {userType: "user", value: user};
     }
     else {
         return {userType: "unknown", value: null};
     }
-
 }
 
 module.exports.getUser = async (id, client) => {
@@ -29,10 +28,18 @@ module.exports.getAllUsers = async (client) => {
 }
 
 module.exports.registerUser = async (lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password, client) => {
-    await client.query("INSERT INTO user_account (last_name, first_name, email_address, birthday, blood_type, login, password) VALUES "+
-    "($1, $2, $3, $4, $5, $6, $7)", [lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password]);
-    
-    return await this.loginUser(login, password, client);
+    try{
+        await client.query("BEGIN");
+        await client.query("INSERT INTO user_account (last_name, first_name, email_address, birthday, blood_type, login, password) VALUES "+
+        "($1, $2, $3, $4, $5, $6, $7)", [lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password]);
+        const user = await client.query("SELECT * FROM user_account WHERE login = $1", [login]);
+        await client.query("COMMIT");
+        return {userType: "user", value: user.rows[0]};
+    }
+    catch(e) {
+        await client.query("ROLLBACK");
+        throw e;
+    }
 }
 
 module.exports.updateUser = async (id, lastname, firstname, emailAddress, birthDay, bloodTypeId, login, password, client) => {
