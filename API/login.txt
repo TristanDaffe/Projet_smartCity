@@ -1,0 +1,7 @@
+Login admin :
+    login = admin
+    password = 1234
+
+Login user :
+    logins = johnDoe90, janeDoeLaBoss91,johnSmithLeBoss, janeSmith93, JD94, ...
+    password = 1234

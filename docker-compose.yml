@@ -15,13 +15,13 @@ services:
     stdin_open: true
     container_name: api
     tty: true
-    build: ./API
+    build: ./API/src
     ports:
       - "3001:3001"
     volumes:
-      - ./API:/app
+      - ./API/src:/app
     env_file:
-      - ./API/.env
+      - ./API/src/.env
     depends_on:
       - BDpostgres
 

@@ -7,7 +7,7 @@ const port = 3001;
 
 app.use(cors())
 app.use(express.json());
-app.use(Router);
+app.use(Router); 
 
 const InternalIp = require("internal-ip");
 const ip = InternalIp.v4.sync();
