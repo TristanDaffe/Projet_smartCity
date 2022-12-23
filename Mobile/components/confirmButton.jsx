@@ -25,15 +25,9 @@ export default function confirmButton(props) {
                             textBody: 'Are you sure you want to make this appointment?',
                             buttonText: 'Yes',
                             confirmText: 'Back',
-<<<<<<< HEAD
                             callback: () => {
                                 alert('You have made an appointment!');
                                 addDonation(props.donation)
-=======
-                            // ça c'est ce qui se passe quand on appuie sur le bouton "yes"
-                            callback: async() => {
-                                await addDonation(props.donation);
->>>>>>> c2fd559e691218378371d67266429aff9daa2de2
                                 Popup.hide();
                             },
                             cancelCallback: () => {
