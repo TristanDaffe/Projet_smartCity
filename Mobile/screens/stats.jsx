@@ -23,23 +23,24 @@ export default function Stats ( {navigation} )  {
           <Text style={styles.title}>{user.firstName} {user.lastName}</Text>
         </View>
         <View>
-          <Text style={styles.text}>BloodType :</Text>
+          <Text style={styles.text}>Blood type :</Text>
           <Text style={styles.textResponseBlood}>{user.blood_type.type}{user.blood_type.rhesus}</Text>
         </View>
         <View>
           <Text style={styles.text}>Stats :</Text>
             <View>
               <View style={styles.containerStats}>
-                <Text style={styles.textStatTop}>Litre of blood donated</Text>
-                <Text style={styles.textStatBottom}>{(donationsUser.length | 0)* quantityDonated} L</Text>
+                <Text style={styles.textStatTop}>Litres of blood donated</Text>
+                <Text style={styles.textStatBottom}>2L</Text>
+
               </View>
               <View style={styles.containerStats}>
                 <Text style={styles.textStatTop}>Amount of people saved</Text>
                 <Text style={styles.textStatBottom}>{(donationsUser.length | 0) * peopleSaveByDonation}</Text>
               </View>
               <View style={styles.containerStats}>
-                <Text style={styles.textStatTop}>Amount of appointment</Text>
-                <Text style={styles.textStatBottom}>{donationsUser.length | 0}</Text>
+                <Text style={styles.textStatTop}>Amount of appointments</Text>
+                <Text style={styles.textStatBottom}>4</Text>
               </View>
             </View>
           </View>

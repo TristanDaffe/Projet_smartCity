@@ -31,9 +31,7 @@ export default function confirmButton(props) {
                                 alert('You have made an appointment!', '');
                                 Popup.hide();
                             },
-                            // ça c'est ce qui se passe quand on clique sur le bouton back
                             cancelCallback: () => {
-                                alert('You pressed the back button');
                                 Popup.hide();
                             },
                         })

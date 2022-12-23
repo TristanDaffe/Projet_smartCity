@@ -20,7 +20,7 @@ export default function Appointment  ( {navigation} )  {
         <Spinner visible = {isLoading}/>
         <TopBarDrawer onclick={navigation.toggleDrawer}/>
         <View style = {styles.container}>
-          <Text style = {styles.textName}>Check your appointment</Text>
+          <Text style = {styles.textName}>Check your appointments</Text>
           <Button 
             title='Next' 
             color='red'

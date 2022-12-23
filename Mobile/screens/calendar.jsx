@@ -29,7 +29,7 @@ export default function CalendarTest ( {route,navigation} )
     return (
         <View style= {styles.container}>
         <TopBar onclick={navigation.goBack}/>
-        <Text style={styles.title}>Calendar</Text>
+        <Text style={styles.title}>Select a date</Text>
         <SafeAreaView>
         <Calendar
             onDayPress={day => {
@@ -48,7 +48,7 @@ export default function CalendarTest ( {route,navigation} )
           }}
         />
         </SafeAreaView>
-        <Text style={styles.title2}>Hours</Text>
+        <Text style={styles.title2}>Choose an hour</Text>
         <View style={styles.table}>
         <HoursTable returnHours = {returnHours}></HoursTable>
         </View>
