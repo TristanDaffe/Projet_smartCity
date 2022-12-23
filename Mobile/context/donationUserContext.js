@@ -9,6 +9,7 @@ export const DonationUserContext = createContext();
 
 export const DonationUserProvider = ({children}) => {
     const [donationsUser, setDonationsUser] = useState([]);
+    const [lastDonationOfType, setLastDonationOfType] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const {token} = useContext(AuthContext)
@@ -26,6 +27,7 @@ export const DonationUserProvider = ({children}) => {
             .then( res => {
                 setDonationsUser(res.data);
                 AsyncStorage.setItem('donationsUser', JSON.stringify(res.data));
+                alert('You have made an appointment!', '');
             })
             .catch( err => {
                 Alert.alert("Error", err.message);
@@ -34,6 +36,28 @@ export const DonationUserProvider = ({children}) => {
                 setIsLoading(false);
             })
     } 
+
+    const getLastDonationOfTypeOfUser = (id) => {
+        setIsLoading(true)
+        axios
+            .get(`${BASE_URL}/donation/user/${id}/last` ,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then( res => {
+                setLastDonationOfType(res.data);
+                AsyncStorage.setItem('lastDonationOfType', JSON.stringify(res.data));
+            })
+            .catch( err => {
+                Alert.alert("Error", err.message);
+            })
+            .finally( () => {
+                setIsLoading(false);
+            })
+        }
 
     const addDonation = async (donation) => {
         return await axios
@@ -60,8 +84,10 @@ export const DonationUserProvider = ({children}) => {
     return (
         <DonationUserContext.Provider value={{
             donationsUser, 
+            lastDonationOfType,
             isLoading, 
             getDonationsOfUser,
+            getLastDonationOfTypeOfUser,
             addDonation,
         }}>{children}</DonationUserContext.Provider>);
 }

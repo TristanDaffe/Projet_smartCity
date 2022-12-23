@@ -3,17 +3,26 @@ import {  View, ScrollView, Text, StyleSheet, Image  } from 'react-native';
 
 import TopBar from '../components/topBar/topBarArrow';
 import { AuthContext } from "../context/authContext";
+import { DonationUserContext } from "../context/donationUserContext";
 
 export default function Account ( {navigation} )  {   
 
   const {user} = React.useContext(AuthContext);
+  const {lastDonationOfType} = React.useContext(DonationUserContext);
 
-  function timeBeforeDonation(time){
-    if(time === '0')
-     return 'You can donate now';
-    return time;
+  function timeBeforeDonation(date){
+    let time = 0;
+    if(date !== undefined){
+      time = Math.floor((new Date(date.date) - new Date()) / (1000 * 60 * 60 * 24));
+      if(time < 0){
+        return 'You can donate now';
+      }
+      return time +" days";
+    }
+    else {
+      return 'You can donate now';
   }
-  
+}
   return (
     <ScrollView style={styles.container}>
       <TopBar onclick={navigation.goBack}/>
@@ -59,15 +68,15 @@ export default function Account ( {navigation} )  {
 
           <View style={styles.donation}>
             <Text style={styles.sectionTitle}>Blood: </Text>
-            <Text style={styles.sectionText}>{timeBeforeDonation(user.timeBeforeBloodDonation)}</Text>
+            <Text style={styles.sectionText}>{timeBeforeDonation(lastDonationOfType[0])}</Text>
           </View>
           <View style={styles.donation}>
             <Text style={styles.sectionTitle}>Plasma: </Text>
-            <Text style={styles.sectionText}>{timeBeforeDonation(user.timeBeforePlasmaDonation)}</Text>
+            <Text style={styles.sectionText}>{timeBeforeDonation(lastDonationOfType[1])}</Text>
           </View>
           <View style={styles.donation}>
             <Text style={styles.sectionTitle}>Plate: </Text>
-            <Text style={styles.sectionText}>{timeBeforeDonation(user.timeBeforePlateletDonation)}</Text>
+            <Text style={styles.sectionText}>{timeBeforeDonation(lastDonationOfType[2])}</Text>
           </View>
         </View>
 

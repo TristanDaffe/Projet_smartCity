@@ -16,6 +16,7 @@ export default function RecapAppointment ( {route,navigation} )  {
 
     return (
         <View>
+<<<<<<< HEAD
         <TopBar onclick={navigation.goBack}/>
         <Text style={styles.title}>Appointment summary</Text>
         <Text style={styles.category}>Donation type :</Text>
@@ -26,6 +27,18 @@ export default function RecapAppointment ( {route,navigation} )  {
         <Text style={styles.response}>{hours}</Text>
         <Text style={styles.category}>Center :</Text>
         <Text style={styles.lastResponse}>{center.name}</Text>
+=======
+          <TopBar onclick={navigation.goBack}/>
+          <Text style={styles.title}>Appointment</Text>
+          <Text style={styles.category}>Donation Type :</Text>
+          <Text style={styles.response}>{type.name}</Text>
+          <Text style={styles.category}>Date :</Text>
+          <Text style={styles.response}>{date}</Text>
+          <Text style={styles.category}>Time :</Text>
+          <Text style={styles.response}>{hours}</Text>
+          <Text style={styles.category}>Center :</Text>
+          <Text style={styles.lastResponse}>{center.name}</Text>
+>>>>>>> c2fd559e691218378371d67266429aff9daa2de2
           <ConfirmationButton name="Make this Appointment" donation = {donation}></ConfirmationButton>
         </View>
     );

@@ -4,12 +4,14 @@ import {BASE_URL} from "../config";
 import { Alert } from "react-native";
 import axios from "axios";
 
+
 export const AuthContext = createContext();
 
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState({});
     const [token, setToken] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+
 
     const register = (emailAddress, lastName, firstName, birthdate, bloodType, rhesus, login, password) => {
         setIsLoading(true);
@@ -32,6 +34,7 @@ export const AuthProvider = ({children}) => {
             setToken(token);
             AsyncStorage.setItem('user', JSON.stringify(userInfo));
             AsyncStorage.setItem('token', JSON.stringify(token));
+
         })
         .catch( err => {
             // gestion des erreurs

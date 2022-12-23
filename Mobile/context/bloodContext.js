@@ -9,6 +9,7 @@ export const BloodContext = createContext();
 
 export const BloodProvider = ({children}) => {
     const [bloods, setBloods] = useState([]);
+    const [bloodTypes, setBloodTypes] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const {token} = useContext(AuthContext)
@@ -25,20 +26,7 @@ export const BloodProvider = ({children}) => {
             })
             .then( res => {
                 setBloods(res.data);
-                console.log("coucou")
                 AsyncStorage.setItem('bloods', JSON.stringify(res.data));
-                // const bloodsDB = res.data;
-                // if(bloodsDB !== undefined){
-                //     types = [];
-                //     rhesus = [];
-                //     bloodsDB.forEach(blood => {
-                //         if(!types.includes(bloodsDB.type))
-                //             types.push(bloodsDB.type);
-                //         if(!rhesus.includes(bloodsDB.rhesus))
-                //             rhesus.push(bloodsDB.rhesus);
-                //     });
-                //     setBloods({types, rhesus});
-                //}
             })
             .catch( err => {
                 Alert.alert("Error", err.message);
@@ -48,10 +36,34 @@ export const BloodProvider = ({children}) => {
             })
     } 
 
+    const getBloodsTypes = () => {
+        setIsLoading(true);
+        axios
+            .get(`${BASE_URL}/bloodtype/all` ,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                    },
+            })
+            .then( res => {
+                setBloodTypes(res.data);
+                AsyncStorage.setItem('bloodsType', JSON.stringify(res.data));
+            })
+            .catch( err => {
+                Alert.alert("Error", err.message);
+            })
+            .finally( () => {
+                setIsLoading(false);
+            })
+        }
+
     return (
         <BloodContext.Provider value={{
             bloods, 
+            bloodTypes,
             isLoading, 
-            getBloods
+            getBloods,
+            getBloodsTypes
         }}>{children}</BloodContext.Provider>);
 }

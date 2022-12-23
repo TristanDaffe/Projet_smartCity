@@ -68,29 +68,29 @@ import { FlatList } from "react-native-gesture-handler";
     }
 
     return (
-              <SafeAreaView style={styles.container}>
-                <FlatList 
-                data = {centers}
-                renderItem ={item}
-                keyExtractor ={(item,index) => index.toString()}
-                ListHeaderComponent={            
+        <SafeAreaView style={styles.container}>
+            <FlatList 
+            data = {centers}
+            renderItem ={item}
+            keyExtractor ={(item,index) => index.toString()}
+            ListHeaderComponent={            
                 <View style={styles.containerItem}>
                 <View style={styles.title}>
-                    <Text>Center</Text>
+                <Text>Center</Text>
                 </View>
                 <View style={styles.title}>
-                    <Text>Address</Text>
+                <Text>Address</Text>
                 </View>
                 <View style={styles.title}>
-                    <Text>EmailAddress</Text>
+                <Text>EmailAddress</Text>
                 </View>
                 <View style={styles.title}>
-                    <Text>PhoneNumber</Text>
+                <Text>PhoneNumber</Text>
                 </View>
-            </View>}
+                </View>}
                 >
-                </FlatList>
-              </SafeAreaView>
+            </FlatList>
+        </SafeAreaView>
 
     )
   }

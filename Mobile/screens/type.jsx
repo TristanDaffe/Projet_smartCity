@@ -4,9 +4,7 @@ import { useDispatch , useSelector } from "react-redux";
 import TopBar from '../components/topBar/topBarArrow';
 import MultiButton from '../components/MultiButton';
 import { ScrollView } from "react-native-gesture-handler";
-import { DonationTypesContext } from '../context/donationTypeContext';
 import { DonationCenterContext } from '../context/donationCenterContext';
-
 import Spinner from "react-native-loading-spinner-overlay/lib";
 
 
@@ -34,9 +32,9 @@ export default function Type ( {navigation} )  {
                 title='Next' 
                 color='red'
                 style={styles.button} 
-                onPress={() =>{
+                onPress={async() =>{
                   if (type != null) {
-                      allDonationCenter()
+                      await allDonationCenter();
                       navigation.navigate('Center', type);
                   }
                   else
