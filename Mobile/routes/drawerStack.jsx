@@ -38,6 +38,7 @@ export default function DrawerStack (props) {
                     drawerIcon: ({color}) => (
                         <Ionicons name="calendar-outline" color={color} size={24} />
                     )
+                    
             }}/>
             <Drawer.Screen name="Statistiques" component={Stats}
             options={{

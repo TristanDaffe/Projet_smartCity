@@ -12,17 +12,10 @@ import {getCenters} from "../redux/selectors"
 export default function Center ( {route,navigation})  {
   const [center, setCenter] = React.useState(null);
   const {donationCenters} = React.useContext(DonationCenterContext);
+  
   const [filteredData, setFilteredData] = React.useState(donationCenters);
 
-  const dispatch = useDispatch();
-  const allCenters = useSelector(getCenters);
-
   const type = route.params;
-
-  useEffect(() => {
-    setFilteredData(donationCenters);
-  }, []);
-
 
   const returnCenter = (newCenter) => {
     setCenter(newCenter);

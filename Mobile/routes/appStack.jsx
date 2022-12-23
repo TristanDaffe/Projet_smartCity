@@ -8,6 +8,7 @@ import Type from '../screens/type';
 import Center from '../screens/center';
 import Calendar from '../screens/calendar';
 import RecapAppointment from '../screens/recapAppointment';
+import userAppointment from '../screens/userAppointment';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ export default function AppStack(props){
             <Stack.Screen name="Center" component={Center} />
             <Stack.Screen name="Calendar" component={Calendar} />
             <Stack.Screen name="RecapAppointment" component={RecapAppointment} />
+            <Stack.Screen name="userAppointment" component={userAppointment} />
         </Stack.Navigator>
     )
 }

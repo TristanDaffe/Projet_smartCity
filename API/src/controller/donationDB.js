@@ -92,11 +92,12 @@ module.exports.createDonation = async (req, res) => {
     
     try { 
         const {rows: donationAvailableForTheCenter} =  await DonationCenterModel.getDonationTypeAvailableForCenter(donationCenterId, client);
+        console.log(donationAvailableForTheCenter)
         let j = 0;
         while( j < donationAvailableForTheCenter.length && donationAvailableForTheCenter[j].id !== donationTypeId)
             j++;
 
-        if(j === donationAvailableForTheCenter.length || donationAvailableForTheCenter[j].id !== donationCenterId){
+        if(j === donationAvailableForTheCenter.length || donationAvailableForTheCenter[j].id !== donationTypeId){
             res.status(400).send("The donation center doesn't have this type of donation available");
         }
         else

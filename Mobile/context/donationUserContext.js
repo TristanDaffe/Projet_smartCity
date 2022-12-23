@@ -36,7 +36,6 @@ export const DonationUserProvider = ({children}) => {
     } 
 
     const addDonation = async (donation) => {
-        console.log(donation.hour)
         return await axios
           .post(`${BASE_URL}/donation`,{
             date: donation.date,
@@ -54,7 +53,6 @@ export const DonationUserProvider = ({children}) => {
                 return res.data;
             })
             .catch( err => {
-                console.log(err.response.data)
                 Alert.alert("Error", err.message);
             })
       };
