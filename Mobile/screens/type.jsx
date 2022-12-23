@@ -7,28 +7,18 @@ import { ScrollView } from "react-native-gesture-handler";
 import { DonationTypesContext } from '../context/donationTypeContext';
 import { DonationCenterContext } from '../context/donationCenterContext';
 
-import {setDonationTypes} from "../redux/actions/donationTypes";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 
-import {setCenters} from "../redux/actions/center";
 
 export default function Type ( {navigation} )  {  
     
     const [type, setType] = React.useState(null);
-    const {getDonationTypes,donationTypes , isLoading} = React.useContext(DonationTypesContext);
-    const {allDonationCenter ,donationCenters} = React.useContext(DonationCenterContext);
+    const {allDonationCenter , isLoading } = React.useContext(DonationCenterContext);
 
-    const dispatch = useDispatch();
-    
     const returnType = (newType) => {
       setType(newType);
     }
     
-    useEffect(() => {
-      console.log("useEffect type")
-      getDonationTypes()
-      dispatch(setDonationTypes(donationTypes));
-    }, []);
 
     return (
       <View>
@@ -46,6 +36,7 @@ export default function Type ( {navigation} )  {
                 style={styles.button} 
                 onPress={() =>{
                   if (type != null) {
+                      allDonationCenter()
                       navigation.navigate('Center', type);
                   }
                   else

@@ -11,23 +11,25 @@ import { format } from "date-fns";
         let date = new Date(item.date);
         let formattedDate = format(date, "yyyy-MM-dd");
 
-        return(
 
-            <View style={styles.containerItem}>
-                <View style={styles.item}>
-                    <Text>{formattedDate}</Text>
+            return(
+
+                <View style={styles.containerItem}>
+                    <View style={styles.item}>
+                        <Text>{formattedDate}</Text>
+                    </View>
+                    <View style={styles.item}>
+                        <Text>{item.hour}</Text>
+                    </View>
+                    <View style={styles.item}>
+                        <Text>{item.name}</Text>
+                    </View>
+                    <View style={styles.item}>
+                        <Text>{item.donation_center_name}</Text>
+                    </View>
                 </View>
-                <View style={styles.item}>
-                    <Text>{item.hour}</Text>
-                </View>
-                <View style={styles.item}>
-                    <Text>{item.name}</Text>
-                </View>
-                <View style={styles.item}>
-                    <Text>{item.donation_center_name}</Text>
-                </View>
-            </View>
-        )
+            )
+
     }
 
     return (

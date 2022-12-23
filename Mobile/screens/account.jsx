@@ -38,7 +38,7 @@ export default function Account ( {navigation} )  {
 {/* Section de la date de naissance*/}
         <Text style={styles.sectionTitle}>Birth date</Text>
         <View style={styles.section}>
-          <Text style={styles.sectionText}>{user.birthDay}</Text>
+          <Text style={styles.sectionText}>{user.birthDay.substring(0,10)}</Text>
         </View>
 
 {/* Section de l'addresse mail*/}

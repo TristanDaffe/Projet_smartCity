@@ -39,9 +39,9 @@ export default function CalendarTest ( {route,navigation} )
           theme={{
   
             selectedDayBackgroundColor: '#ff6666',
-  
-            textDisabledColor: '#729DAF',
-  
+            selectedDotColor: '#ff6666',
+            textDisabledColor: '#ff6666',
+            dotColor: 'yellow',
             textMonthFontWeight: 'bold',
   
             arrowColor: '#ff6666',

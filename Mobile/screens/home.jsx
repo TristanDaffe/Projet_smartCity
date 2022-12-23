@@ -3,10 +3,18 @@ import {  View, Text, StyleSheet, Button, ScrollView, Image , SafeAreaView } fro
 
 import TopBarDrawer from '../components/topBar/topBarDrawer';
 import Test from './Test/TestTris'
+import { DonationTypesContext } from '../context/donationTypeContext';
+import Spinner from "react-native-loading-spinner-overlay/lib";
+import {setDonationTypes} from "../redux/actions/donationTypes";
 
-export default function Home ( {navigation} )  {   
+
+export default function Home ( {navigation} )  {
+
+  const {getDonationTypes , isLoading} = React.useContext(DonationTypesContext);
+
     return (
       <View>
+        <Spinner visible = {isLoading}/>
         <TopBarDrawer onclick={navigation.toggleDrawer}/>
           <SafeAreaView style={styles.container}>
             <Image source={require('../images/bloodDonation.png')} style= {styles.imgTop}/>
@@ -21,7 +29,12 @@ export default function Home ( {navigation} )  {
             <Button  
               title='Make Appointment' 
               color='red' 
-              onPress={() => navigation.navigate('Type')}></Button>
+              onPress={() => 
+                {
+                  getDonationTypes();
+                  navigation.navigate('Type');
+                }
+              }></Button>
             {/* <Image source={require('../images/separationBar.png')} style= {styles.separator}/> */}
             {/* <Text style={styles.title}>How is blood donation going?</Text>
             <Text style={styles.text}>
