@@ -4,10 +4,12 @@ import { View, StyleSheet, Image, Text, Pressable, Button, Alert } from 'react-n
 
 import NotificationButton from './notificationButton'
 import { AuthContext } from '../context/authContext';
+import { DonationUserContext } from '../context/donationUserContext';
 
 // mise en page du menu drawer de gauche
 export default function CustomDrawer (props) {
     const { user, logout } = React.useContext(AuthContext);
+    const {getLastDonationOfTypeOfUser} = React.useContext(DonationUserContext);
 
     function disconnectButton(){
         // ajouter la suppression du user actuel
@@ -21,8 +23,10 @@ export default function CustomDrawer (props) {
         <View style={styles.container}>
 
             <Pressable style={styles.content} 
-                onPress={() => props.navigation.navigate('AppStack', { screen: 'Account' })}
-            >
+                onPress={async() => {
+                    await getLastDonationOfTypeOfUser(user.id)
+                    props.navigation.navigate('AppStack', { screen: 'Account' })}
+                }>
                 <Image source={require('../images/user_account.png')} style={styles.image} />
                 <Text style={styles.text}>{user.firstName} {user.lastName}</Text>
             </Pressable>

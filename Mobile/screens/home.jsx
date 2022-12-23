@@ -4,13 +4,14 @@ import {  View, Text, StyleSheet, Button, ScrollView, Image , SafeAreaView } fro
 import TopBarDrawer from '../components/topBar/topBarDrawer';
 import { DonationTypesContext } from '../context/donationTypeContext';
 import Spinner from "react-native-loading-spinner-overlay/lib";
-import {setDonationTypes} from "../redux/actions/donationTypes";
-
+import { DonationUserContext } from "../context/donationUserContext";
+import { AuthContext } from "../context/authContext";
 
 export default function Home ( {navigation} )  {
 
   const {getDonationTypes , isLoading} = React.useContext(DonationTypesContext);
-
+  const {getLastDonationOfTypeOfUser} = React.useContext(DonationUserContext);
+  const {user} = React.useContext(AuthContext);
     return (
       <ScrollView>
         <Spinner visible = {isLoading}/>
@@ -55,9 +56,10 @@ export default function Home ( {navigation} )  {
               <Button  
               title='Make Appointment' 
               color='red' 
-              onPress={() => 
+              onPress={async() => 
                 {
-                  getDonationTypes();
+                  await getLastDonationOfTypeOfUser(user.id);
+                  await getDonationTypes();
                   navigation.navigate('Type');
                 }}
               style={styles.button}

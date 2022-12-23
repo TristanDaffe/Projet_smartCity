@@ -9,6 +9,7 @@ export const DonationUserContext = createContext();
 
 export const DonationUserProvider = ({children}) => {
     const [donationsUser, setDonationsUser] = useState([]);
+    const [lastDonationOfType, setLastDonationOfType] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
 
     const {token} = useContext(AuthContext)
@@ -35,6 +36,28 @@ export const DonationUserProvider = ({children}) => {
             })
     } 
 
+    const getLastDonationOfTypeOfUser = (id) => {
+        setIsLoading(true)
+        axios
+            .get(`${BASE_URL}/donation/user/${id}/last` ,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then( res => {
+                setLastDonationOfType(res.data);
+                AsyncStorage.setItem('lastDonationOfType', JSON.stringify(res.data));
+            })
+            .catch( err => {
+                Alert.alert("Error", err.message);
+            })
+            .finally( () => {
+                setIsLoading(false);
+            })
+        }
+
     const addDonation = async (donation) => {
         return await axios
           .post(`${BASE_URL}/donation`,{
@@ -60,8 +83,10 @@ export const DonationUserProvider = ({children}) => {
     return (
         <DonationUserContext.Provider value={{
             donationsUser, 
+            lastDonationOfType,
             isLoading, 
             getDonationsOfUser,
+            getLastDonationOfTypeOfUser,
             addDonation,
         }}>{children}</DonationUserContext.Provider>);
 }

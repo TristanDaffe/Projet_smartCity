@@ -1,9 +1,9 @@
 import React, { useState , useEffect } from "react";
 import { FlatList,SafeAreaView,StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { useSelector,useDispatch } from "react-redux";
 import { DonationTypesContext } from '../context/donationTypeContext';
+import Separator from '../components/separator';
 
-import {getTypesDonation} from "../redux/selectors"
+import { DonationUserContext } from "../context/donationUserContext";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
@@ -14,12 +14,28 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 
 export default function MultiButton ({returnType}) {
   const [selectedId, setSelectedId] = useState(null);
-  const {getDonationTypes,donationTypes , isLoading} = React.useContext(DonationTypesContext);
+  const {donationTypes } = React.useContext(DonationTypesContext);
+  const {lastDonationOfType} = React.useContext(DonationUserContext);
 
   useEffect(() => {
     selectedId != null ? returnType(donationTypes[selectedId-1]) : ""
   
   });
+
+  
+  function timeBeforeDonation(date){
+    let time = 0;
+    if(date !== undefined){
+      time = Math.floor((new Date(date.date) - new Date()) / (1000 * 60 * 60 * 24));
+      if(time < 0){
+        return 'You can donate now';
+      }
+      return time +" days before you can donate";
+    }
+    else {
+      return 'You can donate now';
+  }
+}
   
   const renderItem = ({ item }) => {
     const backgroundColor = item.id === selectedId ? "red" : "grey";
@@ -27,17 +43,18 @@ export default function MultiButton ({returnType}) {
 
     return (
       <View>
-        <Item
-        item={item}
-        onPress={() => {
-          setSelectedId(item.id)
-        }}
-        backgroundColor={{ backgroundColor }}
-        textColor={{ color }}
-      />
-      <Text style={styles.textTop}>Last donation :</Text>
-      <Text style={styles.textTop}>24/12/2022</Text>
-      <Text style={styles.textBottom}>You can donate now !</Text>
+          <Item
+          item={item}
+          onPress={() => {
+            setSelectedId(item.id)
+          }}
+          backgroundColor={{ backgroundColor }}
+          textColor={{ color }}
+        />
+        <Text style={styles.textTop}>Last donation :</Text>
+        <Text style={styles.text}>{lastDonationOfType[item.id-1]?.date.substr(0, 10)}</Text>
+        <Text style={styles.textTop}>{timeBeforeDonation(lastDonationOfType[item.id-1])}</Text>
+        <Separator/>
       </View>
     );
   };
@@ -75,10 +92,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 60,
   },
-  textBottom:
+  text:
   {
     fontWeight: 'bold',
-    marginTop: 20,
     marginLeft: 60,
     fontSize: 15,
   },

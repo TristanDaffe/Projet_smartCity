@@ -4,10 +4,6 @@ import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button, TextInput , I
 import { DonationCenterContext } from '../context/donationCenterContext';
 import TopBar from '../components/topBar/topBarArrow';
 import CenterTable from '../components/CenterTable';
-import { useDispatch , useSelector } from "react-redux";
-
-import {setCenters} from "../redux/actions/center";
-import {getCenters} from "../redux/selectors"
 
 export default function Center ( {route,navigation})  {
   const [center, setCenter] = React.useState(null);
@@ -17,6 +13,7 @@ export default function Center ( {route,navigation})  {
 
   const type = route.params;
 
+
   const returnCenter = (newCenter) => {
     setCenter(newCenter);
   }
@@ -24,11 +21,10 @@ export default function Center ( {route,navigation})  {
   const searchFilter = (text) => {
     if(text)
     {
-          const newdata = donationCenters.filter(item => {
-          const itemData = item.name.toUpperCase();
-          const textData = text.toUpperCase();
-          return itemData.indexOf(textData) > -1;
-
+      const newdata = donationCenters.filter(item => {
+        const itemData = item.name.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
       })
       setFilteredData(newdata);
     }
@@ -47,7 +43,6 @@ export default function Center ( {route,navigation})  {
             <Image source={require('../images/magnifyingGlassSearch.png')} style= {styles.imgSearchBarre}/>
             <TextInput style={styles.textSearchBarre}
                 onChangeText={(text) => searchFilter(text)}
-                value={filteredData}
                 placeholder= "search(center)"
               />
             </View>

@@ -3,11 +3,14 @@ import {  View, Text, StyleSheet, Image } from 'react-native';
 
 import TopBarDrawer from '../components/topBar/topBarDrawer';
 import { AuthContext } from '../context/authContext';
+import { DonationUserContext } from "../context/donationUserContext";
 
 export default function Stats ( {navigation} )  {
   
     const {user} = React.useContext(AuthContext); 
+    const {getDonationsOfUser} = React.useContext(DonationUserContext);
 
+    const quantityDonated = 0.5;
     return (
       <View>
         <TopBarDrawer onclick={navigation.toggleDrawer}/>
@@ -24,7 +27,7 @@ export default function Stats ( {navigation} )  {
             <View>
               <View style={styles.containerStats}>
                 <Text style={styles.textStatTop}>Litre of blood donated</Text>
-                <Text style={styles.textStatBottom}>2L</Text>
+                <Text style={styles.textStatBottom}>{}</Text>
               </View>
               <View style={styles.containerStats}>
                 <Text style={styles.textStatTop}>Amount of people saved</Text>
