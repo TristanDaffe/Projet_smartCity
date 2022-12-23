@@ -1,68 +1,59 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Développement de Client Web avancé
 
-## Available Scripts
+## Prerequisites
+- Having docker desktop installed
+- Having a file editor (VS Code, Sublime Text...)
 
-In the project directory, you can run:
+## Running this project using Docker-compose
+- Open docker desktop
+- Unzip the project in a folder.
+- Once the project is unzipped navigate to Project > API > opent the **.env** file.
+- Change the **DB_HOST** const to "BDsmartCityCompose" (which is the name of the container).
+- Then, open a new terminal, navigate the root of the project and run the following command :
+
+### `docker-compose up --build`
+
+- Once it is done, a container named "BDsmartCityCompose" should be visible in docker desktop.
+
+- Finally, open a browser and go to http://localhost:3000/ to see the project.
+You will be redirected to the home page, where you can log in.
+
+- To stop the project, use ctrl+c in the terminal, confirm and run the following command :
+
+### `docker-compose down`
+
+## Running this project without using Docker-compose
+- Unzip the project in a folder.
+- Once the project is unzipped, navigate to Project > API 
+- Open docker desktop and run the following command (which can also be found in Project > API > dockerBD.txt) : 
+
+### `docker run --name BDsmartCity -e POSTGRES_PASSWORD=password -e POSTGRES_USER=admin -e POSTGRES_DB=smartcity -p 5432:5432 -d postgres`
+
+- Once it is done, a container named "BDsmartCity" should be visible in docker desktop. 
+- Then, open a new terminal and navigate to Project > API
+- Run the following command to install all the dependencies.:
+
+### `npm install`
+
+- Then, run the following command to initialize the database.:
+
+### `npm run initDB`
+
+- Run the following command to start the server:
+
+### `npm run dev`
+- In the terminal you should see "Example app listening at _**your ip adress**_".
+- Then, navigate to Project > Back-Office > components > API > http.js and change the content of the **URL_API** const to your ip adress.
+- Then, open a new terminal and navigate to Project > Back-Office and run the following command to install all the dependencies. :
+
+### `npm install`
+
+- Finally, run the following command to start the server:
 
 ### `npm start`
+In the terminal you should see "Compiled successfully!".
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Finally, open a browser and go to http://localhost:3000/ to see the project.
+You will be redirected to the home page, where you can log in.
+- To stop the project, use ctrl+c in the API terminal, confirm and do the same in the Back-Office terminal.
+- To stop the database container, open docker desktop and click on the "BDsmartCity" container, then click on "Stop" in the top right corner.

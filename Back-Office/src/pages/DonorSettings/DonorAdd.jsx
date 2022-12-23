@@ -191,11 +191,5 @@ class DonorAdd extends React.Component {
     }
 }
 
-// const mapStateToProps = (state) => {
-//     return {
-//         donationCenters: state.donationCenters
-//     }
-// }
-
 export default DonorAdd;
 

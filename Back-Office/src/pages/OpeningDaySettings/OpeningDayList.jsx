@@ -79,7 +79,7 @@ class OpeningDayList extends React.Component {
         promesse.then(() => {
             this.setOpeningDay();
         }).catch((error) => {
-            this.setState({ modal2: true});
+            this.setState({ modal2: true });
             this.setState({ header2: "Error" });
             this.setState({ body2: error.response.data });
         }).finally(() => {
@@ -105,10 +105,10 @@ class OpeningDayList extends React.Component {
                 return op.day_label.includes(string);
             }
             else if (this.state.filter === "opening_time") {
-                return op.opening_time.toString().substr(0,5).includes(string);
+                return op.opening_time.toString().substr(0, 5).includes(string);
             }
             else if (this.state.filter === "closing_time") {
-                return op.closing_time.toString().substr(0,5).includes(string);
+                return op.closing_time.toString().substr(0, 5).includes(string);
             }
             else {
                 return false;
@@ -121,7 +121,7 @@ class OpeningDayList extends React.Component {
 
     render() {
         const { currentPage, itemsPerPage } = this.state;
-        const displayedData = this.state.openingDayToDisplay.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);   
+        const displayedData = this.state.openingDayToDisplay.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
 
         return (
             <div>
@@ -170,8 +170,8 @@ class OpeningDayList extends React.Component {
                                 <tr key={index}>
                                     <td>{openingDay.id}</td>
                                     <td>{openingDay.day_label}</td>
-                                    <td>{openingDay.opening_time.toString().substr(0,5)}</td>
-                                    <td>{openingDay.closing_time.toString().substr(0,5)}</td>
+                                    <td>{openingDay.opening_time.toString().substr(0, 5)}</td>
+                                    <td>{openingDay.closing_time.toString().substr(0, 5)}</td>
                                     <td>
                                         <Link to={`/openingDayUpdate/${openingDay.id}`}>Update</Link>
                                     </td>
@@ -184,12 +184,12 @@ class OpeningDayList extends React.Component {
                     </tbody>
                 </table>
                 <div className="pagination">
-                <Pagination
-                       pageCount={Math.ceil(this.state.openingDay.length / itemsPerPage)}
-                       onPageChange={this.handlePageChange}
-                       currentPage={currentPage}
-                   />
-               </div>
+                    <Pagination
+                        pageCount={Math.ceil(this.state.openingDay.length / itemsPerPage)}
+                        onPageChange={this.handlePageChange}
+                        currentPage={currentPage}
+                    />
+                </div>
 
                 {this.state.modal && (
                     <CustomModal
@@ -221,9 +221,6 @@ class OpeningDayList extends React.Component {
         );
     }
 }
-
-
-
 
 
 export default OpeningDayList;

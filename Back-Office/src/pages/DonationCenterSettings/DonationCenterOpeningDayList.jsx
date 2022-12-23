@@ -34,15 +34,6 @@ class DonationCenterOpeningDayList extends React.Component {
         }
     }
 
-    // componentDidUpdate(prevProps) {
-    //     if (this.props !== prevProps) {
-    //         this.setState({
-    //             openingDay: this.props.openingDay,
-    //             openingDayToDisplay: this.props.openingDay
-    //         });
-    //     }
-    // }
-
     componentDidMount() {
         this.setOpeningDays();
     }
@@ -126,9 +117,8 @@ class DonationCenterOpeningDayList extends React.Component {
 
     render() {
         const { currentPage, itemsPerPage } = this.state;
-    
-        // Select the items to display on the current page
         const displayedData = this.state.openingDayToDisplay.slice(currentPage * itemsPerPage, (currentPage + 1) * itemsPerPage);
+        
         return (
             <div>
                 <div className="header">

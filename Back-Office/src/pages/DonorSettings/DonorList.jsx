@@ -54,7 +54,6 @@ class DonorList extends React.Component {
                 this.setState({ body2: "No donor found" });
             }
         } catch (error) {
-            console.log(error);
             this.setState({ modal2: true });
             this.setState({ header2: "Error" });
             this.setState({ body2: error.message });
