@@ -36,13 +36,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/user/login",
+							"raw": "http://{{Base_url}}:{{port}}/1.0/user/login",
 							"protocol": "http",
 							"host": [
 								"{{Base_url}}"
 							],
 							"port": "{{port}}",
 							"path": [
+								"1.0",
 								"user",
 								"login"
 							]
@@ -77,13 +78,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://{{Base_url}}:{{port}}/user/login",
+							"raw": "http://{{Base_url}}:{{port}}/1.0/user/login",
 							"protocol": "http",
 							"host": [
 								"{{Base_url}}"
 							],
 							"port": "{{port}}",
 							"path": [
+								"1.0",
 								"user",
 								"login"
 							]
@@ -588,13 +590,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/all",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/all",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"all"
 									]
@@ -631,13 +634,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/all",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/all",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"all"
 									]
@@ -667,13 +671,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/all",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/all",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"all"
 									]
@@ -733,13 +738,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/2",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/2",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"2"
 									]
@@ -776,13 +782,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/100",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/100",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"100"
 									]
@@ -819,13 +826,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/1",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/1",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"1"
 									]
@@ -862,13 +870,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/1",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/1",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"1"
 									]
@@ -926,13 +935,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/register",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"register"
 									]
@@ -968,13 +978,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/register",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"register"
 									]
@@ -1010,13 +1021,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/register",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"register"
 									]
@@ -1052,13 +1064,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/register",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"register"
 									]
@@ -1094,13 +1107,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/register",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"register"
 									]
@@ -1136,13 +1150,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/register",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/register",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"register"
 									]
@@ -1184,13 +1199,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/9",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/9",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"9"
 									]
@@ -1227,13 +1243,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/100",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/100",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"100"
 									]
@@ -1270,13 +1287,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/1",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/1",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"1"
 									]
@@ -1306,13 +1324,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user/1",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user/1",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user",
 										"1"
 									]
@@ -1364,13 +1383,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user"
 									]
 								}
@@ -1415,13 +1435,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user"
 									]
 								}
@@ -1466,13 +1487,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user"
 									]
 								}
@@ -1517,13 +1539,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user"
 									]
 								}
@@ -1568,13 +1591,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user"
 									]
 								}
@@ -1612,13 +1636,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user"
 									]
 								}
@@ -1663,13 +1688,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/user",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/user",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"user"
 									]
 								}
@@ -1722,13 +1748,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/1",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/1",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"1"
 									]
@@ -1765,13 +1792,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/100",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/100",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"100"
 									]
@@ -1808,13 +1836,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/1",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/1",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"1"
 									]
@@ -1852,13 +1881,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/1",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/1",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"1"
 									]
@@ -1945,13 +1975,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/all",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/all",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"all"
 									]
@@ -2031,13 +2062,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/all",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/all",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"all"
 									]
@@ -2074,13 +2106,14 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/all",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/all",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"all"
 									]
@@ -2107,7 +2140,7 @@
 											"        \"id\": 1,",
 											"        \"type\": \"A\",",
 											"        \"rhesus\": \"+\"",
-											"    },",
+											"    };",
 											"    const response = pm.response.json();",
 											"    pm.expect(response).to.be.eql(expected);",
 											"})"
@@ -2116,9 +2149,6 @@
 									}
 								}
 							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2130,7 +2160,7 @@
 										}
 									]
 								},
-								"method": "GET",
+								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
@@ -2142,13 +2172,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/name",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/name",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"name"
 									]
@@ -2171,9 +2202,6 @@
 									}
 								}
 							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2185,7 +2213,7 @@
 										}
 									]
 								},
-								"method": "GET",
+								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
@@ -2197,13 +2225,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/name",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/name",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"name"
 									]
@@ -2225,7 +2254,7 @@
 											"        \"id\": 1,",
 											"        \"type\": \"A\",",
 											"        \"rhesus\": \"+\"",
-											"    },",
+											"    };",
 											"    const response = pm.response.json();",
 											"    pm.expect(response).to.be.eql(expected);",
 											"})"
@@ -2234,9 +2263,6 @@
 									}
 								}
 							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2248,7 +2274,7 @@
 										}
 									]
 								},
-								"method": "GET",
+								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
@@ -2260,13 +2286,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/name",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/name",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"name"
 									]
@@ -2289,9 +2316,6 @@
 									}
 								}
 							],
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
 							"request": {
 								"auth": {
 									"type": "bearer",
@@ -2303,7 +2327,7 @@
 										}
 									]
 								},
-								"method": "GET",
+								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
@@ -2315,13 +2339,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/name",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/name",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"name"
 									]
@@ -2372,13 +2397,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype"
 									]
 								}
@@ -2423,13 +2449,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype"
 									]
 								}
@@ -2474,13 +2501,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype"
 									]
 								}
@@ -2525,13 +2553,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype"
 									]
 								}
@@ -2569,13 +2598,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype"
 									]
 								}
@@ -2626,13 +2656,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype"
 									]
 								}
@@ -2677,13 +2708,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype"
 									]
 								}
@@ -2728,13 +2760,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype"
 									]
 								}
@@ -2779,13 +2812,14 @@
 									}
 								},
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype"
 									]
 								}
@@ -2826,13 +2860,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/9",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/9",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"9"
 									]
@@ -2869,13 +2904,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/9",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/9",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"9"
 									]
@@ -2905,13 +2941,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/9",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/9",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"9"
 									]
@@ -2948,13 +2985,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/8",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/8",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"8"
 									]
@@ -2991,13 +3029,14 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "http://{{Base_url}}:{{port}}/bloodtype/100",
+									"raw": "http://{{Base_url}}:{{port}}/1.0/bloodtype/100",
 									"protocol": "http",
 									"host": [
 										"{{Base_url}}"
 									],
 									"port": "{{port}}",
 									"path": [
+										"1.0",
 										"bloodtype",
 										"100"
 									]

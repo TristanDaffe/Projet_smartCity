@@ -37,7 +37,7 @@ module.exports.getBloodType = async (req, res) => {
 
     try {
         if(isNaN(id)) {
-            res.stauts(400).send('Id is not a number');
+            res.status(400).send('Id is not a number');
         }
         else {
             const {rows: bloodTypes} = await BloodTypeModel.getBloodType(id, client);
@@ -52,6 +52,7 @@ module.exports.getBloodType = async (req, res) => {
         }
     }
     catch (error) {
+        console.log(error);
         res.sendStatus(500);
     }
     finally {
@@ -88,7 +89,7 @@ module.exports.getBloodType = async (req, res) => {
 module.exports.getBloodTypeFromName = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
-
+    
     const { type, rhesus } = body;
     try {
         if(type === undefined || rhesus === undefined) {
