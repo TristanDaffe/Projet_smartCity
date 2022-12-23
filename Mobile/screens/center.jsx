@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button, TextInput , Image, Alert } from 'react-native';
+import React from "react";
+import {  View, Text, StyleSheet ,SafeAreaView , Button, TextInput , Image, Alert } from 'react-native';
 
 import { DonationCenterContext } from '../context/donationCenterContext';
 import TopBar from '../components/topBar/topBarArrow';

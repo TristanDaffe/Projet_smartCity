@@ -5,8 +5,6 @@ import TopBar from '../components/topBar/topBarArrow';
 import MultiButton from '../components/MultiButton';
 import { ScrollView } from "react-native-gesture-handler";
 import { DonationCenterContext } from '../context/donationCenterContext';
-import { DonationUserContext } from "../context/donationUserContext";
-import { AuthContext } from "../context/authContext";
 import Spinner from "react-native-loading-spinner-overlay/lib";
 
 

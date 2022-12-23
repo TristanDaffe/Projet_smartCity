@@ -1,5 +1,6 @@
-import React, { useState } from "react";
-import {  View, Text, StyleSheet, Image } from 'react-native';
+import React from "react";
+import {  View, Text, StyleSheet, Image, Button } from 'react-native';
+import Spinner from "react-native-loading-spinner-overlay/lib";
 
 import TopBarDrawer from '../components/topBar/topBarDrawer';
 import { AuthContext } from '../context/authContext';
@@ -8,11 +9,13 @@ import { DonationUserContext } from "../context/donationUserContext";
 export default function Stats ( {navigation} )  {
   
     const {user} = React.useContext(AuthContext); 
-    const {getDonationsOfUser} = React.useContext(DonationUserContext);
+    const {getDonationsOfUser, donationsUser, isLoading} = React.useContext(DonationUserContext);
 
     const quantityDonated = 0.5;
+    const peopleSaveByDonation = 3;
     return (
       <View>
+        <Spinner visible = {isLoading}/>
         <TopBarDrawer onclick={navigation.toggleDrawer}/>
         <View style={styles.line}>
           <Image source={require('../images/user_account.png')} style= {styles.image}/>
@@ -27,18 +30,19 @@ export default function Stats ( {navigation} )  {
             <View>
               <View style={styles.containerStats}>
                 <Text style={styles.textStatTop}>Litre of blood donated</Text>
-                <Text style={styles.textStatBottom}>{}</Text>
+                <Text style={styles.textStatBottom}>{(donationsUser.length | 0)* quantityDonated} L</Text>
               </View>
               <View style={styles.containerStats}>
                 <Text style={styles.textStatTop}>Amount of people saved</Text>
-                <Text style={styles.textStatBottom}>3</Text>
+                <Text style={styles.textStatBottom}>{(donationsUser.length | 0) * peopleSaveByDonation}</Text>
               </View>
               <View style={styles.containerStats}>
                 <Text style={styles.textStatTop}>Amount of appointment</Text>
-                <Text style={styles.textStatBottom}>4</Text>
+                <Text style={styles.textStatBottom}>{donationsUser.length | 0}</Text>
               </View>
             </View>
           </View>
+          <Button title="refresh" onPress={() => getDonationsOfUser(user.id)}/>
       </View>
     );
 };
