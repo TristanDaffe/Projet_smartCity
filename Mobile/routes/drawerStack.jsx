@@ -15,7 +15,6 @@ const Drawer = createDrawerNavigator();
 // liste des drawers (liens) dans le menu
 
 // contient leur nom, leur icone et leur lien vers un screen
-// site pour les icons => https://ionic.io/ionicons
 
 export default function DrawerStack (props) {   
     return (
