@@ -1,7 +1,7 @@
 import axios from "axios";
 import { setToken, getToken } from "../../context/LoginContext";
 
-const URL_API = `http://localhost:3001`;
+const URL_API = `http://192.168.1.54:3001`;
 
 const login = async (login, password) => {
   await axios
@@ -423,8 +423,6 @@ const updateDonor = async (donor) => {
       return response.data;
     })
     .catch((error) => {
-      console.log(donor);
-      console.log(body);
       throw error;
     });
 };
@@ -440,6 +438,7 @@ const updateDonationCenter = async (donationCenter) => {
       streetName: donationCenter.streetName,
       numberInStreet: donationCenter.numberInStreet,
       localityId: donationCenter.localityId,
+      // quand ce sera possible dans l'API
       // availableDonation: donationCenter.availableDonation,
     }, {
       headers: {"Content-Type": "application/json",

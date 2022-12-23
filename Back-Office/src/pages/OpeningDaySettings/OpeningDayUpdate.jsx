@@ -63,7 +63,7 @@ class OpeningDayUpdate extends React.Component {
 
     updateOpeningDay() {
         const openingDay = {
-            id : this.state.openingDayId,
+            id: this.state.openingDayId,
             dayLabel: this.state.dayLabel,
             openingTime: this.state.openingTime,
             closingTime: this.state.closingTime,
@@ -89,9 +89,9 @@ class OpeningDayUpdate extends React.Component {
 
 
 
-        render() {
-            return (
-                <div className='addUpdateForm'>
+    render() {
+        return (
+            <div className='addUpdateForm'>
                 <div className="header">
                     <Link to={`/openingDayList`} className='backButtonContainer' >
                         <button className="addBackButton">Back</button>
@@ -107,7 +107,7 @@ class OpeningDayUpdate extends React.Component {
                     <div className='firstItem'>
                         <label >Day label:</label>
                         <select className='addUpdateInput'
-                            defaultValue= {this.state.dayLabel}
+                            defaultValue={this.state.dayLabel}
                             onChange={(event) => {
                                 this.setState({ dayLabel: event.target.value });
                             }} >
@@ -176,27 +176,10 @@ class OpeningDayUpdate extends React.Component {
                 {this.state.redirect && !this.state.error && (
                     <Navigate to={createPath('/openingDayList')} />
                 )}
-
-
             </div>
-            );
-        }
+        );
     }
+}
 
-    // const mapStateToProps = (state) => {
-    //     return {
-    //         donationCenters: state.donationCenters
-    //     }
-    // }
-
-    // const mapDispatchToProps = (dispatch) => {
-    //     return {
-    //         addDonationCenter: (donationCenter) => dispatch(addDonationCenter(donationCenter))
-    //     }
-    // }
-
-    // export default connect(null, mapDispatchToProps)(DonationCenterAdd);
-
-
-    export default withParams(OpeningDayUpdate);
+export default withParams(OpeningDayUpdate);
 

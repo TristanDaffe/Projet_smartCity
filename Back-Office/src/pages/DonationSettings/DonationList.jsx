@@ -35,15 +35,6 @@ class DonationList extends React.Component {
         }
     }
 
-    // componentDidUpdate(prevProps) {
-    //     if (this.props !== prevProps) {
-    //         this.setState({
-    //             donations: this.props.donations,
-    //             donationsToDisplay: this.props.donations
-    //         });
-    //     }
-    // }
-
     componentDidMount() {
         this.setDonations();
     }

@@ -26,9 +26,7 @@ class LoginPannel extends React.Component {
     login(this.state.login, this.state.password).then(() => {
         this.setState({ token: getToken() });
         this.setState({ redirect: true });
-        console.log(this.state);
     }).catch((error) => {
-      console.log(error);
         this.setState({ modal: true });
         this.setState({ header: "Error" });
         this.setState({ body: error.response.data });

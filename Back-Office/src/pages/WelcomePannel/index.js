@@ -8,7 +8,6 @@ function withParams(Component) {
   return (props) => <Component {...props} params={useParams()} />;
 }
 
-
 class WelcomePannel extends React.Component {
   constructor(props) {
     super(props);
@@ -19,25 +18,15 @@ class WelcomePannel extends React.Component {
 
   logout = () => {
     removeToken();
-    console.log("token : ");
-    console.log(getToken());
     this.setState({ redirect: true });
   };
 
-
-
   render() {
     return (
-      
       <div>
-        
         <div className="header">
           <div className="backButtonContainer">
-            
-            <button 
-              className="addBackButton"
-              onClick={this.logout}
-            >
+            <button className="addBackButton" onClick={this.logout}>
               {this.state.redirect && <Navigate to="/login" />}
               Log out
             </button>
@@ -85,7 +74,7 @@ class WelcomePannel extends React.Component {
             img="https://media.istockphoto.com/photos/young-medical-students-interview-patient-during-hospital-rounds-picture-id813533532"
             alt="Donors"
           />
-        </div>   
+        </div>
       </div>
     );
   }
