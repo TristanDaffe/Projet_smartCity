@@ -1,7 +1,9 @@
 import React, { useState , useEffect } from "react";
 import { FlatList,SafeAreaView,StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { useSelector,useDispatch } from "react-redux";
+import { DonationTypesContext } from '../context/donationTypeContext';
+
 import {getTypesDonation} from "../redux/selectors"
-import { useSelector } from "react-redux";
 
 const Item = ({ item, onPress, backgroundColor, textColor }) => (
   <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
@@ -12,11 +14,11 @@ const Item = ({ item, onPress, backgroundColor, textColor }) => (
 
 export default function MultiButton ({returnType}) {
   const [selectedId, setSelectedId] = useState(null);
-
-  const allTypes = useSelector(getTypesDonation);
+  const {getDonationTypes,donationTypes , isLoading} = React.useContext(DonationTypesContext);
 
   useEffect(() => {
-    selectedId != null ? returnType(allTypes[selectedId-1]) : ""
+    selectedId != null ? returnType(donationTypes[selectedId-1]) : ""
+  
   });
   
   const renderItem = ({ item }) => {
@@ -43,7 +45,7 @@ export default function MultiButton ({returnType}) {
   return (
     <SafeAreaView>
       <FlatList
-        data={allTypes}
+        data={donationTypes}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />

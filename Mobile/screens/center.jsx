@@ -11,8 +11,8 @@ import {getCenters} from "../redux/selectors"
 
 export default function Center ( {route,navigation})  {
   const [center, setCenter] = React.useState(null);
-  const {allDonationCenter ,donationCenters} = React.useContext(DonationCenterContext);
-  const [filteredData, setFilteredData] = React.useState(allCenters);
+  const {donationCenters} = React.useContext(DonationCenterContext);
+  const [filteredData, setFilteredData] = React.useState(donationCenters);
 
   const dispatch = useDispatch();
   const allCenters = useSelector(getCenters);
@@ -20,7 +20,7 @@ export default function Center ( {route,navigation})  {
   const type = route.params;
 
   useEffect(() => {
-    console.log("coucou")
+    setFilteredData(donationCenters);
   }, []);
 
 
@@ -31,7 +31,7 @@ export default function Center ( {route,navigation})  {
   const searchFilter = (text) => {
     if(text)
     {
-          const newdata = allCenters.filter(item => {
+          const newdata = donationCenters.filter(item => {
           const itemData = item.name.toUpperCase();
           const textData = text.toUpperCase();
           return itemData.indexOf(textData) > -1;
@@ -41,7 +41,7 @@ export default function Center ( {route,navigation})  {
     }
     else
     {
-      setFilteredData(allCenters)
+      setFilteredData(donationCenters)
     }
   }
   

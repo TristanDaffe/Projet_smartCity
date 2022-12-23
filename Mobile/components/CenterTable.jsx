@@ -2,44 +2,46 @@ import React, { useState , useEffect } from "react";
 import { Text, View, StyleSheet , SafeAreaView,TouchableOpacity} from "react-native";
 import { FlatList } from "react-native-gesture-handler";
 
-  const Item = ({ item, onPress, backgroundColor, textColor }) => (
+  const Item = ({ item, onPress, backgroundColor, textColor }) => 
+  {
+    return(  
+        <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
+            <View style={styles.containerItem}>
+                <View style={styles.case}>
+                    <Text>{item.name}</Text>
+                </View>
+                <View style={styles.case}>
+                    <Text>{item.street_name},{item.street_number}</Text>
+                </View>
+                <View style={styles.case}>
+                    <Text>{item.email_address}</Text>
+                </View>
+                <View style={styles.case}>
+                    <Text>{item.phone_number}</Text>
+                </View>
+            </View>
+        </TouchableOpacity>
+    )
+  }
 
-    <TouchableOpacity onPress={onPress} style={[styles.item, backgroundColor]}>
-        <View style={styles.containerItem}>
-            <View style={styles.case}>
-                <Text>{item.name}</Text>
-            </View>
-            <View style={styles.case}>
-                <Text>{item.street_name},{item.street_number}</Text>
-            </View>
-            <View style={styles.case}>
-                <Text>{item.email_address}</Text>
-            </View>
-            <View style={styles.case}>
-                <Text>{item.phone_number}</Text>
-            </View>
-        </View>
-    </TouchableOpacity>
-  );
 
   const table = ({data,returnCenter,type})=>
   {
     const [selectedId, setSelectedId] = useState(null);
-    const [centers, setCenters] = useState([]);
     
-    // let centers = {};
-    // data.map(center =>{
-    //     let i = 0;
-    //     while (i < center.donationTypeAvailable.length && center.donationTypeAvailable[i].name !== type.name) {
-    //         i++;
-    //     }
-    //     if (i < center.donationTypeAvailable.length) {
-    //         centers.push(center)
-    //     }
-    // })
+    let centers = [];
+    data.map(center =>{
+        let i = 0;
+        while (i < center.donationTypeAvailable.length && center.donationTypeAvailable[i].name !== type.name) {
+            i++;
+        }
+        if (i < center.donationTypeAvailable.length) {
+            centers.push(center)
+        }
+    })
 
     useEffect(() => {
-        selectedId != null ? returnCenter((data[selectedId-1])) : ""
+        selectedId != null ? returnCenter((centers[selectedId-1])) : ""
       });
 
     const item =({item})=>
@@ -68,7 +70,7 @@ import { FlatList } from "react-native-gesture-handler";
     return (
               <SafeAreaView style={styles.container}>
                 <FlatList 
-                data = {data}
+                data = {centers}
                 renderItem ={item}
                 keyExtractor ={(item,index) => index.toString()}
                 ListHeaderComponent={            

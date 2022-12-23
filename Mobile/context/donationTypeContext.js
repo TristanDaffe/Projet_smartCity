@@ -8,7 +8,7 @@ import { AuthContext } from "./authContext";
 export const DonationTypesContext = createContext();
 
 export const DonationTypeProvider = ({children}) => {
-    const [donationTypes, setDonationTypes] = useState([]);
+    const [donationTypes, setDonationTypes] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
     const {token} = useContext(AuthContext)

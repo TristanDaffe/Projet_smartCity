@@ -9,6 +9,16 @@ import { FlatList } from "react-native-gesture-handler";
     {id:4,hours: "10:00"},
     {id:5,hours: "10:30"},
     {id:6,hours: "11:00"},
+    {id:6,hours: "11:30"},
+    {id:6,hours: "12:00"},
+    {id:6,hours: "13:00"},
+    {id:6,hours: "13:30"},
+    {id:6,hours: "14:00"},
+    {id:6,hours: "14:30"},
+    {id:6,hours: "15:00"},
+    {id:6,hours: "15:30"},
+    {id:6,hours: "16:00"},
+    {id:6,hours: "16:30"},
   ];
 
   const Item = ({ item, onPress, backgroundColor, textColor }) => (
