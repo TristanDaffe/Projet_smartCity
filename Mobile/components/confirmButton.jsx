@@ -28,6 +28,7 @@ export default function confirmButton(props) {
                             // ça c'est ce qui se passe quand on appuie sur le bouton "yes"
                             callback: async() => {
                                 await addDonation(props.donation);
+                                alert('You have made an appointment!', '');
                                 Popup.hide();
                             },
                             // ça c'est ce qui se passe quand on clique sur le bouton back
