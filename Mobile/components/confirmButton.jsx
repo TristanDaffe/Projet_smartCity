@@ -1,14 +1,15 @@
 import React from "react";
 import { Button, View} from "react-native";
 import { Root, Popup } from 'react-native-popup-confirm-toast'
+import Spinner from "react-native-loading-spinner-overlay/lib";
 
-import {addUserDonation} from "../redux/actions/userDonation";
 import { DonationUserContext } from '../context/donationUserContext';
 
 export default function confirmButton(props) {
-    const {addDonation} = React.useContext(DonationUserContext);
+    const {addDonation, isLoading} = React.useContext(DonationUserContext);
     return (
         <Root>
+            <Spinner visible = {isLoading}/>
             <View>
                 <Button
                     title= {props.name}
@@ -25,9 +26,8 @@ export default function confirmButton(props) {
                             buttonText: 'Yes',
                             confirmText: 'Back',
                             // ça c'est ce qui se passe quand on appuie sur le bouton "yes"
-                            callback: () => {
-                                alert('You have made an appointment!');
-                                addDonation(props.donation)
+                            callback: async() => {
+                                await addDonation(props.donation);
                                 Popup.hide();
                             },
                             // ça c'est ce qui se passe quand on clique sur le bouton back

@@ -13,6 +13,7 @@ export default function Stats ( {navigation} )  {
 
     const quantityDonated = 0.5;
     const peopleSaveByDonation = 3;
+
     return (
       <View>
         <Spinner visible = {isLoading}/>

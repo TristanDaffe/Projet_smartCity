@@ -27,6 +27,7 @@ export const DonationUserProvider = ({children}) => {
             .then( res => {
                 setDonationsUser(res.data);
                 AsyncStorage.setItem('donationsUser', JSON.stringify(res.data));
+                alert('You have made an appointment!', '');
             })
             .catch( err => {
                 Alert.alert("Error", err.message);
