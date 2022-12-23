@@ -33,14 +33,14 @@ export default function DrawerStack (props) {
                         <Ionicons name="home" color={color} size={24} />
                     )
             }}/>
-            <Drawer.Screen name="Appointment" component={Appointment}
+            <Drawer.Screen name="Your appointments" component={Appointment}
                 options={{
                     drawerIcon: ({color}) => (
                         <Ionicons name="calendar-outline" color={color} size={24} />
                     )
                     
             }}/>
-            <Drawer.Screen name="Statistiques" component={Stats}
+            <Drawer.Screen name="Statistics" component={Stats}
             options={{
                 drawerIcon: ({color}) => (
                     <Ionicons name="stats-chart-outline" color={color} size={24} />

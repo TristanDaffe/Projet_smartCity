@@ -24,7 +24,7 @@ export default function Appointment  ( {navigation} )  {
     return (
       <View>
         <TopBar onclick={navigation.goBack}/>
-        <Text style={styles.title}>Appointment Made</Text>
+        <Text style={styles.title}>Appointments made</Text>
         <View style={styles.lineCenter}>
           <Image source={require('../images/user_account.png')} style= {styles.image}/>
           <Text style={styles.textName}>{user.firstName} {user.lastName}</Text>

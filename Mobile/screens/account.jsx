@@ -55,7 +55,7 @@ export default function Account ( {navigation} )  {
 
 {/* Section du temps avant la prochaine donation*/}
         <View style={styles.info}>
-          <Text style={styles.sectionTitle}> Time before the next donation : </Text>
+          <Text style={styles.sectionTitle}>Time before the next donation : </Text>
 
           <View style={styles.donation}>
             <Text style={styles.sectionTitle}>Blood: </Text>

@@ -24,15 +24,12 @@ export default function confirmButton(props) {
                             textBody: 'Are you sure you want to make this appointment?',
                             buttonText: 'Yes',
                             confirmText: 'Back',
-                            // ça c'est ce qui se passe quand on appuie sur le bouton "yes"
                             callback: () => {
                                 alert('You have made an appointment!');
                                 addDonation(props.donation)
                                 Popup.hide();
                             },
-                            // ça c'est ce qui se passe quand on clique sur le bouton back
                             cancelCallback: () => {
-                                alert('You pressed the back button');
                                 Popup.hide();
                             },
                         })

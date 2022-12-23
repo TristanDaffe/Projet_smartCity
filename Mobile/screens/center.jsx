@@ -42,7 +42,7 @@ export default function Center ( {route,navigation})  {
       <SafeAreaView>
         <TopBar onclick={navigation.goBack}/>
           <View style={styles.lineCenter}>
-            <Text style={styles.title}>Center</Text>
+            <Text style={styles.title}>Select a center</Text>
             <View style={styles.searchBarre}>
             <Image source={require('../images/magnifyingGlassSearch.png')} style= {styles.imgSearchBarre}/>
             <TextInput style={styles.textSearchBarre}
@@ -86,9 +86,9 @@ const styles = StyleSheet.create({
     },
     title: {
       fontWeight: 'bold',
-      fontSize: 30,
+      fontSize: 25,
       marginLeft: 20,
-      marginRight : 90,
+      marginRight : 8,
     },
     table: {
         alignSelf: 'center',
