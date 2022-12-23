@@ -64,32 +64,6 @@ export const AuthProvider = ({children}) => {
             .catch( err => {
                 // gestion des erreurs
                 Alert.alert("Error", err.message);
-/*
-PARTIE POUR TEST SANS API
-*/
-                console.log(err);
-                const userTest = {
-                    id: 1,
-                    first_name: "Jhon",
-                    last_name: "Doe",
-                    email_address: "test@jhon.doe",
-                    birthday: "1990-01-01",
-                    blood_type: {
-                        id: 1,
-                        type: "A",
-                        rhesus: "+"
-                    },
-                    login: "jhon.doe",
-                    password: "1234"
-                }
-                const tokenTest = "123456789";
-                setUser(userTest);
-                setToken(tokenTest);
-                AsyncStorage.setItem('user', JSON.stringify(userTest));
-                AsyncStorage.setItem('token', JSON.stringify(tokenTest));
-/*
-FIN PARTIE POUR TEST SANS API
-*/
             })
             .finally( () => {
                 setIsLoading(false);
