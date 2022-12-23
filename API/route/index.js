@@ -9,13 +9,13 @@ const DonationIntervalleRouter = require('./donationInterval');
 
 const router = require('express').Router();
 
-router.use("/user", UserRouter);
-router.use("/bloodtype", BloodRouter);
-router.use("/donation", DonationRouter);
-router.use("/locality", LocalityRouter);
-router.use("/center", DonationCenterRouter);
-router.use("/openingday", OpeningDayRouter);
-router.use("/donationtype", DonationTypeRouter);
-router.use('/donationinterval', DonationIntervalleRouter)
+router.use("/1.0/user", UserRouter);
+router.use("/1.0/bloodtype", BloodRouter);
+router.use("/1.0/donation", DonationRouter);
+router.use("/1.0/locality", LocalityRouter);
+router.use("/1.0/center", DonationCenterRouter);
+router.use("/1.0/openingday", OpeningDayRouter);
+router.use("/1.0/donationtype", DonationTypeRouter);
+router.use('/1.0/donationinterval', DonationIntervalleRouter)
 
 module.exports = router;
