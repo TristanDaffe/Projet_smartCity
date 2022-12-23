@@ -1,11 +1,12 @@
 import axios from "axios";
 import { setToken, getToken } from "../../context/LoginContext";
 
-const URL_API = `http://192.168.1.54:3001`;
+const URL_API = `http://localhost:3001`;
+const VERSION = `1.0`
 
 const login = async (login, password) => {
   await axios
-    .post(`${URL_API}/user/login`, {
+    .post(`${URL_API}/${VERSION}/user/login`, {
       login: login,
       password: password,
     })
@@ -19,7 +20,7 @@ const login = async (login, password) => {
 
 const getAllDonations = async () => {
   return await axios
-    .get(`${URL_API}/donation/all`, {
+    .get(`${URL_API}/${VERSION}/donation/all`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -35,7 +36,7 @@ const getAllDonations = async () => {
 
 const getDonation = async (id) => {
   return await axios
-    .get(`${URL_API}/donation/${id}`, {
+    .get(`${URL_API}/${VERSION}/donation/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -52,7 +53,7 @@ const getDonation = async (id) => {
 
 const getDonationsFromDonor = async (id) => {
   return await axios
-    .get(`${URL_API}/donation/user/${id}`, {
+    .get(`${URL_API}/${VERSION}/donation/user/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -68,7 +69,7 @@ const getDonationsFromDonor = async (id) => {
 
 const getAllDonationCenters = async () => {
   return await axios
-    .get(`${URL_API}/center/all`, {
+    .get(`${URL_API}/${VERSION}/center/all`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -84,7 +85,7 @@ const getAllDonationCenters = async () => {
 
 const getDonationCenter = async (id) => {
   return await axios
-    .get(`${URL_API}/center/${id}`, {
+    .get(`${URL_API}/${VERSION}/center/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -101,7 +102,7 @@ const getDonationCenter = async (id) => {
 
 const getAllOpeningDays = async () => {
   return await axios
-    .get(`${URL_API}/openingday/all`, {
+    .get(`${URL_API}/${VERSION}/openingday/all`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -117,7 +118,7 @@ const getAllOpeningDays = async () => {
 
 const getOpeningDaysFromDonationCenter = async (id) => {
     return await axios
-        .get(`${URL_API}/center/opening/${id}`, {
+        .get(`${URL_API}/${VERSION}/center/opening/${id}`, {
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${getToken()}`
@@ -133,7 +134,7 @@ const getOpeningDaysFromDonationCenter = async (id) => {
 
 const getOpeningDay = async (id) => {
   return await axios
-    .get(`${URL_API}/openingday/${id}`, {
+    .get(`${URL_API}/${VERSION}/openingday/${id}`, {
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${getToken()}`,
@@ -150,7 +151,7 @@ const getOpeningDay = async (id) => {
 
 const getAllUsers = async () => {
   return await axios
-    .get(`${URL_API}/user/all`, {
+    .get(`${URL_API}/${VERSION}/user/all`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -166,7 +167,7 @@ const getAllUsers = async () => {
 
 const getUser = async (id) => {
   return await axios
-    .get(`${URL_API}/user/${id}`, {
+    .get(`${URL_API}/${VERSION}/user/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -182,7 +183,7 @@ const getUser = async (id) => {
 
 const getLocalities = async () => {
   return await axios
-    .get(`${URL_API}/locality/all`, {
+    .get(`${URL_API}/${VERSION}/locality/all`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -199,7 +200,7 @@ const getLocalities = async () => {
 
 const deleteDonation = async (id) => {
   return await axios
-    .delete(`${URL_API}/donation/${id}`, {
+    .delete(`${URL_API}/${VERSION}/donation/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -215,7 +216,7 @@ const deleteDonation = async (id) => {
 
 const deleteDonationCenter = async (id) => {
   return await axios
-    .delete(`${URL_API}/center/${id}`, {
+    .delete(`${URL_API}/${VERSION}/center/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -231,7 +232,7 @@ const deleteDonationCenter = async (id) => {
 
 const deleteOpeningDay = async (id) => {
   return await axios
-    .delete(`${URL_API}/openingday/${id}`, {
+    .delete(`${URL_API}/${VERSION}/openingday/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -247,7 +248,7 @@ const deleteOpeningDay = async (id) => {
 
 const deleteDonor = async (id) => {
   return await axios
-    .delete(`${URL_API}/user/${id}`, {
+    .delete(`${URL_API}/${VERSION}/user/${id}`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${getToken()}`,
@@ -263,7 +264,7 @@ const deleteDonor = async (id) => {
 
 const addDonor = async (donor) => { 
   return await axios
-    .post(`${URL_API}/user/register`,  {
+    .post(`${URL_API}/${VERSION}/user/register`,  {
       lastName: donor.lastName,
       firstName: donor.firstName,
       emailAddress: donor.emailAddress,
@@ -287,7 +288,7 @@ const addDonor = async (donor) => {
 
 const addOpeningDay = async (openingDay) => {
     return await axios
-        .post(`${URL_API}/openingday`, openingDay, {
+        .post(`${URL_API}/${VERSION}/openingday`, openingDay, {
             dayLabel: openingDay.dayLabel,
             openingTime: openingDay.openingTime,
             closingTime: openingDay.closingTime,
@@ -310,7 +311,7 @@ const addOpeningDay = async (openingDay) => {
 
 const addDonationCenter = async (donationCenter) => {
   return await axios
-    .post(`${URL_API}/center`, donationCenter, {
+    .post(`${URL_API}/${VERSION}/center`, donationCenter, {
       name: donationCenter.name,
       phoneNumber: donationCenter.phoneNumber,
       emailAddress: donationCenter.emailAddress,
@@ -347,7 +348,7 @@ const addDonationCenter = async (donationCenter) => {
 
 const addDonation = async (donation) => {
   return await axios
-    .post(`${URL_API}/donation`, donation, {
+    .post(`${URL_API}/${VERSION}/donation`, donation, {
       date: donation.date,
       hour: donation.hour,
       donationTypeId  : donation.donationTypeId,
@@ -379,7 +380,7 @@ const addDonation = async (donation) => {
 
 const updateOpeningDay = async (openingDay) => {
     return await axios
-        .patch(`${URL_API}/openingday`, openingDay, {
+        .patch(`${URL_API}/${VERSION}/openingday`, openingDay, {
             headers: {"Content-Type": "application/json",
             "Authorization": `Bearer ${getToken()}`,
             }
@@ -412,7 +413,7 @@ const updateDonor = async (donor) => {
     body.password = donor.password;
   }
   return await axios
-    .patch(`${URL_API}/user`, {
+    .patch(`${URL_API}/${VERSION}/user`, {
       body: body,
     }, {
       headers: {"Content-Type": "application/json",
@@ -429,7 +430,7 @@ const updateDonor = async (donor) => {
 
 const updateDonationCenter = async (donationCenter) => {
   return await axios
-    .patch(`${URL_API}/center`, {
+    .patch(`${URL_API}/${VERSION}/center`, {
       id: donationCenter.id,
       name: donationCenter.name,
       phoneNumber: donationCenter.phoneNumber,
@@ -462,7 +463,7 @@ const updateDonationCenter = async (donationCenter) => {
 
 const updateDonation = async (donation) => {  
   return await axios
-    .patch(`${URL_API}/donation`, {
+    .patch(`${URL_API}/${VERSION}/donation`, {
       id: donation.id,
       hour: donation.hour,
       date: donation.date,
