@@ -1,4 +1,4 @@
-# Développement de Client Web avancé
+# Développement de Client Web avancé -- Back-Office
 
 ## Prerequisites
 - Having docker desktop installed
@@ -7,9 +7,11 @@
 ## Running this project using Docker-compose
 - Open docker desktop
 - Unzip the project in a folder.
-- Once the project is unzipped navigate to Project > API > opent the **.env** file.
+- Once the project is unzipped navigate to Project > API > src and open the **.env** file.
 - Change the **DB_HOST** const to "BDsmartCityCompose" (which is the name of the container).
-- Then, open a new terminal, navigate the root of the project and run the following command :
+- Then, open a new terminal, navigate the root of the project and run the following commands :
+
+### `npm install --save-dev nodemon`
 
 ### `docker-compose up --build`
 
@@ -30,7 +32,7 @@ You will be redirected to the home page, where you can log in.
 ### `docker run --name BDsmartCity -e POSTGRES_PASSWORD=password -e POSTGRES_USER=admin -e POSTGRES_DB=smartcity -p 5432:5432 -d postgres`
 
 - Once it is done, a container named "BDsmartCity" should be visible in docker desktop. 
-- Then, open a new terminal and navigate to Project > API
+- Then, open a new terminal and navigate to Project > API > src 
 - Run the following command to install all the dependencies.:
 
 ### `npm install`
