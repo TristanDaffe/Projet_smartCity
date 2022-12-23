@@ -29,7 +29,7 @@ export const BloodProvider = ({children}) => {
                 AsyncStorage.setItem('bloods', JSON.stringify(res.data));
             })
             .catch( err => {
-                Alert.alert("Error", err.message);
+                Alert.alert("Error", err.response.data);
             })
             .finally( () => {
                 setIsLoading(false);
@@ -51,7 +51,7 @@ export const BloodProvider = ({children}) => {
                 AsyncStorage.setItem('bloodsType', JSON.stringify(res.data));
             })
             .catch( err => {
-                Alert.alert("Error", err.message);
+                Alert.alert("Error", err.response.data);
             })
             .finally( () => {
                 setIsLoading(false);

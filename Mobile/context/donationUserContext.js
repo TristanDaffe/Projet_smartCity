@@ -29,7 +29,7 @@ export const DonationUserProvider = ({children}) => {
                 AsyncStorage.setItem('donationsUser', JSON.stringify(res.data));
             })
             .catch( err => {
-                Alert.alert("Error", err.message);
+                Alert.alert("Error", err.response.data);
             })
             .finally( () => {
                 setIsLoading(false);
@@ -51,7 +51,7 @@ export const DonationUserProvider = ({children}) => {
                 AsyncStorage.setItem('lastDonationOfType', JSON.stringify(res.data));
             })
             .catch( err => {
-                Alert.alert("Error", err.message);
+                Alert.alert("Error", err.response.data);
             })
             .finally( () => {
                 setIsLoading(false);
@@ -76,7 +76,7 @@ export const DonationUserProvider = ({children}) => {
                 return res.data;
             })
             .catch( err => {
-                Alert.alert("Error", err.message);
+                Alert.alert("Error", err.response.data);
             })
       };
 

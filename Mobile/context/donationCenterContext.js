@@ -27,7 +27,7 @@ export const DonationCenterProvider = ({children}) => {
                 AsyncStorage.setItem('donationCenters', JSON.stringify(res.data));
             })
             .catch( err => {
-                Alert.alert("Error", err.message);
+                Alert.alert("Error", err.response.data);
             })
             .finally( () => {
                 setIsLoading(false);
