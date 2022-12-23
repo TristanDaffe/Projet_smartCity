@@ -1,25 +1,16 @@
-import React, { useEffect } from "react";
-import {  View, Text, StyleSheet, Image, TextInput } from 'react-native';
+import React from "react";
+import {  View, Text, StyleSheet, Image } from 'react-native';
 
 import TopBar from '../components/topBar/topBarArrow';
 import { AuthContext } from '../context/authContext';
 import AppointmentTable from '../components/AppointmentTableTest';
 import { DonationUserContext } from '../context/donationUserContext';
 
-import { useDispatch , useSelector } from "react-redux";
-
-import {setUserDonation} from "../redux/actions/userDonation";
-import {getUserDonations} from "../redux/selectors"
-
 
 export default function Appointment  ( {navigation} )  {
 
     const {user} = React.useContext(AuthContext);
     const {donationsUser} = React.useContext(DonationUserContext);
-    
-    useEffect(() => {
-      console.log("useEffect appointment")
-    }, []);
 
     return (
       <View>

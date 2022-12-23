@@ -50,7 +50,6 @@ export default function Center ( {route,navigation})  {
           <View style={styles.table}>
               <CenterTable data = {filteredData} type = {type} returnCenter = {returnCenter}></CenterTable>
           </View>
-          {console.log(center)}
           <View style={styles.button}>
               <Button 
                 title='Next' 

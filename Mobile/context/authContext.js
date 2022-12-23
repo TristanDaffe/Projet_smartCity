@@ -63,7 +63,6 @@ export const AuthProvider = ({children}) => {
             })
             .catch( err => {
                 // gestion des erreurs
-                console.log(err.response.data);
                 Alert.alert("Error", err.response.data);
             })
             .finally( () => {

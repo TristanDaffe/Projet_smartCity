@@ -80,7 +80,6 @@ module.exports.getAllDonation = async (req, res) => {
 module.exports.createDonation = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
-    console.log(body)
     const {
         date,
         hour,
@@ -92,7 +91,6 @@ module.exports.createDonation = async (req, res) => {
     
     try { 
         const {rows: donationAvailableForTheCenter} =  await DonationCenterModel.getDonationTypeAvailableForCenter(donationCenterId, client);
-        console.log(donationAvailableForTheCenter)
         let j = 0;
         while( j < donationAvailableForTheCenter.length && donationAvailableForTheCenter[j].id !== donationTypeId)
             j++;
