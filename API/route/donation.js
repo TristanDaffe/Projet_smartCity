@@ -9,7 +9,7 @@ router.get('/all', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, Don
 router.get('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, DonationController.getDonation);
 router.get('/user/:id/last', JWTMiddleWare.identification, DonationController.getLastDonationOfEveryTypeOfUser);
 router.get('/user/:id', JWTMiddleWare.identification,DonationController.getDonationsOfUser);
-router.post('/', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, DonationController.createDonation);
+router.post('/', JWTMiddleWare.identification, DonationController.createDonation);
 router.patch('/', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, DonationController.updateDonation);
 router.delete('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, DonationController.deleteDonation);
 

@@ -12,6 +12,7 @@ export const DonationUserProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const {token} = useContext(AuthContext)
+
     const getDonationsOfUser = (id) => {
         setIsLoading(true);
         axios
@@ -34,10 +35,35 @@ export const DonationUserProvider = ({children}) => {
             })
     } 
 
+    const addDonation = async (donation) => {
+        console.log(donation.hour)
+        return await axios
+          .post(`${BASE_URL}/donation`,{
+            date: donation.date,
+            hour: donation.hours,
+            donationTypeId  : donation.type.id,
+            userId: donation.user.id,
+            donationCenterId: donation.center.id},
+            {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then( res => {
+                return res.data;
+            })
+            .catch( err => {
+                console.log(err.response.data)
+                Alert.alert("Error", err.message);
+            })
+      };
+
     return (
         <DonationUserContext.Provider value={{
             donationsUser, 
             isLoading, 
-            getDonationsOfUser
+            getDonationsOfUser,
+            addDonation,
         }}>{children}</DonationUserContext.Provider>);
 }

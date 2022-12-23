@@ -80,6 +80,7 @@ module.exports.getAllDonation = async (req, res) => {
 module.exports.createDonation = async (req, res) => {
     const client = await pool.connect();
     const body = req.body;
+    console.log(body)
     const {
         date,
         hour,
@@ -95,46 +96,50 @@ module.exports.createDonation = async (req, res) => {
         while( j < donationAvailableForTheCenter.length && donationAvailableForTheCenter[j].id !== donationTypeId)
             j++;
 
-        if(j < donationAvailableForTheCenter || donationAvailableForTheCenter[j].id !== donationCenterId){
+        if(j === donationAvailableForTheCenter.length || donationAvailableForTheCenter[j].id !== donationCenterId){
             res.status(400).send("The donation center doesn't have this type of donation available");
         }
-        // récupérer les dons de l'utilisateur
-        const maxIntervals = await DonationModel.getLongestInterval(client);
-        let maxInterval = maxIntervals.rows[0].time_between.months;
-        let minDate = new Date();
-        if(maxInterval.months)
-            maxInterval += 4 * maxInterval.months;
+        else
+        {
+            // récupérer les dons de l'utilisateur
+            const maxIntervals = await DonationModel.getLongestInterval(client);
+            let maxInterval = maxIntervals.rows[0].time_between.months;
+            let minDate = new Date();
+            if(maxInterval.months)
+                maxInterval += 4 * maxInterval.months;
 
-        minDate.setDate(minDate.getDay() - (maxInterval * 7));
+            minDate.setDate(minDate.getDay() - (maxInterval * 7));
 
-        const {rows: donations} = await DonationModel.getDonationOfUserFromDate(userId, minDate, client);
-        // filtre pour avoir le dernier don de chaque type de don fais
-        let lastDonationOfEveryType = [];
-        donations.map(donation => {
-            if(!lastDonationOfEveryType.some(d => d.donation_type_id === donation.donation_type_id))
-            lastDonationOfEveryType.push(donation);
-        });
-        let canAdd = true;
-        let i = 0;
-        while(canAdd && i < lastDonationOfEveryType.length) {
-            const intervals = await DonationModel.getInterval(lastDonationOfEveryType[i].donation_type_id, donationTypeId, client);
-            const interval = intervals.rows[0].time_between.days;
-            const timeMiliSec = Math.abs(dateFormatDB - (lastDonationOfEveryType[i].date));
-            const timeDays = Math.ceil(timeMiliSec / (1000 * 3600 * 24));
-            canAdd =  timeDays >= interval;
-            i++;
-        }
+            const {rows: donations} = await DonationModel.getDonationOfUserFromDate(userId, minDate, client);
+            // filtre pour avoir le dernier don de chaque type de don fais
+            let lastDonationOfEveryType = [];
+            donations.map(donation => {
+                if(!lastDonationOfEveryType.some(d => d.donation_type_id === donation.donation_type_id))
+                lastDonationOfEveryType.push(donation);
+            });
+            let canAdd = true;
+            let i = 0;
+            while(canAdd && i < lastDonationOfEveryType.length) {
+                const intervals = await DonationModel.getInterval(lastDonationOfEveryType[i].donation_type_id, donationTypeId, client);
+                const interval = intervals.rows[0].time_between.days;
+                const timeMiliSec = Math.abs(dateFormatDB - (lastDonationOfEveryType[i].date));
+                const timeDays = Math.ceil(timeMiliSec / (1000 * 3600 * 24));
+                canAdd =  timeDays >= interval;
+                i++;
+            }
 
-        if(canAdd){
-            await DonationModel.createDonation(date, hour, donationTypeId, userId, donationCenterId, client);
-            res.sendStatus(201);
-        }
-        else {
-            res.status(400).send("You can't add a donation of this type at this date");
+            if(canAdd){
+                await DonationModel.createDonation(date, hour, donationTypeId, userId, donationCenterId, client);
+                res.sendStatus(201);
+            }
+            else {
+                res.status(400).send("You can't add a donation of this type at this date");
+            }
         }
     }
     catch (error) {
         res.sendStatus(500);
+        console.log(error)
     }
     finally {
         client.release();

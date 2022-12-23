@@ -3,12 +3,16 @@ import {  View, Text, StyleSheet,ScrollView,SafeAreaView , Button} from 'react-n
 
 import TopBar from '../components/topBar/topBarArrow';
 import ConfirmationButton from '../components/confirmButton';
+import { AuthContext } from '../context/authContext';
+
 
 export default function RecapAppointment ( {route,navigation} )  { 
   
   const {date,hours,center,type} = route.params;
+
+  const {user} = React.useContext(AuthContext);
   
-  const appointment = {type : type , hours : hours , center : center , date : date}
+  const donation = {type : type , hours : hours , center : center , date : date , user : user}
 
     return (
         <View>
@@ -22,7 +26,7 @@ export default function RecapAppointment ( {route,navigation} )  {
         <Text style={styles.response}>{hours}</Text>
         <Text style={styles.category}>Center :</Text>
         <Text style={styles.lastResponse}>{center.name}</Text>
-          <ConfirmationButton name="Make this Appointment" data = {appointment}></ConfirmationButton>
+          <ConfirmationButton name="Make this Appointment" donation = {donation}></ConfirmationButton>
         </View>
     );
 };

@@ -5,13 +5,18 @@ import TopBar from '../components/topBar/topBarArrow';
 import MultiButton from '../components/MultiButton';
 import { ScrollView } from "react-native-gesture-handler";
 import { DonationTypesContext } from '../context/donationTypeContext';
+import { DonationCenterContext } from '../context/donationCenterContext';
 
 import {setDonationTypes} from "../redux/actions/donationTypes";
+import Spinner from "react-native-loading-spinner-overlay/lib";
+
+import {setCenters} from "../redux/actions/center";
 
 export default function Type ( {navigation} )  {  
     
     const [type, setType] = React.useState(null);
-    const {getDonationTypes,donationTypes} = React.useContext(DonationTypesContext);
+    const {getDonationTypes,donationTypes , isLoading} = React.useContext(DonationTypesContext);
+    const {allDonationCenter ,donationCenters} = React.useContext(DonationCenterContext);
 
     const dispatch = useDispatch();
     
@@ -27,6 +32,7 @@ export default function Type ( {navigation} )  {
 
     return (
       <View>
+        <Spinner visible = {isLoading}/>
         <TopBar onclick={navigation.goBack}/>
           <ScrollView horizontal={false}>
             <Text style={styles.type}>Type</Text>
@@ -34,14 +40,13 @@ export default function Type ( {navigation} )  {
               <MultiButton returnType = {returnType}></MultiButton>
               </ScrollView>
               <View style={styles.button}>
-                {console.log(type)}
               <Button 
                 title='Next' 
                 color='red'
                 style={styles.button} 
                 onPress={() =>{
                   if (type != null) {
-                    navigation.navigate('Center', type)
+                      navigation.navigate('Center', type);
                   }
                   else
                   {
