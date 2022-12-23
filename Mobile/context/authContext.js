@@ -38,7 +38,7 @@ export const AuthProvider = ({children}) => {
         })
         .catch( err => {
             // gestion des erreurs
-            Alert.alert("Erreur lors de l'enregistrement", err.message);
+            Alert.alert("Erreur lors de l'enregistrement", err.response.data);
         })
         .finally( () =>{
             setIsLoading(false);
@@ -63,7 +63,8 @@ export const AuthProvider = ({children}) => {
             })
             .catch( err => {
                 // gestion des erreurs
-                Alert.alert("Error", err.message);
+                console.log(err.response.data);
+                Alert.alert("Error", err.response.data);
             })
             .finally( () => {
                 setIsLoading(false);
@@ -80,6 +81,27 @@ export const AuthProvider = ({children}) => {
 
         setIsLoading(false);
     }
+
+    const deleteAccount = () => {
+        setIsLoading(true);
+
+        axios
+            .delete(`${BASE_URL}/user/${user.id}`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then( res => {
+                logout();
+            })
+            .catch( err => {
+                Alert.alert("Error", err.response.data);
+            })
+            .finally( () => {
+                setIsLoading(false);
+            });
+    }
     return (
         <AuthContext.Provider value={{
             isLoading,
@@ -87,7 +109,8 @@ export const AuthProvider = ({children}) => {
             token,
             register,
             login,
-            logout
+            logout,
+            deleteAccount
         }}>{children}</AuthContext.Provider>
     );
 

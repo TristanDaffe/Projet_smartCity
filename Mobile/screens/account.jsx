@@ -1,5 +1,5 @@
 import React from "react";
-import {  View, ScrollView, Text, StyleSheet, Image  } from 'react-native';
+import {  View, ScrollView, Text, StyleSheet, Image, Button, Alert} from 'react-native';
 
 import TopBar from '../components/topBar/topBarArrow';
 import { AuthContext } from "../context/authContext";
@@ -7,8 +7,15 @@ import { DonationUserContext } from "../context/donationUserContext";
 
 export default function Account ( {navigation} )  {   
 
-  const {user} = React.useContext(AuthContext);
+  const {user, token, deleteAccount} = React.useContext(AuthContext);
   const {lastDonationOfType} = React.useContext(DonationUserContext);
+
+  function handleDelete() {
+    Alert.alert('Are you sure you want to delete your account ?', "This can't be undo !", [
+      {text: 'Yes', onPress: () => {deleteAccount()}},
+      {text: 'No'},
+    ]);
+  }
 
   function timeBeforeDonation(date){
     let time = 0;
@@ -23,8 +30,8 @@ export default function Account ( {navigation} )  {
       return 'You can donate now';
   }
 }
-  return (
-    <ScrollView style={styles.container}>
+  {if(token !== null){
+    return (<ScrollView style={styles.container}>
       <TopBar onclick={navigation.goBack}/>
         <View style={styles.info}>
         <Image source={require('../images/user_account.png')} style={styles.image} />
@@ -39,7 +46,7 @@ export default function Account ( {navigation} )  {
           </View>
           <View>
             <Text style={styles.sectionTitle}>Blood type</Text>
-            <Text style={styles.box}>{user.blood_type.type}{user.blood_type.rhesus}</Text>
+            <Text style={styles.box}>{user.blood_type?.type}{user.blood_type?.rhesus}</Text>
           </View>
           <View />
         </View>
@@ -47,7 +54,7 @@ export default function Account ( {navigation} )  {
 {/* Section de la date de naissance*/}
         <Text style={styles.sectionTitle}>Birth date</Text>
         <View style={styles.section}>
-          <Text style={styles.sectionText}>{user.birthDay.substring(0,10)}</Text>
+          <Text style={styles.sectionText}>{user.birthDay?.substring(0,10)}</Text>
         </View>
 
 {/* Section de l'addresse mail*/}
@@ -79,10 +86,18 @@ export default function Account ( {navigation} )  {
             <Text style={styles.sectionText}>{timeBeforeDonation(lastDonationOfType[2])}</Text>
           </View>
         </View>
-
+        <Button title="Delete account" onPress={() => handleDelete()} />
       </View>
-    </ScrollView> 
-  );
+    </ScrollView> )
+    }
+    else {
+      return (
+        <View>
+          <Text> You are not logged in </Text>
+        </View>
+      )
+    }
+  }
 };
 
 const styles = StyleSheet.create({

@@ -14,6 +14,6 @@ router.post('/register', UserConroller.registerUser);
 
 router.patch('/', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.patchUser);
 
-router.delete('/:id', JWTMiddleWare.identification, AuthMiddleWare.mustBeAdmin, UserConroller.deleteUser);
+router.delete('/:id', JWTMiddleWare.identification, UserConroller.deleteUser);
 
 module.exports = router;
