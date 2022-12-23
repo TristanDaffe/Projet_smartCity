@@ -1,4 +1,4 @@
-# Développement de Client Web avancé -- Back-Office
+# Back-End et Cloud -- API
 
 ## Prerequisites
 - Having docker desktop installed
@@ -16,9 +16,6 @@
 ### `docker-compose up --build`
 
 - Once it is done, a container named "BDsmartCityCompose" should be visible in docker desktop.
-
-- Finally, open a browser and go to http://localhost:3000/ to see the project.
-You will be redirected to the home page, where you can log in.
 
 - To stop the project, use ctrl+c in the terminal, confirm and run the following command :
 
@@ -45,17 +42,6 @@ You will be redirected to the home page, where you can log in.
 
 ### `npm run dev`
 - In the terminal you should see "Example app listening at _**your ip adress**_".
-- Then, navigate to Project > Back-Office > components > API > http.js and change the content of the **URL_API** const to your ip adress.
-- Then, open a new terminal and navigate to Project > Back-Office and run the following command to install all the dependencies. :
 
-### `npm install`
-
-- Finally, run the following command to start the server:
-
-### `npm start`
-In the terminal you should see "Compiled successfully!".
-
-- Finally, open a browser and go to http://localhost:3000/ to see the project.
-You will be redirected to the home page, where you can log in.
-- To stop the project, use ctrl+c in the API terminal, confirm and do the same in the Back-Office terminal.
+- To stop the project, use ctrl+c in the API terminal and confirm.
 - To stop the database container, open docker desktop and click on the "BDsmartCity" container, then click on "Stop" in the top right corner.
